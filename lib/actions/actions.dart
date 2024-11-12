@@ -6,6 +6,7 @@ import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -61,6 +62,7 @@ Future initConfig(BuildContext context) async {
     promotionDetailImage: configResult?.promotionDetailImage,
     storeAndroidLink: configResult?.storeAndroidLink,
     storeIosLink: configResult?.storeIosLink,
+    storeVersion: configResult?.storeVersion,
   );
 }
 
@@ -113,5 +115,37 @@ Future initCustomer(BuildContext context) async {
       );
     }
     await action_blocks.initCustomer(context);
+  }
+}
+
+Future checkAppVersion(BuildContext context) async {
+  await actions.setAppVersion();
+  if (FFAppState().appBuildVersion < FFAppState().configData.storeVersion) {
+    await showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          elevation: 0,
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          alignment: AlignmentDirectional(0.0, 0.0)
+              .resolve(Directionality.of(context)),
+          child: WebViewAware(
+            child: InfoCustomViewWidget(
+              title: 'กรุณาอัพเดทแอปพลิเคชั่นและเปิดใหม่อีกครั้ง',
+              status: 'info',
+            ),
+          ),
+        );
+      },
+    );
+
+    if (isAndroid) {
+      await launchURL(FFAppState().configData.storeAndroidLink);
+    } else {
+      await launchURL(FFAppState().configData.storeIosLink);
+    }
+
+    await actions.closeApp();
   }
 }

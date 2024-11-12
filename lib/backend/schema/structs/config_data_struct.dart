@@ -19,6 +19,7 @@ class ConfigDataStruct extends FFFirebaseStruct {
     String? promotionDetailImage,
     String? storeAndroidLink,
     String? storeIosLink,
+    int? storeVersion,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _contact = contact,
         _freeDay = freeDay,
@@ -29,6 +30,7 @@ class ConfigDataStruct extends FFFirebaseStruct {
         _promotionDetailImage = promotionDetailImage,
         _storeAndroidLink = storeAndroidLink,
         _storeIosLink = storeIosLink,
+        _storeVersion = storeVersion,
         super(firestoreUtilData);
 
   // "contact" field.
@@ -104,6 +106,16 @@ class ConfigDataStruct extends FFFirebaseStruct {
 
   bool hasStoreIosLink() => _storeIosLink != null;
 
+  // "store_version" field.
+  int? _storeVersion;
+  int get storeVersion => _storeVersion ?? 0;
+  set storeVersion(int? val) => _storeVersion = val;
+
+  void incrementStoreVersion(int amount) =>
+      storeVersion = storeVersion + amount;
+
+  bool hasStoreVersion() => _storeVersion != null;
+
   static ConfigDataStruct fromMap(Map<String, dynamic> data) =>
       ConfigDataStruct(
         contact: getDataList(data['contact']),
@@ -115,6 +127,7 @@ class ConfigDataStruct extends FFFirebaseStruct {
         promotionDetailImage: data['promotion_detail_image'] as String?,
         storeAndroidLink: data['store_android_link'] as String?,
         storeIosLink: data['store_ios_link'] as String?,
+        storeVersion: castToType<int>(data['store_version']),
       );
 
   static ConfigDataStruct? maybeFromMap(dynamic data) => data is Map
@@ -131,6 +144,7 @@ class ConfigDataStruct extends FFFirebaseStruct {
         'promotion_detail_image': _promotionDetailImage,
         'store_android_link': _storeAndroidLink,
         'store_ios_link': _storeIosLink,
+        'store_version': _storeVersion,
       }.withoutNulls;
 
   @override
@@ -172,6 +186,10 @@ class ConfigDataStruct extends FFFirebaseStruct {
         'store_ios_link': serializeParam(
           _storeIosLink,
           ParamType.String,
+        ),
+        'store_version': serializeParam(
+          _storeVersion,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -222,6 +240,11 @@ class ConfigDataStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        storeVersion: deserializeParam(
+          data['store_version'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -239,7 +262,8 @@ class ConfigDataStruct extends FFFirebaseStruct {
         policyUrl == other.policyUrl &&
         promotionDetailImage == other.promotionDetailImage &&
         storeAndroidLink == other.storeAndroidLink &&
-        storeIosLink == other.storeIosLink;
+        storeIosLink == other.storeIosLink &&
+        storeVersion == other.storeVersion;
   }
 
   @override
@@ -252,7 +276,8 @@ class ConfigDataStruct extends FFFirebaseStruct {
         policyUrl,
         promotionDetailImage,
         storeAndroidLink,
-        storeIosLink
+        storeIosLink,
+        storeVersion
       ]);
 }
 
@@ -264,6 +289,7 @@ ConfigDataStruct createConfigDataStruct({
   String? promotionDetailImage,
   String? storeAndroidLink,
   String? storeIosLink,
+  int? storeVersion,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -277,6 +303,7 @@ ConfigDataStruct createConfigDataStruct({
       promotionDetailImage: promotionDetailImage,
       storeAndroidLink: storeAndroidLink,
       storeIosLink: storeIosLink,
+      storeVersion: storeVersion,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
