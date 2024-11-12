@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "111745984502",
+    "project_id": "asset-management-ji0msv",
+    "storage_bucket": "asset-management-ji0msv.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111745984502:android:5ab76c06bca7fc7703c9d7",
+        "android_client_info": {
+          "package_name": "com.silver.assetmanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA547rHMEYs_lrtVSeDaFRBJgfasUruHxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
