@@ -293,14 +293,13 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+              ? Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/19962856_6198974.svg',
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 )
