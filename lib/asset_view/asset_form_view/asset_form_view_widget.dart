@@ -566,7 +566,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
+                                        RegExp('[a-zA-Z0-9]'))
                                   ],
                                 ),
                               ),
@@ -1063,7 +1063,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             serialNumber:
                                                 _model.textController2.text,
                                             purchaseDate: _model.purchaseDate,
-                                            price: double.tryParse(
+                                            price: int.tryParse(
                                                 _model.textController3.text),
                                           ));
                                           await showDialog(
@@ -1136,7 +1136,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             serialNumber:
                                                 _model.textController2.text,
                                             purchaseDate: _model.purchaseDate,
-                                            price: double.tryParse(
+                                            price: int.tryParse(
                                                 _model.textController3.text),
                                           ));
                                           await showDialog(
