@@ -74,7 +74,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 64.0, 0.0, 32.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 64.0, 0.0, 16.0),
                   child: wrapWithModel(
                     model: _model.backButtonViewModel,
                     updateCallback: () => safeSetState(() {}),
