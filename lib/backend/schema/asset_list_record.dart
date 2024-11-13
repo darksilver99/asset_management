@@ -61,11 +61,6 @@ class AssetListRecord extends FirestoreRecord {
   DocumentReference? get lastRepairRef => _lastRepairRef;
   bool hasLastRepairRef() => _lastRepairRef != null;
 
-  // "price" field.
-  double? _price;
-  double get price => _price ?? 0.0;
-  bool hasPrice() => _price != null;
-
   // "last_location_ref" field.
   DocumentReference? _lastLocationRef;
   DocumentReference? get lastLocationRef => _lastLocationRef;
@@ -81,6 +76,11 @@ class AssetListRecord extends FirestoreRecord {
   String get image => _image ?? '';
   bool hasImage() => _image != null;
 
+  // "price" field.
+  int? _price;
+  int get price => _price ?? 0;
+  bool hasPrice() => _price != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -93,10 +93,10 @@ class AssetListRecord extends FirestoreRecord {
     _updateDate = snapshotData['update_date'] as DateTime?;
     _lastCheckRef = snapshotData['last_check_ref'] as DocumentReference?;
     _lastRepairRef = snapshotData['last_repair_ref'] as DocumentReference?;
-    _price = castToType<double>(snapshotData['price']);
     _lastLocationRef = snapshotData['last_location_ref'] as DocumentReference?;
     _status = snapshotData['status'] as String?;
     _image = snapshotData['image'] as String?;
+    _price = castToType<int>(snapshotData['price']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -148,10 +148,10 @@ Map<String, dynamic> createAssetListRecordData({
   DateTime? updateDate,
   DocumentReference? lastCheckRef,
   DocumentReference? lastRepairRef,
-  double? price,
   DocumentReference? lastLocationRef,
   String? status,
   String? image,
+  int? price,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -164,10 +164,10 @@ Map<String, dynamic> createAssetListRecordData({
       'update_date': updateDate,
       'last_check_ref': lastCheckRef,
       'last_repair_ref': lastRepairRef,
-      'price': price,
       'last_location_ref': lastLocationRef,
       'status': status,
       'image': image,
+      'price': price,
     }.withoutNulls,
   );
 
@@ -188,10 +188,10 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e1?.updateDate == e2?.updateDate &&
         e1?.lastCheckRef == e2?.lastCheckRef &&
         e1?.lastRepairRef == e2?.lastRepairRef &&
-        e1?.price == e2?.price &&
         e1?.lastLocationRef == e2?.lastLocationRef &&
         e1?.status == e2?.status &&
-        e1?.image == e2?.image;
+        e1?.image == e2?.image &&
+        e1?.price == e2?.price;
   }
 
   @override
@@ -205,10 +205,10 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e?.updateDate,
         e?.lastCheckRef,
         e?.lastRepairRef,
-        e?.price,
         e?.lastLocationRef,
         e?.status,
-        e?.image
+        e?.image,
+        e?.price
       ]);
 
   @override
