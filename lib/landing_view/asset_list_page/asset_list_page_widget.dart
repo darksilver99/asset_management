@@ -263,122 +263,148 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                     return Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      child: Material(
-                        color: Colors.transparent,
-                        elevation: 3.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            useSafeArea: true,
+                            context: context,
+                            builder: (context) {
+                              return WebViewAware(
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: AssetFormViewWidget(
+                                    assetDocument: listViewAssetListRecord,
+                                  ),
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+                        },
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 3.0,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).alternate,
-                              width: 1.0,
-                            ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Row(
+                          child: Container(
+                            width: double.infinity,
+                            height: 100.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).alternate,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            listViewAssetListRecord.subject,
+                                            maxLines: 1,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Kanit',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: functions.getColorStatus(
+                                                listViewAssetListRecord.status),
+                                            borderRadius:
+                                                BorderRadius.circular(100.0),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 4.0, 12.0, 4.0),
+                                            child: Text(
+                                              listViewAssetListRecord.status,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Kanit',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          listViewAssetListRecord.subject,
+                                          'ใช้ที่แผนกไอที',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Kanit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'วันที่ซื้อ 22/22/2222',
+                                          textAlign: TextAlign.end,
                                           maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Kanit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14.0,
                                                 letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w300,
                                               ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: functions.getColorStatus(
-                                              listViewAssetListRecord.status),
-                                          borderRadius:
-                                              BorderRadius.circular(100.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 4.0, 12.0, 4.0),
-                                          child: Text(
-                                            listViewAssetListRecord.status,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Kanit',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'ใช้ที่แผนกไอที',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Kanit',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'วันที่ซื้อ 22/22/2222',
-                                        textAlign: TextAlign.end,
-                                        maxLines: 1,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Kanit',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
