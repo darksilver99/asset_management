@@ -1,11 +1,15 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,41 +51,70 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            enableDrag: false,
-            useSafeArea: true,
-            context: context,
-            builder: (context) {
-              return WebViewAware(
-                child: Padding(
-                  padding: MediaQuery.viewInsetsOf(context),
-                  child: AssetFormViewWidget(),
-                ),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton.extended(
+          onPressed: () async {
+            _model.totalAsset = await queryAssetListRecordCount(
+              parent: FFAppState().customerData.customerRef,
+            );
+            if (_model.totalAsset! >= FFAppState().customerData.maxAssets) {
+              await showDialog(
+                context: context,
+                builder: (dialogContext) {
+                  return Dialog(
+                    elevation: 0,
+                    insetPadding: EdgeInsets.zero,
+                    backgroundColor: Colors.transparent,
+                    alignment: AlignmentDirectional(0.0, 0.0)
+                        .resolve(Directionality.of(context)),
+                    child: WebViewAware(
+                      child: InfoCustomViewWidget(
+                        title:
+                            'บัญชีของท่านกำหนดอุปกรณ์ไม่เกิน ${FFAppState().customerData.maxAssets.toString()} ชิ้น',
+                        detail:
+                            'หากต้องการเพิ่มจำนวนอุปกรณ์ กรุณาตรวจสอบได้ที่เมนู \"ต่ออายุการใช้งาน\"',
+                        status: 'warning',
+                      ),
+                    ),
+                  );
+                },
               );
-            },
-          ).then((value) => safeSetState(() => _model.isUpdate = value));
+            } else {
+              await showModalBottomSheet(
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                enableDrag: false,
+                useSafeArea: true,
+                context: context,
+                builder: (context) {
+                  return WebViewAware(
+                    child: Padding(
+                      padding: MediaQuery.viewInsetsOf(context),
+                      child: AssetFormViewWidget(),
+                    ),
+                  );
+                },
+              ).then((value) => safeSetState(() => _model.isUpdate = value));
+            }
 
-          safeSetState(() {});
-        },
-        backgroundColor: FlutterFlowTheme.of(context).primary,
-        icon: Icon(
-          Icons.add_sharp,
-          size: 18.0,
-        ),
-        elevation: 8.0,
-        label: Text(
-          'เพิ่มอุปกรณ์',
-          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                fontFamily: 'Kanit',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 14.0,
-                letterSpacing: 0.0,
-                fontWeight: FontWeight.normal,
-              ),
+            safeSetState(() {});
+          },
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          icon: Icon(
+            Icons.add_sharp,
+            size: 18.0,
+          ),
+          elevation: 8.0,
+          label: Text(
+            'เพิ่มอุปกรณ์',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Kanit',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.normal,
+                ),
+          ),
         ),
       ),
       body: SafeArea(
@@ -108,14 +141,18 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                       children: [
                         FlutterFlowChoiceChips(
                           options: [
-                            ChipData('ใช้งานอยู่'),
                             ChipData('ว่าง'),
+                            ChipData('ใช้งานอยู่'),
                             ChipData('ส่งซ่อม'),
                             ChipData('พังแล้ว'),
                             ChipData('ทั้งหมด')
                           ],
-                          onChanged: (val) => safeSetState(
-                              () => _model.choiceChipsValue = val?.firstOrNull),
+                          onChanged: (val) async {
+                            safeSetState(() =>
+                                _model.choiceChipsValue = val?.firstOrNull);
+                            _model.selectedStatus = _model.choiceChipsValue!;
+                            safeSetState(() {});
+                          },
                           selectedChipStyle: ChipStyle(
                             backgroundColor:
                                 FlutterFlowTheme.of(context).primary,
@@ -131,7 +168,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                             iconColor: FlutterFlowTheme.of(context).info,
                             iconSize: 16.0,
                             labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 4.0, 8.0, 4.0),
+                                16.0, 4.0, 16.0, 4.0),
                             elevation: 3.0,
                             borderRadius: BorderRadius.circular(100.0),
                           ),
@@ -152,7 +189,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                                 FlutterFlowTheme.of(context).secondaryText,
                             iconSize: 16.0,
                             labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 4.0, 8.0, 4.0),
+                                16.0, 4.0, 16.0, 4.0),
                             elevation: 0.0,
                             borderRadius: BorderRadius.circular(100.0),
                           ),
@@ -178,6 +215,10 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                 pagingController: _model.setListViewController(
                     AssetListRecord.collection(
                             FFAppState().customerData.customerRef)
+                        .where(
+                          'status',
+                          isEqualTo: _model.selectedStatus,
+                        )
                         .orderBy('purchase_date', descending: true),
                     parent: FFAppState().customerData.customerRef),
                 padding: EdgeInsets.fromLTRB(
