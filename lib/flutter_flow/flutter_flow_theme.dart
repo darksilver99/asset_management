@@ -181,7 +181,7 @@ class ThemeTypography extends Typography {
   TextStyle get displaySmall => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get headlineLargeFamily => 'Kanit';
@@ -195,77 +195,77 @@ class ThemeTypography extends Typography {
   TextStyle get headlineMedium => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get headlineSmallFamily => 'Kanit';
   TextStyle get headlineSmall => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get titleLargeFamily => 'Kanit';
   TextStyle get titleLarge => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get titleMediumFamily => 'Kanit';
   TextStyle get titleMedium => GoogleFonts.getFont(
         'Kanit',
         color: theme.info,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get titleSmallFamily => 'Kanit';
   TextStyle get titleSmall => GoogleFonts.getFont(
         'Kanit',
         color: theme.info,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get labelLargeFamily => 'Kanit';
   TextStyle get labelLarge => GoogleFonts.getFont(
         'Kanit',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get labelMediumFamily => 'Kanit';
   TextStyle get labelMedium => GoogleFonts.getFont(
         'Kanit',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get labelSmallFamily => 'Kanit';
   TextStyle get labelSmall => GoogleFonts.getFont(
         'Kanit',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get bodyLargeFamily => 'Kanit';
   TextStyle get bodyLarge => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get bodyMediumFamily => 'Kanit';
   TextStyle get bodyMedium => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
   String get bodySmallFamily => 'Kanit';
   TextStyle get bodySmall => GoogleFonts.getFont(
         'Kanit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.normal,
         fontSize: 22.0,
       );
 }
