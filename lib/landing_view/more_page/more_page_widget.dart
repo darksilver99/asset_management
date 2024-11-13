@@ -81,7 +81,7 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 16.0, 0.0, 16.0),
+                                  0.0, 42.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -149,6 +149,7 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Kanit',
+                                              fontSize: 18.0,
                                               letterSpacing: 0.0,
                                             ),
                                       ),
@@ -185,7 +186,9 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                             fontFamily: 'Kanit',
                                             color: FlutterFlowTheme.of(context)
                                                 .error,
+                                            fontSize: 14.0,
                                             letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w300,
                                             decoration:
                                                 TextDecoration.underline,
                                           ),
@@ -475,6 +478,7 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Kanit',
+                                              fontSize: 20.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -629,6 +633,7 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                             ),
                                       ),
