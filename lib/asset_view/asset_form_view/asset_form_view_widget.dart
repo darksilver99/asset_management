@@ -951,149 +951,170 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             .validate()) {
                                       return;
                                     }
-                                    if (_model.isEdit) {
-                                      if (_model.tmpImageList.isNotEmpty) {
-                                        _model.urlList2 =
-                                            await actions.uploadImageToFirebase(
-                                          '${currentUserUid}/asset',
-                                          _model.tmpImageList.toList(),
-                                          false,
-                                        );
-                                        _model.image = _model.urlList2?.first;
-                                      }
-                                      if (_model.image != null &&
-                                          _model.image != '') {
-                                        await _model.assetResult!.reference
-                                            .update(createAssetListRecordData(
-                                          updateDate: getCurrentTimestamp,
-                                          subject: _model.textController1.text,
-                                          detail: _model.textController3.text,
-                                          image: _model.image,
-                                          serialNumber:
-                                              _model.textController2.text,
-                                          purchaseDate: _model.purchaseDate,
-                                        ));
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: WebViewAware(
-                                                child: InfoCustomViewWidget(
-                                                  title:
-                                                      'แก้ไขข้อมูลเรียบร้อยแล้ว',
-                                                  status: 'success',
+                                    if (_model.purchaseDate != null) {
+                                      if (_model.isEdit) {
+                                        if (_model.tmpImageList.isNotEmpty) {
+                                          _model.urlList2 = await actions
+                                              .uploadImageToFirebase(
+                                            '${currentUserUid}/asset',
+                                            _model.tmpImageList.toList(),
+                                            false,
+                                          );
+                                          _model.image = _model.urlList2?.first;
+                                        }
+                                        if (_model.image != null &&
+                                            _model.image != '') {
+                                          await _model.assetResult!.reference
+                                              .update(createAssetListRecordData(
+                                            updateDate: getCurrentTimestamp,
+                                            subject:
+                                                _model.textController1.text,
+                                            detail: _model.textController3.text,
+                                            image: _model.image,
+                                            serialNumber:
+                                                _model.textController2.text,
+                                            purchaseDate: _model.purchaseDate,
+                                          ));
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: WebViewAware(
+                                                  child: InfoCustomViewWidget(
+                                                    title:
+                                                        'แก้ไขข้อมูลเรียบร้อยแล้ว',
+                                                    status: 'success',
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                              );
+                                            },
+                                          );
 
-                                        Navigator.pop(context, 'update');
-                                      } else {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: WebViewAware(
-                                                child: InfoCustomViewWidget(
-                                                  title: 'กรุณาแนบรูป',
-                                                  status: 'error',
+                                          Navigator.pop(context, 'update');
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: WebViewAware(
+                                                  child: InfoCustomViewWidget(
+                                                    title: 'กรุณาแนบรูป',
+                                                    status: 'error',
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                              );
+                                            },
+                                          );
+                                        }
+                                      } else {
+                                        if (_model.tmpImageList.isNotEmpty) {
+                                          _model.urlList = await actions
+                                              .uploadImageToFirebase(
+                                            '${currentUserUid}/asset',
+                                            _model.tmpImageList.toList(),
+                                            false,
+                                          );
+
+                                          await AssetListRecord.createDoc(
+                                                  FFAppState()
+                                                      .customerData
+                                                      .customerRef!)
+                                              .set(createAssetListRecordData(
+                                            createDate: getCurrentTimestamp,
+                                            status: 'ว่าง',
+                                            subject:
+                                                _model.textController1.text,
+                                            detail: _model.textController3.text,
+                                            image: _model.urlList?.first,
+                                            serialNumber:
+                                                _model.textController2.text,
+                                            purchaseDate: _model.purchaseDate,
+                                          ));
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: WebViewAware(
+                                                  child: InfoCustomViewWidget(
+                                                    title:
+                                                        'เพิ่มข้อมูลเรียบร้อยแล้ว',
+                                                    status: 'success',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          Navigator.pop(context, 'update');
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: WebViewAware(
+                                                  child: InfoCustomViewWidget(
+                                                    title: 'กรุณาแนบรูป',
+                                                    status: 'error',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
                                       }
                                     } else {
-                                      if (_model.tmpImageList.isNotEmpty) {
-                                        _model.urlList =
-                                            await actions.uploadImageToFirebase(
-                                          '${currentUserUid}/asset',
-                                          _model.tmpImageList.toList(),
-                                          false,
-                                        );
-
-                                        await AssetListRecord.createDoc(
-                                                FFAppState()
-                                                    .customerData
-                                                    .customerRef!)
-                                            .set(createAssetListRecordData(
-                                          createDate: getCurrentTimestamp,
-                                          status: '1',
-                                          subject: _model.textController1.text,
-                                          detail: _model.textController3.text,
-                                          image: _model.urlList?.first,
-                                          serialNumber:
-                                              _model.textController2.text,
-                                          purchaseDate: _model.purchaseDate,
-                                        ));
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: WebViewAware(
-                                                child: InfoCustomViewWidget(
-                                                  title:
-                                                      'เพิ่มข้อมูลเรียบร้อยแล้ว',
-                                                  status: 'success',
-                                                ),
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            child: WebViewAware(
+                                              child: InfoCustomViewWidget(
+                                                title: 'เลือกวันที่ซื้ออุปกรณ์',
+                                                status: 'error',
                                               ),
-                                            );
-                                          },
-                                        );
-
-                                        Navigator.pop(context, 'update');
-                                      } else {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: WebViewAware(
-                                                child: InfoCustomViewWidget(
-                                                  title: 'กรุณาแนบรูป',
-                                                  status: 'error',
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }
+                                            ),
+                                          );
+                                        },
+                                      );
                                     }
 
                                     safeSetState(() {});
