@@ -121,6 +121,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'PromotionPage',
           path: '/promotionPage',
           builder: (context, params) => PromotionPageWidget(),
+        ),
+        FFRoute(
+          name: 'AssetListPage',
+          path: '/assetListPage',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'AssetListPage')
+              : AssetListPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

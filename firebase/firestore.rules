@@ -54,5 +54,41 @@ service cloud.firestore {
       allow read: if true;
     }
 
+
+    match /customer_list/{parent}/check_list/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/check_list/{document} {
+      allow read: if true;
+    }
+
+
+    match /customer_list/{parent}/repair_list/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/repair_list/{document} {
+      allow read: if true;
+    }
+
+
+    match /customer_list/{parent}/location_list/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/location_list/{document} {
+      allow read: if true;
+    }
+
   }
 }

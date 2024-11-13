@@ -125,6 +125,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'HomePage': HomePageWidget(),
+      'AssetListPage': AssetListPageWidget(),
       'MorePage': MorePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -150,6 +151,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 32.0,
             ),
             label: 'หน้าแรก',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.dolly,
+              size: 32.0,
+            ),
+            label: 'อุปกรณ์',
             tooltip: '',
           ),
           BottomNavigationBarItem(
