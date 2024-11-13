@@ -90,5 +90,17 @@ service cloud.firestore {
       allow read: if true;
     }
 
+
+    match /customer_list/{parent}/transaction_list/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/transaction_list/{document} {
+      allow read: if true;
+    }
+
   }
 }

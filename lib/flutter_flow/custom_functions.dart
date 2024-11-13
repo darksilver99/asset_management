@@ -95,3 +95,11 @@ Color getColorStatus(String status) {
       return const Color(0xFF000000); // สีดำ (สถานะไม่รู้จัก)
   }
 }
+
+int stringToInt(String? str) {
+  if (str == null) {
+    return 0;
+  }
+
+  return int.parse(str);
+}
