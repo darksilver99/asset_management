@@ -14,6 +14,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -64,9 +65,9 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
               offset: _model.textController2!.text.length);
         });
         safeSetState(() {
-          _model.textController3?.text = _model.assetResult!.detail;
-          _model.textController3?.selection = TextSelection.collapsed(
-              offset: _model.textController3!.text.length);
+          _model.textController4?.text = _model.assetResult!.detail;
+          _model.textController4?.selection = TextSelection.collapsed(
+              offset: _model.textController4!.text.length);
         });
         _model.image = _model.assetResult?.image;
         _model.purchaseDate = _model.assetResult?.purchaseDate;
@@ -83,6 +84,9 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
 
     _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
+
+    _model.textController4 ??= TextEditingController();
+    _model.textFieldFocusNode4 ??= FocusNode();
   }
 
   @override
@@ -148,9 +152,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              _model.isEdit != null
-                                  ? 'แก้ไขข้อมูล'
-                                  : 'เพิ่มข้อมูล',
+                              _model.isEdit ? 'แก้ไขข้อมูล' : 'เพิ่มข้อมูล',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -479,6 +481,88 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model.textController2Validator
                                       .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.textController3,
+                                  focusNode: _model.textFieldFocusNode3,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: false,
+                                    labelText: 'ราคา',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Kanit',
+                                          fontSize: 22.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Kanit',
+                                          fontSize: 22.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Kanit',
+                                        fontSize: 22.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  keyboardType: TextInputType.number,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model.textController3Validator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9]'))
+                                  ],
                                 ),
                               ),
                             ),
@@ -868,8 +952,8 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                               child: Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController3,
-                                  focusNode: _model.textFieldFocusNode3,
+                                  controller: _model.textController4,
+                                  focusNode: _model.textFieldFocusNode4,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -935,7 +1019,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                   maxLines: 3,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController3Validator
+                                  validator: _model.textController4Validator
                                       .asValidator(context),
                                 ),
                               ),
@@ -969,11 +1053,13 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             updateDate: getCurrentTimestamp,
                                             subject:
                                                 _model.textController1.text,
-                                            detail: _model.textController3.text,
+                                            detail: _model.textController4.text,
                                             image: _model.image,
                                             serialNumber:
                                                 _model.textController2.text,
                                             purchaseDate: _model.purchaseDate,
+                                            price: double.tryParse(
+                                                _model.textController3.text),
                                           ));
                                           await showDialog(
                                             context: context,
@@ -1040,11 +1126,13 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             status: 'ว่าง',
                                             subject:
                                                 _model.textController1.text,
-                                            detail: _model.textController3.text,
+                                            detail: _model.textController4.text,
                                             image: _model.urlList?.first,
                                             serialNumber:
                                                 _model.textController2.text,
                                             purchaseDate: _model.purchaseDate,
+                                            price: double.tryParse(
+                                                _model.textController3.text),
                                           ));
                                           await showDialog(
                                             context: context,
@@ -1119,7 +1207,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
 
                                     safeSetState(() {});
                                   },
-                                  text: 'ยืนยัน',
+                                  text: 'บันทึกข้อมูล',
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 54.0,

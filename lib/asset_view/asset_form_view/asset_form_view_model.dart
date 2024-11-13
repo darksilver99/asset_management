@@ -15,6 +15,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -71,6 +72,18 @@ class AssetFormViewModel extends FlutterFlowModel<AssetFormViewWidget> {
     return null;
   }
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode3;
+  TextEditingController? textController3;
+  String? Function(BuildContext, String?)? textController3Validator;
+  String? _textController3Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
+
   // Stores action output result for [Action Block - confirmBlock] action in Icon widget.
   bool? isConfirm2;
   // Stores action output result for [Action Block - confirmBlock] action in Icon widget.
@@ -80,9 +93,9 @@ class AssetFormViewModel extends FlutterFlowModel<AssetFormViewWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
+  FocusNode? textFieldFocusNode4;
+  TextEditingController? textController4;
+  String? Function(BuildContext, String?)? textController4Validator;
   // Stores action output result for [Custom Action - uploadImageToFirebase] action in Button widget.
   List<String>? urlList2;
   // Stores action output result for [Custom Action - uploadImageToFirebase] action in Button widget.
@@ -92,6 +105,7 @@ class AssetFormViewModel extends FlutterFlowModel<AssetFormViewWidget> {
   void initState(BuildContext context) {
     textController1Validator = _textController1Validator;
     textController2Validator = _textController2Validator;
+    textController3Validator = _textController3Validator;
   }
 
   @override
@@ -104,5 +118,8 @@ class AssetFormViewModel extends FlutterFlowModel<AssetFormViewWidget> {
 
     textFieldFocusNode3?.dispose();
     textController3?.dispose();
+
+    textFieldFocusNode4?.dispose();
+    textController4?.dispose();
   }
 }
