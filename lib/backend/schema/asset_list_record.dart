@@ -21,11 +21,6 @@ class AssetListRecord extends FirestoreRecord {
   DateTime? get createDate => _createDate;
   bool hasCreateDate() => _createDate != null;
 
-  // "status" field.
-  int? _status;
-  int get status => _status ?? 0;
-  bool hasStatus() => _status != null;
-
   // "subject" field.
   String? _subject;
   String get subject => _subject ?? '';
@@ -36,13 +31,72 @@ class AssetListRecord extends FirestoreRecord {
   String get detail => _detail ?? '';
   bool hasDetail() => _detail != null;
 
+  // "location" field.
+  String? _location;
+  String get location => _location ?? '';
+  bool hasLocation() => _location != null;
+
+  // "purchase_date" field.
+  DateTime? _purchaseDate;
+  DateTime? get purchaseDate => _purchaseDate;
+  bool hasPurchaseDate() => _purchaseDate != null;
+
+  // "serial_number" field.
+  String? _serialNumber;
+  String get serialNumber => _serialNumber ?? '';
+  bool hasSerialNumber() => _serialNumber != null;
+
+  // "update_date" field.
+  DateTime? _updateDate;
+  DateTime? get updateDate => _updateDate;
+  bool hasUpdateDate() => _updateDate != null;
+
+  // "last_check_ref" field.
+  DocumentReference? _lastCheckRef;
+  DocumentReference? get lastCheckRef => _lastCheckRef;
+  bool hasLastCheckRef() => _lastCheckRef != null;
+
+  // "last_repair_ref" field.
+  DocumentReference? _lastRepairRef;
+  DocumentReference? get lastRepairRef => _lastRepairRef;
+  bool hasLastRepairRef() => _lastRepairRef != null;
+
+  // "price" field.
+  double? _price;
+  double get price => _price ?? 0.0;
+  bool hasPrice() => _price != null;
+
+  // "last_location_ref" field.
+  DocumentReference? _lastLocationRef;
+  DocumentReference? get lastLocationRef => _lastLocationRef;
+  bool hasLastLocationRef() => _lastLocationRef != null;
+
+  // "status" field.
+  String? _status;
+  String get status => _status ?? '';
+  bool hasStatus() => _status != null;
+
+  // "image" field.
+  String? _image;
+  String get image => _image ?? '';
+  bool hasImage() => _image != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
     _createDate = snapshotData['create_date'] as DateTime?;
-    _status = castToType<int>(snapshotData['status']);
     _subject = snapshotData['subject'] as String?;
     _detail = snapshotData['detail'] as String?;
+    _location = snapshotData['location'] as String?;
+    _purchaseDate = snapshotData['purchase_date'] as DateTime?;
+    _serialNumber = snapshotData['serial_number'] as String?;
+    _updateDate = snapshotData['update_date'] as DateTime?;
+    _lastCheckRef = snapshotData['last_check_ref'] as DocumentReference?;
+    _lastRepairRef = snapshotData['last_repair_ref'] as DocumentReference?;
+    _price = castToType<double>(snapshotData['price']);
+    _lastLocationRef = snapshotData['last_location_ref'] as DocumentReference?;
+    _status = snapshotData['status'] as String?;
+    _image = snapshotData['image'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -86,16 +140,34 @@ class AssetListRecord extends FirestoreRecord {
 
 Map<String, dynamic> createAssetListRecordData({
   DateTime? createDate,
-  int? status,
   String? subject,
   String? detail,
+  String? location,
+  DateTime? purchaseDate,
+  String? serialNumber,
+  DateTime? updateDate,
+  DocumentReference? lastCheckRef,
+  DocumentReference? lastRepairRef,
+  double? price,
+  DocumentReference? lastLocationRef,
+  String? status,
+  String? image,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'create_date': createDate,
-      'status': status,
       'subject': subject,
       'detail': detail,
+      'location': location,
+      'purchase_date': purchaseDate,
+      'serial_number': serialNumber,
+      'update_date': updateDate,
+      'last_check_ref': lastCheckRef,
+      'last_repair_ref': lastRepairRef,
+      'price': price,
+      'last_location_ref': lastLocationRef,
+      'status': status,
+      'image': image,
     }.withoutNulls,
   );
 
@@ -108,14 +180,36 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
   @override
   bool equals(AssetListRecord? e1, AssetListRecord? e2) {
     return e1?.createDate == e2?.createDate &&
-        e1?.status == e2?.status &&
         e1?.subject == e2?.subject &&
-        e1?.detail == e2?.detail;
+        e1?.detail == e2?.detail &&
+        e1?.location == e2?.location &&
+        e1?.purchaseDate == e2?.purchaseDate &&
+        e1?.serialNumber == e2?.serialNumber &&
+        e1?.updateDate == e2?.updateDate &&
+        e1?.lastCheckRef == e2?.lastCheckRef &&
+        e1?.lastRepairRef == e2?.lastRepairRef &&
+        e1?.price == e2?.price &&
+        e1?.lastLocationRef == e2?.lastLocationRef &&
+        e1?.status == e2?.status &&
+        e1?.image == e2?.image;
   }
 
   @override
-  int hash(AssetListRecord? e) => const ListEquality()
-      .hash([e?.createDate, e?.status, e?.subject, e?.detail]);
+  int hash(AssetListRecord? e) => const ListEquality().hash([
+        e?.createDate,
+        e?.subject,
+        e?.detail,
+        e?.location,
+        e?.purchaseDate,
+        e?.serialNumber,
+        e?.updateDate,
+        e?.lastCheckRef,
+        e?.lastRepairRef,
+        e?.price,
+        e?.lastLocationRef,
+        e?.status,
+        e?.image
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is AssetListRecord;

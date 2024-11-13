@@ -7,3 +7,5 @@ export '/authen_view/register_page/register_page_widget.dart'
 export '/landing_view/more_page/more_page_widget.dart' show MorePageWidget;
 export '/payment_view/promotion_page/promotion_page_widget.dart'
     show PromotionPageWidget;
+export '/landing_view/asset_list_page/asset_list_page_widget.dart'
+    show AssetListPageWidget;
