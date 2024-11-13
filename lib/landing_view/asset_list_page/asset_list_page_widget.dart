@@ -385,7 +385,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'วันที่ซื้อ 22/22/2222',
+                                          'วันที่ซื้อ ${functions.dateTh(listViewAssetListRecord.purchaseDate)}',
                                           textAlign: TextAlign.end,
                                           maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
