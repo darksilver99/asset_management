@@ -196,10 +196,11 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                           chipSpacing: 8.0,
                           rowSpacing: 8.0,
                           multiselect: false,
+                          initialized: _model.choiceChipsValue != null,
                           alignment: WrapAlignment.start,
                           controller: _model.choiceChipsValueController ??=
                               FormFieldController<List<String>>(
-                            [],
+                            [_model.selectedStatus],
                           ),
                           wrapped: true,
                         ),
