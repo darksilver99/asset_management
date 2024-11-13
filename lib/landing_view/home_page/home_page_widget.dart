@@ -56,11 +56,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        'assets/images/asset_17373887.png',
+                        height: 80.0,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
@@ -70,7 +77,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           Expanded(
                             child: Text(
                               'ระบบจัดการอุปกรณ์ (AMS)',
-                              textAlign: TextAlign.start,
+                              textAlign: TextAlign.center,
                               maxLines: 1,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -84,6 +91,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ],
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
