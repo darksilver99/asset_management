@@ -84,13 +84,15 @@ List<String> getYearFromCurrent(int len) {
 Color getColorStatus(String status) {
   switch (status) {
     case "ใช้งานอยู่":
-      return const Color(0xFF4CAF50); // สีเขียว (สำหรับสถานะ "ใช้งาน")
+      return const Color(0xFF4CAF50); // สีเขียว (สำหรับสถานะ "ใช้งานอยู่")
     case "ส่งซ่อม":
       return const Color(0xFFFF9800); // สีส้ม (สำหรับสถานะ "ส่งซ่อม")
     case "ว่าง":
       return const Color(0xFF2196F3); // สีน้ำเงิน (สำหรับสถานะ "ว่าง")
-    case "พังแล้ว":
-      return const Color(0xFFF44336); // สีแดง (สำหรับสถานะ "พังแล้ว")
+    case "ใช้ไม่ได้แล้ว":
+      return const Color(0xFFF44336); // สีแดง (สำหรับสถานะ "ใช้ไม่ได้แล้ว")
+    case "หาย":
+      return const Color(0xFFF44336); // สีแดง (สำหรับสถานะ "หาย")
     default:
       return const Color(0xFF000000); // สีดำ (สถานะไม่รู้จัก)
   }

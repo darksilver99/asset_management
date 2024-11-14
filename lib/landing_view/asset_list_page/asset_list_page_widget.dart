@@ -146,7 +146,8 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                               ChipData('ว่าง'),
                               ChipData('ใช้งานอยู่'),
                               ChipData('ส่งซ่อม'),
-                              ChipData('พังแล้ว'),
+                              ChipData('ใช้ไม่ได้แล้ว'),
+                              ChipData('หาย'),
                               ChipData('ทั้งหมด')
                             ],
                             onChanged: (val) async {
