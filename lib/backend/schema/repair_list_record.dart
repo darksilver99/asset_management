@@ -36,6 +36,11 @@ class RepairListRecord extends FirestoreRecord {
   double get price => _price ?? 0.0;
   bool hasPrice() => _price != null;
 
+  // "finish_date" field.
+  DateTime? _finishDate;
+  DateTime? get finishDate => _finishDate;
+  bool hasFinishDate() => _finishDate != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -43,6 +48,7 @@ class RepairListRecord extends FirestoreRecord {
     _remark = snapshotData['remark'] as String?;
     _assetRef = snapshotData['asset_ref'] as DocumentReference?;
     _price = castToType<double>(snapshotData['price']);
+    _finishDate = snapshotData['finish_date'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -89,6 +95,7 @@ Map<String, dynamic> createRepairListRecordData({
   String? remark,
   DocumentReference? assetRef,
   double? price,
+  DateTime? finishDate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -96,6 +103,7 @@ Map<String, dynamic> createRepairListRecordData({
       'remark': remark,
       'asset_ref': assetRef,
       'price': price,
+      'finish_date': finishDate,
     }.withoutNulls,
   );
 
@@ -110,12 +118,13 @@ class RepairListRecordDocumentEquality implements Equality<RepairListRecord> {
     return e1?.createDate == e2?.createDate &&
         e1?.remark == e2?.remark &&
         e1?.assetRef == e2?.assetRef &&
-        e1?.price == e2?.price;
+        e1?.price == e2?.price &&
+        e1?.finishDate == e2?.finishDate;
   }
 
   @override
   int hash(RepairListRecord? e) => const ListEquality()
-      .hash([e?.createDate, e?.remark, e?.assetRef, e?.price]);
+      .hash([e?.createDate, e?.remark, e?.assetRef, e?.price, e?.finishDate]);
 
   @override
   bool isValidKey(Object? o) => o is RepairListRecord;
