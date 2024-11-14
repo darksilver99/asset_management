@@ -144,12 +144,12 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                           0.0, 0.0, 8.0, 0.0),
                                       child: Text(
                                         currentUserEmail,
-                                        maxLines: 2,
+                                        maxLines: 1,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Kanit',
-                                              fontSize: 18.0,
+                                              fontSize: 12.0,
                                               letterSpacing: 0.0,
                                             ),
                                       ),
