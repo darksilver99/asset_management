@@ -56,7 +56,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 8.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -64,7 +64,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
                         'assets/images/asset_17373887.png',
-                        height: 80.0,
+                        height: 120.0,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -800,7 +800,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
             ]
                 .addToStart(SizedBox(height: 8.0))
-                .addToEnd(SizedBox(height: 180.0)),
+                .addToEnd(SizedBox(height: 64.0)),
           ),
         ),
       ),
