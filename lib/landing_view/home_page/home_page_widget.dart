@@ -64,9 +64,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
                         'assets/images/asset_17373887.png',
-                        height: 120.0,
+                        height: 100.0,
                         fit: BoxFit.cover,
                       ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'ระบบจัดการอุปกรณ์',
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Kanit',
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding:
@@ -76,15 +95,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              'ระบบจัดการอุปกรณ์ (AMS)',
+                              'Asset management system (AMS)',
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Kanit',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.normal,
                                   ),
                             ),
                           ),
