@@ -115,7 +115,10 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                             WidgetsToImage(
                               controller: controller,
                               child: Container(
-                                decoration: BoxDecoration(),
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.all(16.0),
                                   child: Column(
