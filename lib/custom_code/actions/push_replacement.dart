@@ -16,8 +16,26 @@ Future pushReplacement(
 ) async {
   // Add your function code here!
   if (path != null) {
-    context.pushReplacement('/$path');
+    context.pushReplacement(
+      '/$path',
+      extra: <String, dynamic>{
+        kTransitionInfoKey: const TransitionInfo(
+          hasTransition: true,
+          transitionType: PageTransitionType.fade,
+          duration: Duration(milliseconds: 0),
+        ),
+      },
+    );
   } else {
-    context.pushReplacement('/');
+    context.pushReplacement(
+      '/',
+      extra: <String, dynamic>{
+        kTransitionInfoKey: const TransitionInfo(
+          hasTransition: true,
+          transitionType: PageTransitionType.fade,
+          duration: Duration(milliseconds: 0),
+        ),
+      },
+    );
   }
 }
