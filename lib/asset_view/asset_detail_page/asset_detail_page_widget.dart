@@ -1,6 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
+import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -88,47 +89,81 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 4.0, 0.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    _model.isConfirm =
-                                        await action_blocks.confirmBlock(
-                                      context,
-                                      title: 'ต้องการลบรายการนี้?',
-                                      detail:
-                                          'หากลบแล้วจะไม่สามารถเรียกคืนข้อมูลได้ รวมถึงข้อมูลสถานะต่างๆ ของรายการนี้',
-                                    );
-                                    if (_model.isConfirm!) {
-                                      context.safePop();
-                                    }
+                              Builder(
+                                builder: (context) => Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 4.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      _model.isConfirm =
+                                          await action_blocks.confirmBlock(
+                                        context,
+                                        title: 'ต้องการลบรายการนี้?',
+                                        detail:
+                                            'หากลบแล้วจะไม่สามารถเรียกคืนข้อมูลได้ รวมถึงข้อมูลสถานะต่างๆ ของรายการนี้',
+                                      );
+                                      if (_model.isConfirm!) {
+                                        await _model.assetDocument!.reference
+                                            .delete();
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: WebViewAware(
+                                                child: GestureDetector(
+                                                  onTap: () => FocusScope.of(
+                                                          dialogContext)
+                                                      .unfocus(),
+                                                  child: InfoCustomViewWidget(
+                                                    title:
+                                                        'ลบข้อมูลเรียบร้อยแล้ว',
+                                                    status: 'success',
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
 
-                                    safeSetState(() {});
-                                  },
-                                  text: 'ลบ',
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.trashAlt,
-                                    size: 12.0,
-                                  ),
-                                  options: FFButtonOptions(
-                                    height: 24.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 12.0, 0.0),
-                                    iconAlignment: IconAlignment.start,
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).error,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Kanit',
-                                          color: Colors.white,
-                                          fontSize: 12.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    elevation: 0.0,
-                                    borderRadius: BorderRadius.circular(8.0),
+                                        context.safePop();
+                                      }
+
+                                      safeSetState(() {});
+                                    },
+                                    text: 'ลบ',
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.trashAlt,
+                                      size: 12.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      height: 24.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 0.0, 12.0, 0.0),
+                                      iconAlignment: IconAlignment.start,
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context).error,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Kanit',
+                                            color: Colors.white,
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
                                   ),
                                 ),
                               ),
