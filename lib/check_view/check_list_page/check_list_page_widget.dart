@@ -229,6 +229,7 @@ class _CheckListPageWidgetState extends State<CheckListPageWidget> {
                                                           .bodyMedium
                                                           .override(
                                                             fontFamily: 'Kanit',
+                                                            fontSize: 18.0,
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
@@ -250,7 +251,7 @@ class _CheckListPageWidgetState extends State<CheckListPageWidget> {
                                                             color: FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondaryText,
-                                                            fontSize: 16.0,
+                                                            fontSize: 14.0,
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
