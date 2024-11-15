@@ -295,7 +295,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                   assetRef: widget!.assetReference,
                                   checkerName: _model.textController2.text,
                                 ));
-                                _model.insertPath =
+                                _model.insertedCheck =
                                     CheckListRecord.getDocumentFromData(
                                         createCheckListRecordData(
                                           createDate: getCurrentTimestamp,
@@ -305,6 +305,11 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                               _model.textController2.text,
                                         ),
                                         checkListRecordReference);
+
+                                await widget!.assetReference!
+                                    .update(createAssetListRecordData(
+                                  lastCheckRef: _model.insertedCheck?.reference,
+                                ));
                                 _model.assetResult =
                                     await AssetListRecord.getDocumentOnce(
                                         widget!.assetReference!);
@@ -312,7 +317,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                   context,
                                   assetReference: widget!.assetReference,
                                   refPath: functions.getCheckPath(
-                                      _model.insertPath!.reference),
+                                      _model.insertedCheck!.reference),
                                   subject:
                                       'ทำการตรวจสอบ ${_model.assetResult?.subject}',
                                   remark: _model.textController1.text,

@@ -393,7 +393,11 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              'ใช้ที่แผนกไอที',
+                                              valueOrDefault<String>(
+                                                listViewAssetListRecord
+                                                    .location,
+                                                '-',
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
