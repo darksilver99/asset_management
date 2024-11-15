@@ -144,6 +144,7 @@ dependencies:
   package_info_plus: ^3.0.3
   skeleton_loader: ^2.0.0+4
   excel: ^4.0.0
+  widgets_to_image: ^0.0.2
 
 dependency_overrides:
   http: 1.2.2

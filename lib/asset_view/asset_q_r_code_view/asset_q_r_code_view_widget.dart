@@ -1,3 +1,6 @@
+import 'package:asset_management/custom_toon/custom_toon.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
+
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,6 +28,7 @@ class AssetQRCodeViewWidget extends StatefulWidget {
 
 class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
   late AssetQRCodeViewModel _model;
+  WidgetsToImageController controller = WidgetsToImageController();
 
   @override
   void setState(VoidCallback callback) {
@@ -108,63 +112,66 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(),
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 8.0, 8.0, 8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              valueOrDefault<String>(
-                                                widget!.assetDocument?.subject,
-                                                '-',
+                            WidgetsToImage(
+                              controller: controller,
+                              child: Container(
+                                decoration: BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 8.0, 8.0, 8.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                valueOrDefault<String>(
+                                                  widget!.assetDocument?.subject,
+                                                  '-',
+                                                ),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          fontSize: 24.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                               ),
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        fontSize: 24.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 32.0),
-                                      child: BarcodeWidget(
-                                        data: functions.getAssetPath(
-                                            widget!.assetDocument!.reference),
-                                        barcode: Barcode.qrCode(),
-                                        width: 250.0,
-                                        height: 250.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        backgroundColor: Colors.transparent,
-                                        errorBuilder: (_context, _error) =>
-                                            SizedBox(
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 32.0),
+                                        child: BarcodeWidget(
+                                          data: functions.getAssetPath(
+                                              widget!.assetDocument!.reference),
+                                          barcode: Barcode.qrCode(),
                                           width: 250.0,
                                           height: 250.0,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          backgroundColor: Colors.transparent,
+                                          errorBuilder: (_context, _error) =>
+                                              SizedBox(
+                                            width: 250.0,
+                                            height: 250.0,
+                                          ),
+                                          drawText: true,
                                         ),
-                                        drawText: true,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -174,7 +181,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   await actions.shareFile(
-                                    'path',
+                                    getSaveAndGetImagePath(controller),
                                   );
                                 },
                                 text: 'แชร์ QR Code',
