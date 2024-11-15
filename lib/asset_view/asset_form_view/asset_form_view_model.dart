@@ -100,6 +100,8 @@ class AssetFormViewModel extends FlutterFlowModel<AssetFormViewWidget> {
   List<String>? urlList2;
   // Stores action output result for [Custom Action - uploadImageToFirebase] action in Button widget.
   List<String>? urlList;
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  AssetListRecord? insertAsset;
 
   @override
   void initState(BuildContext context) {
