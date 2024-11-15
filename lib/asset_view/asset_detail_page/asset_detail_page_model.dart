@@ -1,4 +1,5 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
+import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';

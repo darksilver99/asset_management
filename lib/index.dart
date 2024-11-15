@@ -11,3 +11,5 @@ export '/landing_view/asset_list_page/asset_list_page_widget.dart'
     show AssetListPageWidget;
 export '/asset_view/asset_detail_page/asset_detail_page_widget.dart'
     show AssetDetailPageWidget;
+export '/check_view/check_list_page/check_list_page_widget.dart'
+    show CheckListPageWidget;

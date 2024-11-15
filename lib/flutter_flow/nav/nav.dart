@@ -142,6 +142,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'CheckListPage',
+          path: '/checkListPage',
+          asyncParams: {
+            'assetDocument': getDoc(
+                ['customer_list', 'asset_list'], AssetListRecord.fromSnapshot),
+          },
+          builder: (context, params) => CheckListPageWidget(
+            assetDocument: params.getParam(
+              'assetDocument',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -105,3 +105,11 @@ int stringToInt(String? str) {
 
   return int.parse(str);
 }
+
+DocumentReference? getAssetRef(String path) {
+  return FirebaseFirestore.instance.doc(path);
+}
+
+String getAssetPath(DocumentReference assetRef) {
+  return assetRef.path;
+}

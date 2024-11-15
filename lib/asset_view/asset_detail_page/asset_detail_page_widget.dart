@@ -1,4 +1,5 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
+import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
@@ -90,6 +91,61 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 4.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      useSafeArea: true,
+                                      context: context,
+                                      builder: (context) {
+                                        return WebViewAware(
+                                          child: GestureDetector(
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: AssetQRCodeViewWidget(
+                                                assetReference: _model
+                                                    .assetDocument!.reference,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  },
+                                  text: 'QR Code',
+                                  icon: Icon(
+                                    Icons.qr_code_rounded,
+                                    size: 12.0,
+                                  ),
+                                  options: FFButtonOptions(
+                                    height: 24.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 0.0, 12.0, 0.0),
+                                    iconAlignment: IconAlignment.start,
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Kanit',
+                                          color: Colors.white,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
                               Builder(
                                 builder: (context) => Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -387,8 +443,19 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 8.0, 16.0, 16.0),
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              context.pushNamed(
+                                'CheckListPage',
+                                queryParameters: {
+                                  'assetDocument': serializeParam(
+                                    _model.assetDocument,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'assetDocument': _model.assetDocument,
+                                },
+                              );
                             },
                             text: 'รายการตรวจเช็คอุปกรณ์',
                             options: FFButtonOptions(
