@@ -486,7 +486,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 text: 'ตรวจเช็คอุปกรณ์',
                                 icon: FaIcon(
                                   FontAwesomeIcons.search,
-                                  size: 15.0,
+                                  size: 24.0,
                                 ),
                                 options: FFButtonOptions(
                                   height: 60.0,
