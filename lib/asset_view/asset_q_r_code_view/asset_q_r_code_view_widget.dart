@@ -109,7 +109,10 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              decoration: BoxDecoration(),
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Column(
