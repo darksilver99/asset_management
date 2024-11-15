@@ -67,7 +67,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 8.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 8.0, 16.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -83,7 +83,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                   child: Icon(
                     Icons.close_rounded,
                     color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
+                    size: 32.0,
                   ),
                 ),
               ],
