@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -225,19 +226,9 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    _model.isLoading = true;
-                    safeSetState(() {});
-                    await Future.delayed(const Duration(milliseconds: 600));
-
-                    context.goNamed(
+                    await actions.pushReplacement(
+                      context,
                       'AssetListPage',
-                      extra: <String, dynamic>{
-                        kTransitionInfoKey: TransitionInfo(
-                          hasTransition: true,
-                          transitionType: PageTransitionType.fade,
-                          duration: Duration(milliseconds: 0),
-                        ),
-                      },
                     );
                   },
                   child: PagedListView<DocumentSnapshot<Object?>?,
