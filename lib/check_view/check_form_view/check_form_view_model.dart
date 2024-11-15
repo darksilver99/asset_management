@@ -42,7 +42,7 @@ class CheckFormViewModel extends FlutterFlowModel<CheckFormViewWidget> {
   }
 
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  CheckListRecord? insertPath;
+  CheckListRecord? insertedCheck;
   // Stores action output result for [Backend Call - Read Document] action in Button widget.
   AssetListRecord? assetResult;
 

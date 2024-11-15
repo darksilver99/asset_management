@@ -103,7 +103,7 @@ class _CheckListPageWidgetState extends State<CheckListPageWidget> {
                 model: _model.backButtonViewModel,
                 updateCallback: () => safeSetState(() {}),
                 child: BackButtonViewWidget(
-                  title: 'รายการเช็คอุปกรณ์',
+                  title: 'รายการตรวจเช็คอุปกรณ์',
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
               ),
