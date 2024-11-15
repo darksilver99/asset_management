@@ -56,39 +56,15 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
             widget!.assetDocument!.reference);
         safeSetState(() {
           _model.textController1?.text = _model.assetResult!.subject;
-          _model.textFieldFocusNode1?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.textController1?.selection = TextSelection.collapsed(
-              offset: _model.textController1!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.textController2?.text = _model.assetResult!.serialNumber;
-          _model.textFieldFocusNode2?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.textController2?.selection = TextSelection.collapsed(
-              offset: _model.textController2!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.textController4?.text = _model.assetResult!.detail;
-          _model.textFieldFocusNode4?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.textController4?.selection = TextSelection.collapsed(
-              offset: _model.textController4!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.textController3?.text = _model.assetResult!.price.toString();
-          _model.textFieldFocusNode3?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.textController3?.selection = TextSelection.collapsed(
-              offset: _model.textController3!.text.length,
-            );
-          });
         });
         _model.image = _model.assetResult?.image;
         _model.purchaseDate = _model.assetResult?.purchaseDate;
