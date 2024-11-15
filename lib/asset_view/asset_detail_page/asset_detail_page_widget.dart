@@ -166,7 +166,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                           ),
-                                      elevation: 0.0,
+                                      elevation: 1.0,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
@@ -232,7 +232,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                         fontSize: 12.0,
                                         letterSpacing: 0.0,
                                       ),
-                                  elevation: 0.0,
+                                  elevation: 1.0,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
@@ -609,7 +609,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                   ),
-                                          elevation: 0.0,
+                                          elevation: 3.0,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
@@ -647,14 +647,91 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          valueOrDefault<String>(
-                                            _model.assetDocument?.subject,
-                                            '-',
-                                          ),
+                                          'วันที่ซื้ออุปกรณ์ ${functions.dateTh(_model.assetDocument?.purchaseDate)}',
+                                          textAlign: TextAlign.end,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Kanit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: RichText(
+                                          textScaler:
+                                              MediaQuery.of(context).textScaler,
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: _model
+                                                    .assetDocument!.subject,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    ' (${_model.assetDocument?.serialNumber})',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              )
+                                            ],
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Kanit',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'ราคา ${formatNumber(
+                                            _model.assetDocument?.price,
+                                            formatType: FormatType.decimal,
+                                            decimalType: DecimalType.automatic,
+                                          )}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Kanit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                fontSize: 18.0,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
