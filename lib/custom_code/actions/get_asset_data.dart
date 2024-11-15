@@ -10,8 +10,11 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<AssetListRecord?> getAssetData(DocumentReference assetRef) async {
+Future<AssetListRecord?> getAssetData(DocumentReference? assetRef) async {
   // Add your function code here!
+  if (assetRef == null) {
+    return null;
+  }
   try {
     var rs = await FirebaseFirestore.instance.doc(assetRef.path).get();
     if (!rs.exists) {

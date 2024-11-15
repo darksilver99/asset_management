@@ -107,7 +107,11 @@ int stringToInt(String? str) {
 }
 
 DocumentReference? getAssetRef(String path) {
-  return FirebaseFirestore.instance.doc(path);
+  try {
+    return FirebaseFirestore.instance.doc(path);
+  } catch (e) {
+    return null;
+  }
 }
 
 String getAssetPath(DocumentReference assetRef) {

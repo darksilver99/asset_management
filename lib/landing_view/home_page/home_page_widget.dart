@@ -440,7 +440,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       _model.qrCode != '') {
                                     _model.assetResult =
                                         await actions.getAssetData(
-                                      functions.getAssetRef(_model.qrCode!)!,
+                                      functions.getAssetRef(_model.qrCode!),
                                     );
                                     if (_model.assetResult != null) {
                                       context.pushNamed(
