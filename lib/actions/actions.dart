@@ -149,3 +149,20 @@ Future checkAppVersion(BuildContext context) async {
     await actions.closeApp();
   }
 }
+
+Future insertTransaction(
+  BuildContext context, {
+  required DocumentReference? assetReference,
+  required String? refPath,
+  required String? subject,
+  required String? remark,
+}) async {
+  await TransactionListRecord.createDoc(FFAppState().customerData.customerRef!)
+      .set(createTransactionListRecordData(
+    createDate: getCurrentTimestamp,
+    assetRef: assetReference,
+    refPath: refPath,
+    subject: subject,
+    remark: remark,
+  ));
+}

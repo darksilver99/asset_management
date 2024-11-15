@@ -117,3 +117,7 @@ DocumentReference? getAssetRef(String path) {
 String getAssetPath(DocumentReference assetRef) {
   return assetRef.path;
 }
+
+String getCheckPath(DocumentReference ref) {
+  return ref.path;
+}

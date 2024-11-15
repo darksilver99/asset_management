@@ -36,11 +36,6 @@ class TransactionListRecord extends FirestoreRecord {
   String get subject => _subject ?? '';
   bool hasSubject() => _subject != null;
 
-  // "status" field.
-  String? _status;
-  String get status => _status ?? '';
-  bool hasStatus() => _status != null;
-
   // "remark" field.
   String? _remark;
   String get remark => _remark ?? '';
@@ -53,7 +48,6 @@ class TransactionListRecord extends FirestoreRecord {
     _assetRef = snapshotData['asset_ref'] as DocumentReference?;
     _refPath = snapshotData['ref_path'] as String?;
     _subject = snapshotData['subject'] as String?;
-    _status = snapshotData['status'] as String?;
     _remark = snapshotData['remark'] as String?;
   }
 
@@ -101,7 +95,6 @@ Map<String, dynamic> createTransactionListRecordData({
   DocumentReference? assetRef,
   String? refPath,
   String? subject,
-  String? status,
   String? remark,
 }) {
   final firestoreData = mapToFirestore(
@@ -110,7 +103,6 @@ Map<String, dynamic> createTransactionListRecordData({
       'asset_ref': assetRef,
       'ref_path': refPath,
       'subject': subject,
-      'status': status,
       'remark': remark,
     }.withoutNulls,
   );
@@ -128,19 +120,12 @@ class TransactionListRecordDocumentEquality
         e1?.assetRef == e2?.assetRef &&
         e1?.refPath == e2?.refPath &&
         e1?.subject == e2?.subject &&
-        e1?.status == e2?.status &&
         e1?.remark == e2?.remark;
   }
 
   @override
-  int hash(TransactionListRecord? e) => const ListEquality().hash([
-        e?.createDate,
-        e?.assetRef,
-        e?.refPath,
-        e?.subject,
-        e?.status,
-        e?.remark
-      ]);
+  int hash(TransactionListRecord? e) => const ListEquality()
+      .hash([e?.createDate, e?.assetRef, e?.refPath, e?.subject, e?.remark]);
 
   @override
   bool isValidKey(Object? o) => o is TransactionListRecord;
