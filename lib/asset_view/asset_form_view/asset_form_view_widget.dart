@@ -152,7 +152,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                   },
                   child: Icon(
                     Icons.close_rounded,
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: FlutterFlowTheme.of(context).secondaryText,
                     size: 32.0,
                   ),
                 ),
