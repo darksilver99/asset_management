@@ -1082,6 +1082,15 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             price: int.tryParse(
                                                 _model.textController3.text),
                                           ));
+                                          await action_blocks.insertTransaction(
+                                            context,
+                                            assetReference:
+                                                _model.assetResult?.reference,
+                                            refPath: functions.getAssetPath(
+                                                _model.assetResult!.reference),
+                                            subject: 'แก้ไขข้อมูลอุปกรณ์',
+                                            remark: _model.assetResult?.subject,
+                                          );
                                           await showDialog(
                                             context: context,
                                             builder: (dialogContext) {
@@ -1138,10 +1147,12 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             false,
                                           );
 
-                                          await AssetListRecord.createDoc(
+                                          var assetListRecordReference =
+                                              AssetListRecord.createDoc(
                                                   FFAppState()
                                                       .customerData
-                                                      .customerRef!)
+                                                      .customerRef!);
+                                          await assetListRecordReference
                                               .set(createAssetListRecordData(
                                             createDate: getCurrentTimestamp,
                                             status: 'ว่าง',
@@ -1155,6 +1166,35 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             price: int.tryParse(
                                                 _model.textController3.text),
                                           ));
+                                          _model.insertAsset = AssetListRecord
+                                              .getDocumentFromData(
+                                                  createAssetListRecordData(
+                                                    createDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'ว่าง',
+                                                    subject: _model
+                                                        .textController1.text,
+                                                    detail: _model
+                                                        .textController4.text,
+                                                    image:
+                                                        _model.urlList?.first,
+                                                    serialNumber: _model
+                                                        .textController2.text,
+                                                    purchaseDate:
+                                                        _model.purchaseDate,
+                                                    price: int.tryParse(_model
+                                                        .textController3.text),
+                                                  ),
+                                                  assetListRecordReference);
+                                          await action_blocks.insertTransaction(
+                                            context,
+                                            assetReference:
+                                                _model.insertAsset?.reference,
+                                            refPath: functions.getAssetPath(
+                                                _model.insertAsset!.reference),
+                                            subject: 'เพิ่มอุปกรณ์ใหม่',
+                                            remark: _model.insertAsset?.subject,
+                                          );
                                           await showDialog(
                                             context: context,
                                             builder: (dialogContext) {
