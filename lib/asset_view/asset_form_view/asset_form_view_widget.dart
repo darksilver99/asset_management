@@ -1065,7 +1065,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                             refPath: functions.getAssetPath(
                                                 _model.assetResult!.reference),
                                             subject: 'แก้ไขข้อมูลอุปกรณ์',
-                                            remark: _model.assetResult?.subject,
+                                            remark: _model.textController1.text,
                                           );
                                           await showDialog(
                                             context: context,
