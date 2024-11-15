@@ -181,7 +181,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   await actions.shareFile(
-                                    getSaveAndGetImagePath(controller),
+                                    await getSaveAndGetImagePath(controller),
                                   );
                                 },
                                 text: 'แชร์ QR Code',
