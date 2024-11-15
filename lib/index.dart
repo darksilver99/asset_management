@@ -9,3 +9,5 @@ export '/payment_view/promotion_page/promotion_page_widget.dart'
     show PromotionPageWidget;
 export '/landing_view/asset_list_page/asset_list_page_widget.dart'
     show AssetListPageWidget;
+export '/asset_view/asset_detail_page/asset_detail_page_widget.dart'
+    show AssetDetailPageWidget;

@@ -128,6 +128,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'AssetListPage')
               : AssetListPageWidget(),
+        ),
+        FFRoute(
+          name: 'AssetDetailPage',
+          path: '/assetDetailPage',
+          asyncParams: {
+            'assetDocument': getDoc(
+                ['customer_list', 'asset_list'], AssetListRecord.fromSnapshot),
+          },
+          builder: (context, params) => AssetDetailPageWidget(
+            assetDocument: params.getParam(
+              'assetDocument',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
