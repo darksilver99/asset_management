@@ -51,7 +51,7 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
     AssetListRecord? assetResult;
 
     assetResult = await actions.getAssetData(
-      widget!.assetDocument!.reference,
+      widget!.assetDocument?.reference,
     );
     if (assetResult != null) {
       assetDocument = assetResult;
