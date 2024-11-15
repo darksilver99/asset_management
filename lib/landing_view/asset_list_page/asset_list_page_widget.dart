@@ -103,6 +103,14 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                   );
                 },
               ).then((value) => safeSetState(() => _model.isUpdate = value));
+
+              if ((_model.isUpdate != null && _model.isUpdate != '') &&
+                  (_model.isUpdate == 'update')) {
+                await actions.pushReplacement(
+                  context,
+                  'AssetListPage',
+                );
+              }
             }
 
             safeSetState(() {});
