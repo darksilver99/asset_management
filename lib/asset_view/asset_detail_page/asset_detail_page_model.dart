@@ -1,5 +1,4 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
@@ -11,7 +10,6 @@ import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'asset_detail_page_widget.dart' show AssetDetailPageWidget;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -51,8 +49,9 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   Future initAssetData(BuildContext context) async {
     AssetListRecord? assetResult;
 
-    assetResult =
-        await AssetListRecord.getDocumentOnce(widget!.assetDocument!.reference);
+    assetResult = await actions.getAssetData(
+      widget!.assetDocument!.reference,
+    );
     if (assetResult != null) {
       assetDocument = assetResult;
     } else {

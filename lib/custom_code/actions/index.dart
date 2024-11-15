@@ -5,3 +5,4 @@ export 'push_replacement.dart' show pushReplacement;
 export 'set_app_version.dart' show setAppVersion;
 export 'share_file.dart' show shareFile;
 export 'upload_image_to_firebase.dart' show uploadImageToFirebase;
+export 'get_asset_data.dart' show getAssetData;
