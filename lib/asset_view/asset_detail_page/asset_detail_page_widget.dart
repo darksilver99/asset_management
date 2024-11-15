@@ -111,8 +111,8 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
                                               child: AssetQRCodeViewWidget(
-                                                assetReference: _model
-                                                    .assetDocument!.reference,
+                                                assetDocument:
+                                                    _model.assetDocument!,
                                               ),
                                             ),
                                           ),
