@@ -8,17 +8,18 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'broken_form_view_model.dart';
-export 'broken_form_view_model.dart';
+import 'repair_form_view_model.dart';
+export 'repair_form_view_model.dart';
 
-class BrokenFormViewWidget extends StatefulWidget {
-  const BrokenFormViewWidget({
+class RepairFormViewWidget extends StatefulWidget {
+  const RepairFormViewWidget({
     super.key,
     required this.assetDocument,
   });
@@ -26,11 +27,11 @@ class BrokenFormViewWidget extends StatefulWidget {
   final AssetListRecord? assetDocument;
 
   @override
-  State<BrokenFormViewWidget> createState() => _BrokenFormViewWidgetState();
+  State<RepairFormViewWidget> createState() => _RepairFormViewWidgetState();
 }
 
-class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
-  late BrokenFormViewModel _model;
+class _RepairFormViewWidgetState extends State<RepairFormViewWidget> {
+  late RepairFormViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -41,7 +42,7 @@ class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BrokenFormViewModel());
+    _model = createModel(context, () => RepairFormViewModel());
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -56,6 +57,8 @@ class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -148,7 +151,7 @@ class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   hintText:
-                                      'ระบุรายละเอียด เช่น สาเหตุที่ใช้งานไม่ได้, ผู้ใช้งาน',
+                                      'ระบุรายละเอียด เช่น ส่วนที่ซ่อม, ซ่อมที่ไหน',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -529,33 +532,58 @@ class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
                                 if (_model.tmpImageList.isNotEmpty) {
                                   _model.urlList =
                                       await actions.uploadImageToFirebase(
-                                    '${currentUserUid}/broken',
+                                    '${currentUserUid}/repair',
                                     _model.tmpImageList.toList(),
                                     false,
                                   );
 
-                                  await widget!.assetDocument!.reference
-                                      .update({
-                                    ...createAssetListRecordData(
-                                      updateDate: getCurrentTimestamp,
-                                      status: 'ใช้ไม่ได้แล้ว',
-                                      brokenDate: getCurrentTimestamp,
-                                      brokenDetail: _model.textController.text,
+                                  var repairListRecordReference =
+                                      RepairListRecord.createDoc(FFAppState()
+                                          .customerData
+                                          .customerRef!);
+                                  await repairListRecordReference.set({
+                                    ...createRepairListRecordData(
+                                      createDate: getCurrentTimestamp,
+                                      remark: _model.textController.text,
+                                      assetRef:
+                                          widget!.assetDocument?.reference,
                                     ),
                                     ...mapToFirestore(
                                       {
-                                        'location': FieldValue.delete(),
-                                        'broken_image_list': _model.urlList,
+                                        'image': _model.urlList,
                                       },
                                     ),
                                   });
+                                  _model.insertedRepair =
+                                      RepairListRecord.getDocumentFromData({
+                                    ...createRepairListRecordData(
+                                      createDate: getCurrentTimestamp,
+                                      remark: _model.textController.text,
+                                      assetRef:
+                                          widget!.assetDocument?.reference,
+                                    ),
+                                    ...mapToFirestore(
+                                      {
+                                        'image': _model.urlList,
+                                      },
+                                    ),
+                                  }, repairListRecordReference);
+
+                                  await widget!.assetDocument!.reference
+                                      .update(createAssetListRecordData(
+                                    updateDate: getCurrentTimestamp,
+                                    status: 'ส่งซ่อม',
+                                    lastRepairRef:
+                                        _model.insertedRepair?.reference,
+                                  ));
                                   await action_blocks.insertTransaction(
                                     context,
                                     assetReference:
                                         widget!.assetDocument?.reference,
-                                    refPath: '',
+                                    refPath: functions.getRepairPath(
+                                        _model.insertedRepair!.reference),
                                     subject: widget!.assetDocument?.subject,
-                                    remark: 'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
+                                    remark: 'ทำการส่งซ่อม',
                                   );
                                   Navigator.pop(context, 'update');
                                 } else {

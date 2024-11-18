@@ -14,6 +14,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/location_view/location_form_view/location_form_view_widget.dart';
 import '/lost_view/lost_form_view/lost_form_view_widget.dart';
 import '/lost_view/lost_view/lost_view_widget.dart';
+import '/repair_view/repair_form_view/repair_form_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -51,6 +52,8 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   String? lostDetail;
   // Stores action output result for [Bottom Sheet - BrokenFormView] action in Button widget.
   String? brokenDetail;
+  // Stores action output result for [Bottom Sheet - RepairFormView] action in Button widget.
+  String? repairDetail;
 
   @override
   void initState(BuildContext context) {

@@ -14,6 +14,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/location_view/location_form_view/location_form_view_widget.dart';
 import '/lost_view/lost_form_view/lost_form_view_widget.dart';
 import '/lost_view/lost_view/lost_view_widget.dart';
+import '/repair_view/repair_form_view/repair_form_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -633,75 +634,102 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                   ),
                                 if (_model.assetDocument?.lastRepairRef != null)
                                   Expanded(
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      elevation: 3.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      child: Container(
-                                        height: 100.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          'RepairListPage',
+                                          queryParameters: {
+                                            'assetDocument': serializeParam(
+                                              _model.assetDocument,
+                                              ParamType.Document,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'assetDocument':
+                                                _model.assetDocument,
+                                          },
+                                        );
+                                      },
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 3.0,
+                                        shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 1.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 4.0),
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.tools,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      size: 32.0,
+                                        child: Container(
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 1.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  4.0),
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons.tools,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 32.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'รายการ\nซ่อม',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      maxLines: 2,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Kanit',
-                                                            fontSize: 18.0,
-                                                            letterSpacing: 0.0,
-                                                            lineHeight: 1.0,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'รายการ\nส่งซ่อม',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 2,
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Kanit',
+                                                              fontSize: 18.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              lineHeight: 1.0,
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -1180,31 +1208,48 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'ส่งซ่อม') {
-                                                await _model
-                                                    .assetDocument!.reference
-                                                    .update({
-                                                  ...createAssetListRecordData(
-                                                    updateDate:
-                                                        getCurrentTimestamp,
-                                                    status: 'ส่งซ่อม',
-                                                  ),
-                                                  ...mapToFirestore(
-                                                    {
-                                                      'location':
-                                                          FieldValue.delete(),
-                                                    },
-                                                  ),
-                                                });
-                                                await action_blocks
-                                                    .insertTransaction(
-                                                  context,
-                                                  assetReference: _model
-                                                      .assetDocument?.reference,
-                                                  refPath: '',
-                                                  subject: _model
-                                                      .assetDocument?.subject,
-                                                  remark: 'ทำการส่งซ่อม',
-                                                );
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  useSafeArea: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              RepairFormViewWidget(
+                                                            assetDocument: _model
+                                                                .assetDocument!,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => safeSetState(
+                                                    () => _model.repairDetail =
+                                                        value));
+
+                                                _shouldSetState = true;
+                                                if (!((_model.repairDetail !=
+                                                            null &&
+                                                        _model.repairDetail !=
+                                                            '') &&
+                                                    (_model.repairDetail ==
+                                                        'update'))) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
                                               } else {
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
