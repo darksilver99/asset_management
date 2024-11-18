@@ -929,6 +929,10 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                         .locationDataList
                                                         ?.first,
                                                   );
+                                                } else {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
                                                 }
                                               } else if (_model
                                                       .selectedStatus ==
