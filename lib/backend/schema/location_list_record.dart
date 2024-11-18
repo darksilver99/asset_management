@@ -36,6 +36,11 @@ class LocationListRecord extends FirestoreRecord {
   String get locationName => _locationName ?? '';
   bool hasLocationName() => _locationName != null;
 
+  // "image" field.
+  List<String>? _image;
+  List<String> get image => _image ?? const [];
+  bool hasImage() => _image != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -43,6 +48,7 @@ class LocationListRecord extends FirestoreRecord {
     _remark = snapshotData['remark'] as String?;
     _assetRef = snapshotData['asset_ref'] as DocumentReference?;
     _locationName = snapshotData['location_name'] as String?;
+    _image = getDataList(snapshotData['image']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -108,15 +114,17 @@ class LocationListRecordDocumentEquality
 
   @override
   bool equals(LocationListRecord? e1, LocationListRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.createDate == e2?.createDate &&
         e1?.remark == e2?.remark &&
         e1?.assetRef == e2?.assetRef &&
-        e1?.locationName == e2?.locationName;
+        e1?.locationName == e2?.locationName &&
+        listEquality.equals(e1?.image, e2?.image);
   }
 
   @override
   int hash(LocationListRecord? e) => const ListEquality()
-      .hash([e?.createDate, e?.remark, e?.assetRef, e?.locationName]);
+      .hash([e?.createDate, e?.remark, e?.assetRef, e?.locationName, e?.image]);
 
   @override
   bool isValidKey(Object? o) => o is LocationListRecord;

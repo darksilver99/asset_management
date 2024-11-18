@@ -1,7 +1,6 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
-import '/asset_view/location_form_view/location_form_view_widget.dart';
 import '/asset_view/remark_form_view/remark_form_view_widget.dart';
 import '/asset_view/remark_view/remark_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
@@ -12,6 +11,7 @@ import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/location_view/location_form_view/location_form_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -66,8 +66,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -1036,90 +1034,26 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                               .viewInsetsOf(
                                                                   context),
                                                           child:
-                                                              LocationFormViewWidget(),
+                                                              LocationFormViewWidget(
+                                                            assetDocument: _model
+                                                                .assetDocument!,
+                                                          ),
                                                         ),
                                                       ),
                                                     );
                                                   },
                                                 ).then((value) => safeSetState(
-                                                    () => _model
-                                                            .locationDataList =
-                                                        value));
+                                                    () =>
+                                                        _model.locationDetail =
+                                                            value));
 
                                                 _shouldSetState = true;
-                                                if (_model.locationDataList !=
-                                                        null &&
-                                                    (_model.locationDataList)!
-                                                        .isNotEmpty) {
-                                                  var locationListRecordReference =
-                                                      LocationListRecord
-                                                          .createDoc(FFAppState()
-                                                              .customerData
-                                                              .customerRef!);
-                                                  await locationListRecordReference
-                                                      .set(
-                                                          createLocationListRecordData(
-                                                    createDate:
-                                                        getCurrentTimestamp,
-                                                    remark: _model
-                                                        .locationDataList?.last,
-                                                    assetRef: _model
-                                                        .assetDocument
-                                                        ?.reference,
-                                                    locationName: _model
-                                                        .locationDataList
-                                                        ?.first,
-                                                  ));
-                                                  _model.locationInserted =
-                                                      LocationListRecord
-                                                          .getDocumentFromData(
-                                                              createLocationListRecordData(
-                                                                createDate:
-                                                                    getCurrentTimestamp,
-                                                                remark: _model
-                                                                    .locationDataList
-                                                                    ?.last,
-                                                                assetRef: _model
-                                                                    .assetDocument
-                                                                    ?.reference,
-                                                                locationName: _model
-                                                                    .locationDataList
-                                                                    ?.first,
-                                                              ),
-                                                              locationListRecordReference);
-                                                  _shouldSetState = true;
-
-                                                  await _model
-                                                      .assetDocument!.reference
-                                                      .update(
-                                                          createAssetListRecordData(
-                                                    updateDate:
-                                                        getCurrentTimestamp,
-                                                    status: 'ใช้งานอยู่',
-                                                    lastLocationRef: _model
-                                                        .locationInserted
-                                                        ?.reference,
-                                                    location: _model
-                                                        .locationDataList
-                                                        ?.first,
-                                                  ));
-                                                  await action_blocks
-                                                      .insertTransaction(
-                                                    context,
-                                                    assetReference: _model
-                                                        .assetDocument
-                                                        ?.reference,
-                                                    refPath: functions
-                                                        .getLocationPath(_model
-                                                            .locationInserted!
-                                                            .reference),
-                                                    subject:
-                                                        '${_model.assetDocument?.subject} ถูกใช้งาน',
-                                                    remark: _model
-                                                        .locationDataList
-                                                        ?.first,
-                                                  );
-                                                } else {
+                                                if (!((_model.locationDetail !=
+                                                            null &&
+                                                        _model.locationDetail !=
+                                                            '') &&
+                                                    (_model.locationDetail ==
+                                                        'update'))) {
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
                                                   return;

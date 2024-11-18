@@ -1,7 +1,6 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
-import '/asset_view/location_form_view/location_form_view_widget.dart';
 import '/asset_view/remark_form_view/remark_form_view_widget.dart';
 import '/asset_view/remark_view/remark_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
@@ -12,6 +11,7 @@ import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/location_view/location_form_view/location_form_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -44,9 +44,7 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   String? selectedStatus;
   // Stores action output result for [Bottom Sheet - LocationFormView] action in Button widget.
-  List<String>? locationDataList;
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  LocationListRecord? locationInserted;
+  String? locationDetail;
   // Stores action output result for [Bottom Sheet - RemarkFormView] action in Button widget.
   String? lostDetail;
   // Stores action output result for [Bottom Sheet - RemarkFormView] action in Button widget.

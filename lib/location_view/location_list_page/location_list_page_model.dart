@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/check_view/check_form_view/check_form_view_widget.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/no_data_view/no_data_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -9,7 +8,6 @@ import '/location_view/location_detail_view/location_detail_view_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'location_list_page_widget.dart' show LocationListPageWidget;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
