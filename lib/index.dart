@@ -12,3 +12,5 @@ export '/asset_view/asset_detail_page/asset_detail_page_widget.dart'
     show AssetDetailPageWidget;
 export '/check_view/check_list_page/check_list_page_widget.dart'
     show CheckListPageWidget;
+export '/location_view/location_list_page/location_list_page_widget.dart'
+    show LocationListPageWidget;

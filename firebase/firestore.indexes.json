@@ -27,6 +27,20 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "location_list",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "asset_ref",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "create_date",
+          "order": "DESCENDING"
+        }
+      ]
     }
   ]
 }

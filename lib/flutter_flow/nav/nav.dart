@@ -151,6 +151,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'LocationListPage',
+          path: '/locationListPage',
+          asyncParams: {
+            'assetDocument': getDoc(
+                ['customer_list', 'asset_list'], AssetListRecord.fromSnapshot),
+          },
+          builder: (context, params) => LocationListPageWidget(
+            assetDocument: params.getParam(
+              'assetDocument',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
