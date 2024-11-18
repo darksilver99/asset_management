@@ -8,28 +8,26 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'remark_view_model.dart';
-export 'remark_view_model.dart';
+import 'lost_view_model.dart';
+export 'lost_view_model.dart';
 
-class RemarkViewWidget extends StatefulWidget {
-  const RemarkViewWidget({
+class LostViewWidget extends StatefulWidget {
+  const LostViewWidget({
     super.key,
-    required this.title,
     this.detail,
     required this.date,
   });
 
-  final String? title;
   final String? detail;
   final DateTime? date;
 
   @override
-  State<RemarkViewWidget> createState() => _RemarkViewWidgetState();
+  State<LostViewWidget> createState() => _LostViewWidgetState();
 }
 
-class _RemarkViewWidgetState extends State<RemarkViewWidget>
+class _LostViewWidgetState extends State<LostViewWidget>
     with TickerProviderStateMixin {
-  late RemarkViewModel _model;
+  late LostViewModel _model;
 
   final animationsMap = <String, AnimationInfo>{};
 
@@ -42,7 +40,7 @@ class _RemarkViewWidgetState extends State<RemarkViewWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RemarkViewModel());
+    _model = createModel(context, () => LostViewModel());
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
@@ -127,10 +125,7 @@ class _RemarkViewWidgetState extends State<RemarkViewWidget>
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 8.0),
                                   child: Text(
-                                    valueOrDefault<String>(
-                                      widget!.title,
-                                      '-',
-                                    ),
+                                    'รายละเอียด',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium

@@ -5,11 +5,11 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'remark_form_view_model.dart';
-export 'remark_form_view_model.dart';
+import 'lost_form_view_model.dart';
+export 'lost_form_view_model.dart';
 
-class RemarkFormViewWidget extends StatefulWidget {
-  const RemarkFormViewWidget({
+class LostFormViewWidget extends StatefulWidget {
+  const LostFormViewWidget({
     super.key,
     required this.hintText,
   });
@@ -17,11 +17,11 @@ class RemarkFormViewWidget extends StatefulWidget {
   final String? hintText;
 
   @override
-  State<RemarkFormViewWidget> createState() => _RemarkFormViewWidgetState();
+  State<LostFormViewWidget> createState() => _LostFormViewWidgetState();
 }
 
-class _RemarkFormViewWidgetState extends State<RemarkFormViewWidget> {
-  late RemarkFormViewModel _model;
+class _LostFormViewWidgetState extends State<LostFormViewWidget> {
+  late LostFormViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -32,7 +32,7 @@ class _RemarkFormViewWidgetState extends State<RemarkFormViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RemarkFormViewModel());
+    _model = createModel(context, () => LostFormViewModel());
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();

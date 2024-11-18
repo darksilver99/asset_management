@@ -101,6 +101,11 @@ class AssetListRecord extends FirestoreRecord {
   DateTime? get brokenDate => _brokenDate;
   bool hasBrokenDate() => _brokenDate != null;
 
+  // "broken_image_list" field.
+  List<String>? _brokenImageList;
+  List<String> get brokenImageList => _brokenImageList ?? const [];
+  bool hasBrokenImageList() => _brokenImageList != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -121,6 +126,7 @@ class AssetListRecord extends FirestoreRecord {
     _lostDate = snapshotData['lost_date'] as DateTime?;
     _brokenDetail = snapshotData['broken_detail'] as String?;
     _brokenDate = snapshotData['broken_date'] as DateTime?;
+    _brokenImageList = getDataList(snapshotData['broken_image_list']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -211,6 +217,7 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
 
   @override
   bool equals(AssetListRecord? e1, AssetListRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.createDate == e2?.createDate &&
         e1?.subject == e2?.subject &&
         e1?.detail == e2?.detail &&
@@ -227,7 +234,8 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e1?.lostDetail == e2?.lostDetail &&
         e1?.lostDate == e2?.lostDate &&
         e1?.brokenDetail == e2?.brokenDetail &&
-        e1?.brokenDate == e2?.brokenDate;
+        e1?.brokenDate == e2?.brokenDate &&
+        listEquality.equals(e1?.brokenImageList, e2?.brokenImageList);
   }
 
   @override
@@ -248,7 +256,8 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e?.lostDetail,
         e?.lostDate,
         e?.brokenDetail,
-        e?.brokenDate
+        e?.brokenDate,
+        e?.brokenImageList
       ]);
 
   @override
