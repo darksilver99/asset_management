@@ -1,5 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
+import '/asset_view/asset_status_view/asset_status_view_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
@@ -10,6 +12,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -585,33 +588,158 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                           ),
                                         ),
                                       ),
-                                      FFButtonWidget(
-                                        onPressed: () {
-                                          print('Button pressed ...');
-                                        },
-                                        text: 'เปลี่ยนสถานะ',
-                                        options: FFButtonOptions(
-                                          height: 32.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Kanit',
-                                                    color: Colors.white,
-                                                    fontSize: 18.0,
-                                                    letterSpacing: 0.0,
+                                      Builder(
+                                        builder: (context) => FFButtonWidget(
+                                          onPressed: () async {
+                                            var _shouldSetState = false;
+                                            await showDialog(
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: WebViewAware(
+                                                    child: GestureDetector(
+                                                      onTap: () =>
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus(),
+                                                      child:
+                                                          AssetStatusViewWidget(
+                                                        currentStatus: _model
+                                                            .assetDocument!
+                                                            .status,
+                                                      ),
+                                                    ),
                                                   ),
-                                          elevation: 3.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                                );
+                                              },
+                                            ).then((value) => safeSetState(() =>
+                                                _model.selectedStatus = value));
+
+                                            _shouldSetState = true;
+                                            if (_model.selectedStatus != null &&
+                                                _model.selectedStatus != '') {
+                                              if (_model.selectedStatus ==
+                                                  'ว่าง') {
+                                                await _model
+                                                    .assetDocument!.reference
+                                                    .update(
+                                                        createAssetListRecordData(
+                                                  updateDate:
+                                                      getCurrentTimestamp,
+                                                  status: 'ว่าง',
+                                                ));
+                                                await action_blocks
+                                                    .insertTransaction(
+                                                  context,
+                                                  assetReference: _model
+                                                      .assetDocument?.reference,
+                                                  refPath: '',
+                                                  subject: _model
+                                                      .assetDocument?.subject,
+                                                  remark:
+                                                      'ปรับสถานะเป็น \"ว่าง\"',
+                                                );
+                                              } else if (_model
+                                                      .selectedStatus ==
+                                                  'ใช้งาน') {
+                                              } else if (_model
+                                                      .selectedStatus ==
+                                                  'หาย') {
+                                                await _model
+                                                    .assetDocument!.reference
+                                                    .update(
+                                                        createAssetListRecordData(
+                                                  updateDate:
+                                                      getCurrentTimestamp,
+                                                  status: 'หาย',
+                                                ));
+                                                await action_blocks
+                                                    .insertTransaction(
+                                                  context,
+                                                  assetReference: _model
+                                                      .assetDocument?.reference,
+                                                  refPath: '',
+                                                  subject: _model
+                                                      .assetDocument?.subject,
+                                                  remark:
+                                                      'ปรับสถานะเป็น \"หาย\"',
+                                                );
+                                              } else if (_model
+                                                      .selectedStatus ==
+                                                  'ใช้ไม่ได้แล้ว') {
+                                                await _model
+                                                    .assetDocument!.reference
+                                                    .update(
+                                                        createAssetListRecordData(
+                                                  updateDate:
+                                                      getCurrentTimestamp,
+                                                  status: 'ใช้ไม่ได้แล้ว',
+                                                ));
+                                                await action_blocks
+                                                    .insertTransaction(
+                                                  context,
+                                                  assetReference: _model
+                                                      .assetDocument?.reference,
+                                                  refPath: '',
+                                                  subject: _model
+                                                      .assetDocument?.subject,
+                                                  remark:
+                                                      'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
+                                                );
+                                              } else if (_model
+                                                      .selectedStatus ==
+                                                  'ส่งซ่อม') {
+                                              } else {
+                                                safeSetState(() {});
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+
+                                              _model.isLoading = true;
+                                              safeSetState(() {});
+                                              await _model
+                                                  .initAssetData(context);
+                                              _model.isLoading = false;
+                                              safeSetState(() {});
+                                            }
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                          },
+                                          text: 'เปลี่ยนสถานะ',
+                                          options: FFButtonOptions(
+                                            height: 32.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Kanit',
+                                                      color: Colors.white,
+                                                      fontSize: 18.0,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            elevation: 3.0,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
                                         ),
                                       ),
                                     ],

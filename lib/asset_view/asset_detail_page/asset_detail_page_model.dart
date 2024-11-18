@@ -1,5 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
+import '/asset_view/asset_status_view/asset_status_view_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
@@ -11,6 +13,7 @@ import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'asset_detail_page_widget.dart' show AssetDetailPageWidget;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -35,6 +38,8 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   bool? isConfirm;
   // Stores action output result for [Bottom Sheet - AssetFormView] action in Button widget.
   String? isUpdate;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  String? selectedStatus;
 
   @override
   void initState(BuildContext context) {
