@@ -1028,12 +1028,10 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                 },
                                               );
 
-                                              _model.isLoading = true;
-                                              safeSetState(() {});
-                                              await _model
-                                                  .initAssetData(context);
-                                              _model.isLoading = false;
-                                              safeSetState(() {});
+                                              await actions.pushReplacement(
+                                                context,
+                                                'AssetListPage',
+                                              );
                                             }
                                             if (_shouldSetState)
                                               safeSetState(() {});
