@@ -556,7 +556,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                               child: WebViewAware(
                                                 child: InfoCustomViewWidget(
                                                   title: 'กำหนดไม่เกิน 3 รูป',
-                                                  status: 'warning',
+                                                  status: 'error',
                                                 ),
                                               ),
                                             );
@@ -596,6 +596,9 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                           Builder(
                             builder: (context) => FFButtonWidget(
                               onPressed: () async {
+                                await actions.hideKeyBoard(
+                                  context,
+                                );
                                 if (_model.formKey.currentState == null ||
                                     !_model.formKey.currentState!.validate()) {
                                   return;
