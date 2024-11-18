@@ -142,6 +142,7 @@ class _CheckDetailViewWidgetState extends State<CheckDetailViewWidget> {
                                           .override(
                                             fontFamily: 'Kanit',
                                             letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                   ),
@@ -164,6 +165,9 @@ class _CheckDetailViewWidgetState extends State<CheckDetailViewWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Kanit',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 18.0,
                                             letterSpacing: 0.0,
                                           ),
                                     ),
@@ -189,6 +193,7 @@ class _CheckDetailViewWidgetState extends State<CheckDetailViewWidget> {
                                               .override(
                                                 fontFamily: 'Kanit',
                                                 letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
                                               ),
                                         ),
                                       ),
@@ -309,6 +314,7 @@ class _CheckDetailViewWidgetState extends State<CheckDetailViewWidget> {
                                           fontFamily: 'Kanit',
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
+                                          fontSize: 16.0,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
