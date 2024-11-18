@@ -14,3 +14,5 @@ export '/check_view/check_list_page/check_list_page_widget.dart'
     show CheckListPageWidget;
 export '/location_view/location_list_page/location_list_page_widget.dart'
     show LocationListPageWidget;
+export '/repair_view/repair_list_page/repair_list_page_widget.dart'
+    show RepairListPageWidget;

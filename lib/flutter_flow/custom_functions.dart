@@ -125,3 +125,7 @@ String getCheckPath(DocumentReference ref) {
 String getLocationPath(DocumentReference ref) {
   return ref.path;
 }
+
+String getRepairPath(DocumentReference ref) {
+  return ref.path;
+}
