@@ -659,7 +659,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                       ),
-                                  elevation: 0.0,
+                                  elevation: 3.0,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),

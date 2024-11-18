@@ -567,7 +567,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                     text: 'แนบรูป',
                                     icon: Icon(
                                       Icons.image,
-                                      size: 15.0,
+                                      size: 22.0,
                                     ),
                                     options: FFButtonOptions(
                                       height: 40.0,
@@ -577,7 +577,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                           EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
                                       color:
-                                          FlutterFlowTheme.of(context).primary,
+                                          FlutterFlowTheme.of(context).warning,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
