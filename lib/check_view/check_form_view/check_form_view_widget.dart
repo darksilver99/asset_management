@@ -1,14 +1,18 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'check_form_view_model.dart';
@@ -133,7 +137,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
+                                0.0, 0.0, 0.0, 16.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -143,7 +147,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  labelText: 'หมายเหตุ',
+                                  labelText: 'รายละเอียดการตรวจ',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -207,7 +211,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
+                                0.0, 0.0, 0.0, 16.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -217,7 +221,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  labelText: 'ผู้ตรวจ',
+                                  labelText: 'ชื่อผู้ตรวจ',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -277,6 +281,318 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 4.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'รูปการตรวจ',
+                                          maxLines: 1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Kanit',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                if (_model.tmpImageList.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 4.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Builder(
+                                            builder: (context) {
+                                              final imageList =
+                                                  _model.tmpImageList.toList();
+
+                                              return Wrap(
+                                                spacing: 8.0,
+                                                runSpacing: 8.0,
+                                                alignment: WrapAlignment.start,
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.start,
+                                                direction: Axis.horizontal,
+                                                runAlignment:
+                                                    WrapAlignment.start,
+                                                verticalDirection:
+                                                    VerticalDirection.down,
+                                                clipBehavior: Clip.none,
+                                                children: List.generate(
+                                                    imageList.length,
+                                                    (imageListIndex) {
+                                                  final imageListItem =
+                                                      imageList[imageListIndex];
+                                                  return Container(
+                                                    width: 80.0,
+                                                    height: 80.0,
+                                                    child: Stack(
+                                                      children: [
+                                                        InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            await Navigator
+                                                                .push(
+                                                              context,
+                                                              PageTransition(
+                                                                type:
+                                                                    PageTransitionType
+                                                                        .fade,
+                                                                child:
+                                                                    FlutterFlowExpandedImageView(
+                                                                  image: Image
+                                                                      .memory(
+                                                                    imageListItem
+                                                                            .bytes ??
+                                                                        Uint8List.fromList(
+                                                                            []),
+                                                                    fit: BoxFit
+                                                                        .contain,
+                                                                  ),
+                                                                  allowRotation:
+                                                                      false,
+                                                                  tag:
+                                                                      'imageTag',
+                                                                  useHeroAnimation:
+                                                                      true,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: Hero(
+                                                            tag: 'imageTag',
+                                                            transitionOnUserGestures:
+                                                                true,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              child:
+                                                                  Image.memory(
+                                                                imageListItem
+                                                                        .bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                width: double
+                                                                    .infinity,
+                                                                height: double
+                                                                    .infinity,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, -1.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        0.0),
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                _model.isConfirm =
+                                                                    await action_blocks
+                                                                        .confirmBlock(
+                                                                  context,
+                                                                  title:
+                                                                      'ต้องการลบรูป?',
+                                                                );
+                                                                if (_model
+                                                                    .isConfirm!) {
+                                                                  _model.removeFromTmpImageList(
+                                                                      imageListItem);
+                                                                  safeSetState(
+                                                                      () {});
+                                                                }
+
+                                                                safeSetState(
+                                                                    () {});
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .cancel_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                size: 24.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                Builder(
+                                  builder: (context) => FFButtonWidget(
+                                    onPressed: () async {
+                                      if (_model.tmpImageList.length < 3) {
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          maxWidth: 600.00,
+                                          imageQuality: 80,
+                                          allowPhoto: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          safeSetState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
+
+                                          try {
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
+                                          } finally {
+                                            _model.isDataUploading = false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                              selectedMedia.length) {
+                                            safeSetState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                            });
+                                          } else {
+                                            safeSetState(() {});
+                                            return;
+                                          }
+                                        }
+
+                                        if (_model.uploadedLocalFile != null &&
+                                            (_model.uploadedLocalFile.bytes
+                                                    ?.isNotEmpty ??
+                                                false)) {
+                                          _model.addToTmpImageList(
+                                              _model.uploadedLocalFile);
+                                          safeSetState(() {});
+                                        }
+                                        safeSetState(() {
+                                          _model.isDataUploading = false;
+                                          _model.uploadedLocalFile =
+                                              FFUploadedFile(
+                                                  bytes:
+                                                      Uint8List.fromList([]));
+                                        });
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: WebViewAware(
+                                                child: InfoCustomViewWidget(
+                                                  title: 'กำหนดไม่เกิน 3 รูป',
+                                                  status: 'warning',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                                    text: 'แนบรูป',
+                                    icon: Icon(
+                                      Icons.image,
+                                      size: 15.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Kanit',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           Builder(
                             builder: (context) => FFButtonWidget(
                               onPressed: () async {
@@ -284,64 +600,108 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                     !_model.formKey.currentState!.validate()) {
                                   return;
                                 }
+                                if (_model.tmpImageList.isNotEmpty) {
+                                  _model.urlList =
+                                      await actions.uploadImageToFirebase(
+                                    '',
+                                    _model.tmpImageList.toList(),
+                                    false,
+                                  );
 
-                                var checkListRecordReference =
-                                    CheckListRecord.createDoc(
-                                        FFAppState().customerData.customerRef!);
-                                await checkListRecordReference
-                                    .set(createCheckListRecordData(
-                                  createDate: getCurrentTimestamp,
-                                  remark: _model.textController1.text,
-                                  assetRef: widget!.assetReference,
-                                  checkerName: _model.textController2.text,
-                                ));
-                                _model.insertedCheck =
-                                    CheckListRecord.getDocumentFromData(
-                                        createCheckListRecordData(
-                                          createDate: getCurrentTimestamp,
-                                          remark: _model.textController1.text,
-                                          assetRef: widget!.assetReference,
-                                          checkerName:
-                                              _model.textController2.text,
+                                  var checkListRecordReference =
+                                      CheckListRecord.createDoc(FFAppState()
+                                          .customerData
+                                          .customerRef!);
+                                  await checkListRecordReference.set({
+                                    ...createCheckListRecordData(
+                                      createDate: getCurrentTimestamp,
+                                      remark: _model.textController1.text,
+                                      assetRef: widget!.assetReference,
+                                      checkerName: _model.textController2.text,
+                                    ),
+                                    ...mapToFirestore(
+                                      {
+                                        'image': _model.urlList,
+                                      },
+                                    ),
+                                  });
+                                  _model.insertedCheck =
+                                      CheckListRecord.getDocumentFromData({
+                                    ...createCheckListRecordData(
+                                      createDate: getCurrentTimestamp,
+                                      remark: _model.textController1.text,
+                                      assetRef: widget!.assetReference,
+                                      checkerName: _model.textController2.text,
+                                    ),
+                                    ...mapToFirestore(
+                                      {
+                                        'image': _model.urlList,
+                                      },
+                                    ),
+                                  }, checkListRecordReference);
+
+                                  await widget!.assetReference!
+                                      .update(createAssetListRecordData(
+                                    lastCheckRef:
+                                        _model.insertedCheck?.reference,
+                                  ));
+                                  _model.assetResult =
+                                      await AssetListRecord.getDocumentOnce(
+                                          widget!.assetReference!);
+                                  await action_blocks.insertTransaction(
+                                    context,
+                                    assetReference: widget!.assetReference,
+                                    refPath: functions.getCheckPath(
+                                        _model.insertedCheck!.reference),
+                                    subject:
+                                        'ทำการตรวจสอบ ${_model.assetResult?.subject}',
+                                    remark: _model.textController1.text,
+                                  );
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: WebViewAware(
+                                          child: InfoCustomViewWidget(
+                                            title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
+                                            status: 'success',
+                                          ),
                                         ),
-                                        checkListRecordReference);
+                                      );
+                                    },
+                                  );
 
-                                await widget!.assetReference!
-                                    .update(createAssetListRecordData(
-                                  lastCheckRef: _model.insertedCheck?.reference,
-                                ));
-                                _model.assetResult =
-                                    await AssetListRecord.getDocumentOnce(
-                                        widget!.assetReference!);
-                                await action_blocks.insertTransaction(
-                                  context,
-                                  assetReference: widget!.assetReference,
-                                  refPath: functions.getCheckPath(
-                                      _model.insertedCheck!.reference),
-                                  subject:
-                                      'ทำการตรวจสอบ ${_model.assetResult?.subject}',
-                                  remark: _model.textController1.text,
-                                );
-                                await showDialog(
-                                  context: context,
-                                  builder: (dialogContext) {
-                                    return Dialog(
-                                      elevation: 0,
-                                      insetPadding: EdgeInsets.zero,
-                                      backgroundColor: Colors.transparent,
-                                      alignment: AlignmentDirectional(0.0, 0.0)
-                                          .resolve(Directionality.of(context)),
-                                      child: WebViewAware(
-                                        child: InfoCustomViewWidget(
-                                          title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
-                                          status: 'success',
+                                  context.goNamed('HomePage');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: WebViewAware(
+                                          child: InfoCustomViewWidget(
+                                            title:
+                                                'กรุณาแนบรูปการตรวจอย่างน้อย 1 รูป',
+                                            status: 'error',
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-
-                                context.goNamed('HomePage');
+                                      );
+                                    },
+                                  );
+                                }
 
                                 safeSetState(() {});
                               },
