@@ -808,8 +808,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     {
                                                       'location':
                                                           FieldValue.delete(),
-                                                      'last_location_ref':
-                                                          FieldValue.delete(),
                                                     },
                                                   ),
                                                 });
@@ -924,7 +922,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                             .locationInserted!
                                                             .reference),
                                                     subject:
-                                                        '${_model.assetDocument?.subject} ถูกใช้งานอยู่',
+                                                        '${_model.assetDocument?.subject} ถูกใช้งาน',
                                                     remark: _model
                                                         .locationDataList
                                                         ?.first,
@@ -986,8 +984,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     ...mapToFirestore(
                                                       {
                                                         'location':
-                                                            FieldValue.delete(),
-                                                        'last_location_ref':
                                                             FieldValue.delete(),
                                                       },
                                                     ),
@@ -1063,8 +1059,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                       {
                                                         'location':
                                                             FieldValue.delete(),
-                                                        'last_location_ref':
-                                                            FieldValue.delete(),
                                                       },
                                                     ),
                                                   });
@@ -1099,8 +1093,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   ...mapToFirestore(
                                                     {
                                                       'location':
-                                                          FieldValue.delete(),
-                                                      'last_location_ref':
                                                           FieldValue.delete(),
                                                     },
                                                   ),

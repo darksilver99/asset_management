@@ -394,11 +394,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              valueOrDefault<String>(
-                                                listViewAssetListRecord
-                                                    .location,
-                                                '-',
-                                              ),
+                                              listViewAssetListRecord.location,
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
