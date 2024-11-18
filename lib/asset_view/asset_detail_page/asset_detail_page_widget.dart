@@ -2,6 +2,7 @@ import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
 import '/asset_view/remark_form_view/remark_form_view_widget.dart';
+import '/asset_view/remark_view/remark_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
@@ -539,54 +540,215 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 4.0, 0.0),
-                                          child: RichText(
-                                            textScaler: MediaQuery.of(context)
-                                                .textScaler,
-                                            text: TextSpan(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                TextSpan(
-                                                  text: 'สถานะ : ',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                                TextSpan(
-                                                  text: _model
-                                                      .assetDocument!.status,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        color: functions
-                                                            .getColorStatus(_model
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                4.0, 0.0),
+                                                    child: RichText(
+                                                      textScaler:
+                                                          MediaQuery.of(context)
+                                                              .textScaler,
+                                                      text: TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: 'สถานะ : ',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Kanit',
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                          TextSpan(
+                                                            text: _model
                                                                 .assetDocument!
-                                                                .status),
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                                .status,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Kanit',
+                                                                  color: functions
+                                                                      .getColorStatus(_model
+                                                                          .assetDocument!
+                                                                          .status),
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          )
+                                                        ],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Kanit',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
-                                                )
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        letterSpacing: 0.0,
-                                                      ),
                                             ),
-                                          ),
+                                            if ((_model.assetDocument?.status ==
+                                                    'หาย') ||
+                                                (_model.assetDocument?.status ==
+                                                    'ใช้ไม่ได้แล้ว'))
+                                              Builder(
+                                                builder: (context) => InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    if ((_model.assetDocument
+                                                                ?.status ==
+                                                            'ใช้ไม่ได้แล้ว') ||
+                                                        (_model.assetDocument
+                                                                ?.status ==
+                                                            'หาย')) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (dialogContext) {
+                                                          return Dialog(
+                                                            elevation: 0,
+                                                            insetPadding:
+                                                                EdgeInsets.zero,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            alignment: AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                            child: WebViewAware(
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus(),
+                                                                child:
+                                                                    RemarkViewWidget(
+                                                                  title:
+                                                                      'รายละเอียด',
+                                                                  date: () {
+                                                                    if (_model
+                                                                            .assetDocument
+                                                                            ?.status ==
+                                                                        'ใช้ไม่ได้แล้ว') {
+                                                                      return _model
+                                                                          .assetDocument!
+                                                                          .brokenDate!;
+                                                                    } else if (_model
+                                                                            .assetDocument
+                                                                            ?.status ==
+                                                                        'หาย') {
+                                                                      return _model
+                                                                          .assetDocument!
+                                                                          .lostDate!;
+                                                                    } else {
+                                                                      return getCurrentTimestamp;
+                                                                    }
+                                                                  }(),
+                                                                  detail: () {
+                                                                    if (_model
+                                                                            .assetDocument
+                                                                            ?.status ==
+                                                                        'ใช้ไม่ได้แล้ว') {
+                                                                      return _model
+                                                                          .assetDocument
+                                                                          ?.brokenDetail;
+                                                                    } else if (_model
+                                                                            .assetDocument
+                                                                            ?.status ==
+                                                                        'หาย') {
+                                                                      return _model
+                                                                          .assetDocument
+                                                                          ?.lostDetail;
+                                                                    } else {
+                                                                      return '-';
+                                                                    }
+                                                                  }(),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.info_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 14.0,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          'รายละเอียดเพิ่มเติม',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Kanit',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
                                         ),
                                       ),
                                       Builder(
