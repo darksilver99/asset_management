@@ -36,11 +36,6 @@ class LocationListRecord extends FirestoreRecord {
   String get locationName => _locationName ?? '';
   bool hasLocationName() => _locationName != null;
 
-  // "last_date" field.
-  DateTime? _lastDate;
-  DateTime? get lastDate => _lastDate;
-  bool hasLastDate() => _lastDate != null;
-
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -48,7 +43,6 @@ class LocationListRecord extends FirestoreRecord {
     _remark = snapshotData['remark'] as String?;
     _assetRef = snapshotData['asset_ref'] as DocumentReference?;
     _locationName = snapshotData['location_name'] as String?;
-    _lastDate = snapshotData['last_date'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -95,7 +89,6 @@ Map<String, dynamic> createLocationListRecordData({
   String? remark,
   DocumentReference? assetRef,
   String? locationName,
-  DateTime? lastDate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,7 +96,6 @@ Map<String, dynamic> createLocationListRecordData({
       'remark': remark,
       'asset_ref': assetRef,
       'location_name': locationName,
-      'last_date': lastDate,
     }.withoutNulls,
   );
 
@@ -119,13 +111,12 @@ class LocationListRecordDocumentEquality
     return e1?.createDate == e2?.createDate &&
         e1?.remark == e2?.remark &&
         e1?.assetRef == e2?.assetRef &&
-        e1?.locationName == e2?.locationName &&
-        e1?.lastDate == e2?.lastDate;
+        e1?.locationName == e2?.locationName;
   }
 
   @override
-  int hash(LocationListRecord? e) => const ListEquality().hash(
-      [e?.createDate, e?.remark, e?.assetRef, e?.locationName, e?.lastDate]);
+  int hash(LocationListRecord? e) => const ListEquality()
+      .hash([e?.createDate, e?.remark, e?.assetRef, e?.locationName]);
 
   @override
   bool isValidKey(Object? o) => o is LocationListRecord;
