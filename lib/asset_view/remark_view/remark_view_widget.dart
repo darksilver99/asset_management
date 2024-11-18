@@ -183,7 +183,12 @@ class _RemarkViewWidgetState extends State<RemarkViewWidget>
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily: 'Kanit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w300,
                                                         ),
                                               ),
                                             ),
