@@ -7,24 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'location_detail_view_model.dart';
-export 'location_detail_view_model.dart';
+import 'broken_detail_view_model.dart';
+export 'broken_detail_view_model.dart';
 
-class LocationDetailViewWidget extends StatefulWidget {
-  const LocationDetailViewWidget({
+class BrokenDetailViewWidget extends StatefulWidget {
+  const BrokenDetailViewWidget({
     super.key,
-    required this.locationDocument,
+    required this.assetDocument,
   });
 
-  final LocationListRecord? locationDocument;
+  final AssetListRecord? assetDocument;
 
   @override
-  State<LocationDetailViewWidget> createState() =>
-      _LocationDetailViewWidgetState();
+  State<BrokenDetailViewWidget> createState() => _BrokenDetailViewWidgetState();
 }
 
-class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
-  late LocationDetailViewModel _model;
+class _BrokenDetailViewWidgetState extends State<BrokenDetailViewWidget> {
+  late BrokenDetailViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -35,7 +34,7 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LocationDetailViewModel());
+    _model = createModel(context, () => BrokenDetailViewModel());
   }
 
   @override
@@ -137,29 +136,8 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'ใช้งานที่ : ${widget!.locationDocument?.locationName}',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Kanit',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Text(
                                       valueOrDefault<String>(
-                                        widget!.locationDocument?.remark,
+                                        widget!.assetDocument?.brokenDetail,
                                         '-',
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -176,8 +154,10 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
                                 ],
                               ),
                             ),
-                            if (widget!.locationDocument?.image != null &&
-                                (widget!.locationDocument?.image)!.isNotEmpty)
+                            if (widget!.assetDocument?.brokenImageList !=
+                                    null &&
+                                (widget!.assetDocument?.brokenImageList)!
+                                    .isNotEmpty)
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 8.0),
@@ -190,7 +170,7 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'รูปก่อนการใช้งาน',
+                                            'รูปความเสียหาย',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -209,7 +189,8 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
                                           child: Builder(
                                             builder: (context) {
                                               final imageList = widget!
-                                                      .locationDocument?.image
+                                                      .assetDocument
+                                                      ?.brokenImageList
                                                       ?.toList() ??
                                                   [];
 
@@ -312,7 +293,7 @@ class _LocationDetailViewWidgetState extends State<LocationDetailViewWidget> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'วันที่บันทึก ${functions.dateTimeTh(widget!.locationDocument?.createDate)}',
+                                    'วันที่บันทึก ${functions.dateTimeTh(widget!.assetDocument?.brokenDate)}',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

@@ -1,10 +1,10 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
-import '/asset_view/remark_form_view/remark_form_view_widget.dart';
-import '/asset_view/remark_view/remark_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/broken_view/broken_detail_view/broken_detail_view_widget.dart';
+import '/broken_view/broken_form_view/broken_form_view_widget.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -12,6 +12,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/location_view/location_form_view/location_form_view_widget.dart';
+import '/lost_view/lost_form_view/lost_form_view_widget.dart';
+import '/lost_view/lost_view/lost_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -822,12 +824,45 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
-                                                    if ((_model.assetDocument
-                                                                ?.status ==
-                                                            'ใช้ไม่ได้แล้ว') ||
-                                                        (_model.assetDocument
-                                                                ?.status ==
-                                                            'หาย')) {
+                                                    if (_model.assetDocument
+                                                            ?.status ==
+                                                        'ใช้ไม่ได้แล้ว') {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        enableDrag: false,
+                                                        useSafeArea: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    BrokenDetailViewWidget(
+                                                                  assetDocument:
+                                                                      _model
+                                                                          .assetDocument!,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() {}));
+                                                    } else if (_model
+                                                            .assetDocument
+                                                            ?.status ==
+                                                        'หาย') {
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -852,47 +887,13 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                                             dialogContext)
                                                                         .unfocus(),
                                                                 child:
-                                                                    RemarkViewWidget(
-                                                                  title:
-                                                                      'รายละเอียด',
-                                                                  date: () {
-                                                                    if (_model
-                                                                            .assetDocument
-                                                                            ?.status ==
-                                                                        'ใช้ไม่ได้แล้ว') {
-                                                                      return _model
-                                                                          .assetDocument!
-                                                                          .brokenDate!;
-                                                                    } else if (_model
-                                                                            .assetDocument
-                                                                            ?.status ==
-                                                                        'หาย') {
-                                                                      return _model
-                                                                          .assetDocument!
-                                                                          .lostDate!;
-                                                                    } else {
-                                                                      return getCurrentTimestamp;
-                                                                    }
-                                                                  }(),
-                                                                  detail: () {
-                                                                    if (_model
-                                                                            .assetDocument
-                                                                            ?.status ==
-                                                                        'ใช้ไม่ได้แล้ว') {
-                                                                      return _model
-                                                                          .assetDocument
-                                                                          ?.brokenDetail;
-                                                                    } else if (_model
-                                                                            .assetDocument
-                                                                            ?.status ==
-                                                                        'หาย') {
-                                                                      return _model
-                                                                          .assetDocument
-                                                                          ?.lostDetail;
-                                                                    } else {
-                                                                      return '-';
-                                                                    }
-                                                                  }(),
+                                                                    LostViewWidget(
+                                                                  date: _model
+                                                                      .assetDocument!
+                                                                      .lostDate!,
+                                                                  detail: _model
+                                                                      .assetDocument
+                                                                      ?.lostDetail,
                                                                 ),
                                                               ),
                                                             ),
@@ -1080,7 +1081,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                               .viewInsetsOf(
                                                                   context),
                                                           child:
-                                                              RemarkFormViewWidget(
+                                                              LostFormViewWidget(
                                                             hintText:
                                                                 'ระบุรายละเอียดเพิ่มเติม เช่น หายที่ไหน, ใครเป็นคนแจ้ง',
                                                           ),
@@ -1153,9 +1154,9 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                               .viewInsetsOf(
                                                                   context),
                                                           child:
-                                                              RemarkFormViewWidget(
-                                                            hintText:
-                                                                'ระบุรายละเอียดเพิ่มเติม เช่น สาเหตุที่ใช้ไม่ได้',
+                                                              BrokenFormViewWidget(
+                                                            assetDocument: _model
+                                                                .assetDocument!,
                                                           ),
                                                         ),
                                                       ),
@@ -1166,41 +1167,12 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                         value));
 
                                                 _shouldSetState = true;
-                                                if (_model.brokenDetail !=
-                                                        null &&
-                                                    _model.brokenDetail != '') {
-                                                  await _model
-                                                      .assetDocument!.reference
-                                                      .update({
-                                                    ...createAssetListRecordData(
-                                                      updateDate:
-                                                          getCurrentTimestamp,
-                                                      status: 'ใช้ไม่ได้แล้ว',
-                                                      brokenDate:
-                                                          getCurrentTimestamp,
-                                                      brokenDetail:
-                                                          _model.brokenDetail,
-                                                    ),
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'location':
-                                                            FieldValue.delete(),
-                                                      },
-                                                    ),
-                                                  });
-                                                  await action_blocks
-                                                      .insertTransaction(
-                                                    context,
-                                                    assetReference: _model
-                                                        .assetDocument
-                                                        ?.reference,
-                                                    refPath: '',
-                                                    subject: _model
-                                                        .assetDocument?.subject,
-                                                    remark:
-                                                        'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
-                                                  );
-                                                } else {
+                                                if (!((_model.brokenDetail !=
+                                                            null &&
+                                                        _model.brokenDetail !=
+                                                            '') &&
+                                                    (_model.brokenDetail ==
+                                                        'update'))) {
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
                                                   return;

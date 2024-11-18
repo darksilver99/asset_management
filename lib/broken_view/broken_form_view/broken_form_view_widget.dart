@@ -8,18 +8,17 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'location_form_view_model.dart';
-export 'location_form_view_model.dart';
+import 'broken_form_view_model.dart';
+export 'broken_form_view_model.dart';
 
-class LocationFormViewWidget extends StatefulWidget {
-  const LocationFormViewWidget({
+class BrokenFormViewWidget extends StatefulWidget {
+  const BrokenFormViewWidget({
     super.key,
     required this.assetDocument,
   });
@@ -27,11 +26,11 @@ class LocationFormViewWidget extends StatefulWidget {
   final AssetListRecord? assetDocument;
 
   @override
-  State<LocationFormViewWidget> createState() => _LocationFormViewWidgetState();
+  State<BrokenFormViewWidget> createState() => _BrokenFormViewWidgetState();
 }
 
-class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
-  late LocationFormViewModel _model;
+class _BrokenFormViewWidgetState extends State<BrokenFormViewWidget> {
+  late BrokenFormViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -42,13 +41,10 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LocationFormViewModel());
+    _model = createModel(context, () => BrokenFormViewModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -60,8 +56,6 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -115,7 +109,7 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Text(
-                              'บันทึกข้อมูลการใช้งาน',
+                              'บันทึกข้อมูลความเสียหาย',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -141,82 +135,8 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
-                                controller: _model.textController1,
-                                focusNode: _model.textFieldFocusNode1,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'แผนกหรือสถานที่ใช้',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Kanit',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Kanit',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Kanit',
-                                      letterSpacing: 0.0,
-                                    ),
-                                maxLines: null,
-                                keyboardType: TextInputType.multiline,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController1Validator
-                                    .asValidator(context),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 16.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _model.textController2,
-                                focusNode: _model.textFieldFocusNode2,
+                                controller: _model.textController,
+                                focusNode: _model.textFieldFocusNode,
                                 autofocus: false,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -228,7 +148,7 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   hintText:
-                                      'ระบุรายละเอียด เช่น ชื่อผู้ใช้งาน,  สภาพอุปกรณ์ก่อนให้ใช้งาน อื่นๆ',
+                                      'ระบุรายละเอียด เช่น สาเหตุที่ใช้งานไม่ได้, ผู้ใช้งาน',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -279,7 +199,7 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                                 keyboardType: TextInputType.multiline,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController2Validator
+                                validator: _model.textControllerValidator
                                     .asValidator(context),
                               ),
                             ),
@@ -299,7 +219,7 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'รูปก่อนการใช้งาน',
+                                          'รูปความเสียหาย',
                                           maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -609,62 +529,33 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                                 if (_model.tmpImageList.isNotEmpty) {
                                   _model.urlList =
                                       await actions.uploadImageToFirebase(
-                                    '${currentUserUid}/location',
+                                    '${currentUserUid}/broken',
                                     _model.tmpImageList.toList(),
                                     false,
                                   );
 
-                                  var locationListRecordReference =
-                                      LocationListRecord.createDoc(FFAppState()
-                                          .customerData
-                                          .customerRef!);
-                                  await locationListRecordReference.set({
-                                    ...createLocationListRecordData(
-                                      createDate: getCurrentTimestamp,
-                                      remark: _model.textController2.text,
-                                      assetRef:
-                                          widget!.assetDocument?.reference,
-                                      locationName: _model.textController1.text,
+                                  await widget!.assetDocument!.reference
+                                      .update({
+                                    ...createAssetListRecordData(
+                                      updateDate: getCurrentTimestamp,
+                                      status: 'ใช้ไม่ได้แล้ว',
+                                      brokenDate: getCurrentTimestamp,
+                                      brokenDetail: _model.textController.text,
                                     ),
                                     ...mapToFirestore(
                                       {
-                                        'image': _model.urlList,
+                                        'location': FieldValue.delete(),
+                                        'broken_image_list': _model.urlList,
                                       },
                                     ),
                                   });
-                                  _model.locationInserted =
-                                      LocationListRecord.getDocumentFromData({
-                                    ...createLocationListRecordData(
-                                      createDate: getCurrentTimestamp,
-                                      remark: _model.textController2.text,
-                                      assetRef:
-                                          widget!.assetDocument?.reference,
-                                      locationName: _model.textController1.text,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'image': _model.urlList,
-                                      },
-                                    ),
-                                  }, locationListRecordReference);
-
-                                  await widget!.assetDocument!.reference
-                                      .update(createAssetListRecordData(
-                                    updateDate: getCurrentTimestamp,
-                                    status: 'ใช้งานอยู่',
-                                    lastLocationRef:
-                                        _model.locationInserted?.reference,
-                                    location: _model.textController1.text,
-                                  ));
                                   await action_blocks.insertTransaction(
                                     context,
                                     assetReference:
                                         widget!.assetDocument?.reference,
-                                    refPath: functions.getLocationPath(
-                                        _model.locationInserted!.reference),
-                                    subject:
-                                        '${_model.textController1.text} ถูกใช้งาน',
-                                    remark: _model.textController2.text,
+                                    refPath: '',
+                                    subject: widget!.assetDocument?.subject,
+                                    remark: 'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
                                   );
                                   Navigator.pop(context, 'update');
                                 } else {
