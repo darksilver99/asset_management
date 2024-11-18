@@ -1,6 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
+import '/asset_view/location_form_view/location_form_view_widget.dart';
 import '/asset_view/remark_form_view/remark_form_view_widget.dart';
 import '/asset_view/remark_view/remark_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
@@ -65,6 +66,8 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -795,12 +798,21 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   'ว่าง') {
                                                 await _model
                                                     .assetDocument!.reference
-                                                    .update(
-                                                        createAssetListRecordData(
-                                                  updateDate:
-                                                      getCurrentTimestamp,
-                                                  status: 'ว่าง',
-                                                ));
+                                                    .update({
+                                                  ...createAssetListRecordData(
+                                                    updateDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'ว่าง',
+                                                  ),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'location':
+                                                          FieldValue.delete(),
+                                                      'last_location_ref':
+                                                          FieldValue.delete(),
+                                                    },
+                                                  ),
+                                                });
                                                 await action_blocks
                                                     .insertTransaction(
                                                   context,
@@ -815,25 +827,109 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'ใช้งาน') {
-                                                await _model
-                                                    .assetDocument!.reference
-                                                    .update(
-                                                        createAssetListRecordData(
-                                                  updateDate:
-                                                      getCurrentTimestamp,
-                                                  status: 'ใช้งานอยู่',
-                                                ));
-                                                await action_blocks
-                                                    .insertTransaction(
-                                                  context,
-                                                  assetReference: _model
-                                                      .assetDocument?.reference,
-                                                  refPath: '',
-                                                  subject: _model
-                                                      .assetDocument?.subject,
-                                                  remark:
-                                                      'ปรับสถานะเป็น \"ใช้งานอยู่\"',
-                                                );
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  useSafeArea: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              LocationFormViewWidget(),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => safeSetState(
+                                                    () => _model
+                                                            .locationDataList =
+                                                        value));
+
+                                                _shouldSetState = true;
+                                                if (_model.locationDataList !=
+                                                        null &&
+                                                    (_model.locationDataList)!
+                                                        .isNotEmpty) {
+                                                  var locationListRecordReference =
+                                                      LocationListRecord
+                                                          .createDoc(FFAppState()
+                                                              .customerData
+                                                              .customerRef!);
+                                                  await locationListRecordReference
+                                                      .set(
+                                                          createLocationListRecordData(
+                                                    createDate:
+                                                        getCurrentTimestamp,
+                                                    remark: _model
+                                                        .locationDataList?.last,
+                                                    assetRef: _model
+                                                        .assetDocument
+                                                        ?.reference,
+                                                    locationName: _model
+                                                        .locationDataList
+                                                        ?.first,
+                                                  ));
+                                                  _model.locationInserted =
+                                                      LocationListRecord
+                                                          .getDocumentFromData(
+                                                              createLocationListRecordData(
+                                                                createDate:
+                                                                    getCurrentTimestamp,
+                                                                remark: _model
+                                                                    .locationDataList
+                                                                    ?.last,
+                                                                assetRef: _model
+                                                                    .assetDocument
+                                                                    ?.reference,
+                                                                locationName: _model
+                                                                    .locationDataList
+                                                                    ?.first,
+                                                              ),
+                                                              locationListRecordReference);
+                                                  _shouldSetState = true;
+
+                                                  await _model
+                                                      .assetDocument!.reference
+                                                      .update(
+                                                          createAssetListRecordData(
+                                                    updateDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'ใช้งานอยู่',
+                                                    lastLocationRef: _model
+                                                        .locationInserted
+                                                        ?.reference,
+                                                    location: _model
+                                                        .locationDataList
+                                                        ?.first,
+                                                  ));
+                                                  await action_blocks
+                                                      .insertTransaction(
+                                                    context,
+                                                    assetReference: _model
+                                                        .assetDocument
+                                                        ?.reference,
+                                                    refPath: functions
+                                                        .getLocationPath(_model
+                                                            .locationInserted!
+                                                            .reference),
+                                                    subject:
+                                                        '${_model.assetDocument?.subject} ถูกใช้งานอยู่',
+                                                    remark: _model
+                                                        .locationDataList
+                                                        ?.first,
+                                                  );
+                                                }
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'หาย') {
@@ -873,16 +969,25 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     _model.lostDetail != '') {
                                                   await _model
                                                       .assetDocument!.reference
-                                                      .update(
-                                                          createAssetListRecordData(
-                                                    updateDate:
-                                                        getCurrentTimestamp,
-                                                    status: 'หาย',
-                                                    lostDetail:
-                                                        _model.lostDetail,
-                                                    lostDate:
-                                                        getCurrentTimestamp,
-                                                  ));
+                                                      .update({
+                                                    ...createAssetListRecordData(
+                                                      updateDate:
+                                                          getCurrentTimestamp,
+                                                      status: 'หาย',
+                                                      lostDetail:
+                                                          _model.lostDetail,
+                                                      lostDate:
+                                                          getCurrentTimestamp,
+                                                    ),
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'location':
+                                                            FieldValue.delete(),
+                                                        'last_location_ref':
+                                                            FieldValue.delete(),
+                                                      },
+                                                    ),
+                                                  });
                                                   await action_blocks
                                                       .insertTransaction(
                                                     context,
@@ -940,16 +1045,25 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     _model.brokenDetail != '') {
                                                   await _model
                                                       .assetDocument!.reference
-                                                      .update(
-                                                          createAssetListRecordData(
-                                                    updateDate:
-                                                        getCurrentTimestamp,
-                                                    status: 'ใช้ไม่ได้แล้ว',
-                                                    brokenDate:
-                                                        getCurrentTimestamp,
-                                                    brokenDetail:
-                                                        _model.brokenDetail,
-                                                  ));
+                                                      .update({
+                                                    ...createAssetListRecordData(
+                                                      updateDate:
+                                                          getCurrentTimestamp,
+                                                      status: 'ใช้ไม่ได้แล้ว',
+                                                      brokenDate:
+                                                          getCurrentTimestamp,
+                                                      brokenDetail:
+                                                          _model.brokenDetail,
+                                                    ),
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'location':
+                                                            FieldValue.delete(),
+                                                        'last_location_ref':
+                                                            FieldValue.delete(),
+                                                      },
+                                                    ),
+                                                  });
                                                   await action_blocks
                                                       .insertTransaction(
                                                     context,
@@ -972,12 +1086,21 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   'ส่งซ่อม') {
                                                 await _model
                                                     .assetDocument!.reference
-                                                    .update(
-                                                        createAssetListRecordData(
-                                                  updateDate:
-                                                      getCurrentTimestamp,
-                                                  status: 'ส่งซ่อม',
-                                                ));
+                                                    .update({
+                                                  ...createAssetListRecordData(
+                                                    updateDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'ส่งซ่อม',
+                                                  ),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'location':
+                                                          FieldValue.delete(),
+                                                      'last_location_ref':
+                                                          FieldValue.delete(),
+                                                    },
+                                                  ),
+                                                });
                                                 await action_blocks
                                                     .insertTransaction(
                                                   context,
@@ -989,7 +1112,6 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   remark: 'ทำการส่งซ่อม',
                                                 );
                                               } else {
-                                                safeSetState(() {});
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
                                                 return;

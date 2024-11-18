@@ -2,6 +2,7 @@ import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
+import '/component/no_data_view/no_data_view_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -128,7 +129,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                   color: FlutterFlowTheme.of(context).primaryBackground,
                   fontSize: 14.0,
                   letterSpacing: 0.0,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.w500,
                 ),
           ),
         ),
@@ -284,7 +285,7 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                           ),
                         ),
                       ),
-
+                      noItemsFoundIndicatorBuilder: (_) => NoDataViewWidget(),
                       itemBuilder: (context, _, listViewIndex) {
                         final listViewAssetListRecord = _model
                             .listViewPagingController!.itemList![listViewIndex];
