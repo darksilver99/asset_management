@@ -761,7 +761,8 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                                   context),
                                                           child:
                                                               RemarkFormViewWidget(
-                                                            hintText: '',
+                                                            hintText:
+                                                                'ระบุรายละเอียดเพิ่มเติม เช่น สาเหตุที่ใช้ไม่ได้',
                                                           ),
                                                         ),
                                                       ),
