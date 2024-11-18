@@ -581,7 +581,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'ประวัติ\nการใช้งาน',
+                                                      'รายการ\nใช้งาน',
                                                       textAlign:
                                                           TextAlign.center,
                                                       maxLines: 2,
@@ -657,7 +657,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'ประวัติ\nการซ่อม',
+                                                      'รายการ\nซ่อม',
                                                       textAlign:
                                                           TextAlign.center,
                                                       maxLines: 2,
