@@ -1,6 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
+import '/asset_view/remark_form_view/remark_form_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
@@ -652,38 +653,167 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'ใช้งาน') {
+                                                await _model
+                                                    .assetDocument!.reference
+                                                    .update(
+                                                        createAssetListRecordData(
+                                                  updateDate:
+                                                      getCurrentTimestamp,
+                                                  status: 'ใช้งานอยู่',
+                                                ));
+                                                await action_blocks
+                                                    .insertTransaction(
+                                                  context,
+                                                  assetReference: _model
+                                                      .assetDocument?.reference,
+                                                  refPath: '',
+                                                  subject: _model
+                                                      .assetDocument?.subject,
+                                                  remark:
+                                                      'ปรับสถานะเป็น \"ใช้งานอยู่\"',
+                                                );
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'หาย') {
-                                                await _model
-                                                    .assetDocument!.reference
-                                                    .update(
-                                                        createAssetListRecordData(
-                                                  updateDate:
-                                                      getCurrentTimestamp,
-                                                  status: 'หาย',
-                                                ));
-                                                await action_blocks
-                                                    .insertTransaction(
-                                                  context,
-                                                  assetReference: _model
-                                                      .assetDocument?.reference,
-                                                  refPath: '',
-                                                  subject: _model
-                                                      .assetDocument?.subject,
-                                                  remark:
-                                                      'ปรับสถานะเป็น \"หาย\"',
-                                                );
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  useSafeArea: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              RemarkFormViewWidget(
+                                                            hintText:
+                                                                'ระบุรายละเอียดเพิ่มเติม เช่น หายที่ไหน, ใครเป็นคนแจ้ง',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => safeSetState(
+                                                    () => _model.lostDetail =
+                                                        value));
+
+                                                _shouldSetState = true;
+                                                if (_model.lostDetail != null &&
+                                                    _model.lostDetail != '') {
+                                                  await _model
+                                                      .assetDocument!.reference
+                                                      .update(
+                                                          createAssetListRecordData(
+                                                    updateDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'หาย',
+                                                    lostDetail:
+                                                        _model.lostDetail,
+                                                    lostDate:
+                                                        getCurrentTimestamp,
+                                                  ));
+                                                  await action_blocks
+                                                      .insertTransaction(
+                                                    context,
+                                                    assetReference: _model
+                                                        .assetDocument
+                                                        ?.reference,
+                                                    refPath: '',
+                                                    subject: _model
+                                                        .assetDocument?.subject,
+                                                    remark:
+                                                        'ปรับสถานะเป็น \"หาย\"',
+                                                  );
+                                                } else {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
                                               } else if (_model
                                                       .selectedStatus ==
                                                   'ใช้ไม่ได้แล้ว') {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  useSafeArea: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              RemarkFormViewWidget(
+                                                            hintText: '',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => safeSetState(
+                                                    () => _model.brokenDetail =
+                                                        value));
+
+                                                _shouldSetState = true;
+                                                if (_model.brokenDetail !=
+                                                        null &&
+                                                    _model.brokenDetail != '') {
+                                                  await _model
+                                                      .assetDocument!.reference
+                                                      .update(
+                                                          createAssetListRecordData(
+                                                    updateDate:
+                                                        getCurrentTimestamp,
+                                                    status: 'ใช้ไม่ได้แล้ว',
+                                                    brokenDate:
+                                                        getCurrentTimestamp,
+                                                    brokenDetail:
+                                                        _model.brokenDetail,
+                                                  ));
+                                                  await action_blocks
+                                                      .insertTransaction(
+                                                    context,
+                                                    assetReference: _model
+                                                        .assetDocument
+                                                        ?.reference,
+                                                    refPath: '',
+                                                    subject: _model
+                                                        .assetDocument?.subject,
+                                                    remark:
+                                                        'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
+                                                  );
+                                                } else {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                              } else if (_model
+                                                      .selectedStatus ==
+                                                  'ส่งซ่อม') {
                                                 await _model
                                                     .assetDocument!.reference
                                                     .update(
                                                         createAssetListRecordData(
                                                   updateDate:
                                                       getCurrentTimestamp,
-                                                  status: 'ใช้ไม่ได้แล้ว',
+                                                  status: 'ส่งซ่อม',
                                                 ));
                                                 await action_blocks
                                                     .insertTransaction(
@@ -693,18 +823,47 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                   refPath: '',
                                                   subject: _model
                                                       .assetDocument?.subject,
-                                                  remark:
-                                                      'ปรับสถานะเป็น \"ใช้ไม่ได้แล้ว\"',
+                                                  remark: 'ทำการส่งซ่อม',
                                                 );
-                                              } else if (_model
-                                                      .selectedStatus ==
-                                                  'ส่งซ่อม') {
                                               } else {
                                                 safeSetState(() {});
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
                                                 return;
                                               }
+
+                                              await showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: WebViewAware(
+                                                      child: GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus(),
+                                                        child:
+                                                            InfoCustomViewWidget(
+                                                          title:
+                                                              'บันทึกข้อมูลเรียบร้อยแล้ว',
+                                                          status: 'success',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
 
                                               _model.isLoading = true;
                                               safeSetState(() {});

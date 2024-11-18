@@ -81,6 +81,26 @@ class AssetListRecord extends FirestoreRecord {
   int get price => _price ?? 0;
   bool hasPrice() => _price != null;
 
+  // "lost_detail" field.
+  String? _lostDetail;
+  String get lostDetail => _lostDetail ?? '';
+  bool hasLostDetail() => _lostDetail != null;
+
+  // "lost_date" field.
+  DateTime? _lostDate;
+  DateTime? get lostDate => _lostDate;
+  bool hasLostDate() => _lostDate != null;
+
+  // "broken_detail" field.
+  String? _brokenDetail;
+  String get brokenDetail => _brokenDetail ?? '';
+  bool hasBrokenDetail() => _brokenDetail != null;
+
+  // "broken_date" field.
+  DateTime? _brokenDate;
+  DateTime? get brokenDate => _brokenDate;
+  bool hasBrokenDate() => _brokenDate != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -97,6 +117,10 @@ class AssetListRecord extends FirestoreRecord {
     _status = snapshotData['status'] as String?;
     _image = snapshotData['image'] as String?;
     _price = castToType<int>(snapshotData['price']);
+    _lostDetail = snapshotData['lost_detail'] as String?;
+    _lostDate = snapshotData['lost_date'] as DateTime?;
+    _brokenDetail = snapshotData['broken_detail'] as String?;
+    _brokenDate = snapshotData['broken_date'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -152,6 +176,10 @@ Map<String, dynamic> createAssetListRecordData({
   String? status,
   String? image,
   int? price,
+  String? lostDetail,
+  DateTime? lostDate,
+  String? brokenDetail,
+  DateTime? brokenDate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -168,6 +196,10 @@ Map<String, dynamic> createAssetListRecordData({
       'status': status,
       'image': image,
       'price': price,
+      'lost_detail': lostDetail,
+      'lost_date': lostDate,
+      'broken_detail': brokenDetail,
+      'broken_date': brokenDate,
     }.withoutNulls,
   );
 
@@ -191,7 +223,11 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e1?.lastLocationRef == e2?.lastLocationRef &&
         e1?.status == e2?.status &&
         e1?.image == e2?.image &&
-        e1?.price == e2?.price;
+        e1?.price == e2?.price &&
+        e1?.lostDetail == e2?.lostDetail &&
+        e1?.lostDate == e2?.lostDate &&
+        e1?.brokenDetail == e2?.brokenDetail &&
+        e1?.brokenDate == e2?.brokenDate;
   }
 
   @override
@@ -208,7 +244,11 @@ class AssetListRecordDocumentEquality implements Equality<AssetListRecord> {
         e?.lastLocationRef,
         e?.status,
         e?.image,
-        e?.price
+        e?.price,
+        e?.lostDetail,
+        e?.lostDate,
+        e?.brokenDetail,
+        e?.brokenDate
       ]);
 
   @override
