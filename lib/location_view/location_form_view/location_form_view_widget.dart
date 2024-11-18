@@ -15,23 +15,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'check_form_view_model.dart';
-export 'check_form_view_model.dart';
+import 'location_form_view_model.dart';
+export 'location_form_view_model.dart';
 
-class CheckFormViewWidget extends StatefulWidget {
-  const CheckFormViewWidget({
+class LocationFormViewWidget extends StatefulWidget {
+  const LocationFormViewWidget({
     super.key,
-    required this.assetReference,
+    required this.assetDocument,
   });
 
-  final DocumentReference? assetReference;
+  final AssetListRecord? assetDocument;
 
   @override
-  State<CheckFormViewWidget> createState() => _CheckFormViewWidgetState();
+  State<LocationFormViewWidget> createState() => _LocationFormViewWidgetState();
 }
 
-class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
-  late CheckFormViewModel _model;
+class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
+  late LocationFormViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -42,7 +42,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CheckFormViewModel());
+    _model = createModel(context, () => LocationFormViewModel());
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -115,7 +115,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Text(
-                              'บันทึกการตรวจ',
+                              'บันทึกข้อมูลการใช้งาน',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -147,13 +147,88 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
-                                  labelText: 'รายละเอียดการตรวจ',
+                                  labelText: 'แผนกหรือสถานที่ใช้',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
                                         fontFamily: 'Kanit',
                                         letterSpacing: 0.0,
                                       ),
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Kanit',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Kanit',
+                                      letterSpacing: 0.0,
+                                    ),
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                cursorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                validator: _model.textController1Validator
+                                    .asValidator(context),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _model.textController2,
+                                focusNode: _model.textFieldFocusNode2,
+                                autofocus: false,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Kanit',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  hintText:
+                                      'ระบุรายละเอียด เช่น ชื่อผู้ใช้งาน,  สภาพอุปกรณ์ก่อนให้ใช้งาน อื่นๆ',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
@@ -204,78 +279,6 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                 keyboardType: TextInputType.multiline,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController1Validator
-                                    .asValidator(context),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 16.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _model.textController2,
-                                focusNode: _model.textFieldFocusNode2,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'ชื่อผู้ตรวจ',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Kanit',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Kanit',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Kanit',
-                                      letterSpacing: 0.0,
-                                    ),
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
                                 validator: _model.textController2Validator
                                     .asValidator(context),
                               ),
@@ -296,7 +299,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'รูปการตรวจ',
+                                          'รูปการก่อนใช้งาน',
                                           maxLines: 1,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -606,21 +609,22 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                 if (_model.tmpImageList.isNotEmpty) {
                                   _model.urlList =
                                       await actions.uploadImageToFirebase(
-                                    '${currentUserUid}/check',
+                                    '${currentUserUid}/location',
                                     _model.tmpImageList.toList(),
                                     false,
                                   );
 
-                                  var checkListRecordReference =
-                                      CheckListRecord.createDoc(FFAppState()
+                                  var locationListRecordReference =
+                                      LocationListRecord.createDoc(FFAppState()
                                           .customerData
                                           .customerRef!);
-                                  await checkListRecordReference.set({
-                                    ...createCheckListRecordData(
+                                  await locationListRecordReference.set({
+                                    ...createLocationListRecordData(
                                       createDate: getCurrentTimestamp,
-                                      remark: _model.textController1.text,
-                                      assetRef: widget!.assetReference,
-                                      checkerName: _model.textController2.text,
+                                      remark: _model.textController2.text,
+                                      assetRef:
+                                          widget!.assetDocument?.reference,
+                                      locationName: _model.textController1.text,
                                     ),
                                     ...mapToFirestore(
                                       {
@@ -628,60 +632,41 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                       },
                                     ),
                                   });
-                                  _model.insertedCheck =
-                                      CheckListRecord.getDocumentFromData({
-                                    ...createCheckListRecordData(
+                                  _model.locationInserted =
+                                      LocationListRecord.getDocumentFromData({
+                                    ...createLocationListRecordData(
                                       createDate: getCurrentTimestamp,
-                                      remark: _model.textController1.text,
-                                      assetRef: widget!.assetReference,
-                                      checkerName: _model.textController2.text,
+                                      remark: _model.textController2.text,
+                                      assetRef:
+                                          widget!.assetDocument?.reference,
+                                      locationName: _model.textController1.text,
                                     ),
                                     ...mapToFirestore(
                                       {
                                         'image': _model.urlList,
                                       },
                                     ),
-                                  }, checkListRecordReference);
+                                  }, locationListRecordReference);
 
-                                  await widget!.assetReference!
+                                  await widget!.assetDocument!.reference
                                       .update(createAssetListRecordData(
-                                    lastCheckRef:
-                                        _model.insertedCheck?.reference,
+                                    updateDate: getCurrentTimestamp,
+                                    status: 'ใช้งานอยู่',
+                                    lastLocationRef:
+                                        _model.locationInserted?.reference,
+                                    location: _model.textController1.text,
                                   ));
-                                  _model.assetResult =
-                                      await AssetListRecord.getDocumentOnce(
-                                          widget!.assetReference!);
                                   await action_blocks.insertTransaction(
                                     context,
-                                    assetReference: widget!.assetReference,
-                                    refPath: functions.getCheckPath(
-                                        _model.insertedCheck!.reference),
+                                    assetReference:
+                                        widget!.assetDocument?.reference,
+                                    refPath: functions.getLocationPath(
+                                        _model.locationInserted!.reference),
                                     subject:
-                                        'ทำการตรวจสอบ ${_model.assetResult?.subject}',
-                                    remark: _model.textController1.text,
+                                        '${_model.textController1.text} ถูกใช้งาน',
+                                    remark: _model.textController2.text,
                                   );
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                        child: WebViewAware(
-                                          child: InfoCustomViewWidget(
-                                            title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
-                                            status: 'success',
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-
-                                  context.goNamed('HomePage');
+                                  Navigator.pop(context, 'update');
                                 } else {
                                   await showDialog(
                                     context: context,
@@ -696,9 +681,8 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                                     Directionality.of(context)),
                                         child: WebViewAware(
                                           child: InfoCustomViewWidget(
-                                            title:
-                                                'กรุณาแนบรูปการตรวจอย่างน้อย 1 รูป',
-                                            status: 'error',
+                                            title: 'กรุณาแนบรูปอย่างน้อย 1 รูป',
+                                            status: '',
                                           ),
                                         ),
                                       );

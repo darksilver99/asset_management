@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/check_view/check_form_view/check_form_view_widget.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/no_data_view/no_data_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/location_view/location_detail_view/location_detail_view_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -55,45 +53,6 @@ class _LocationListPageWidgetState extends State<LocationListPageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            await showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              enableDrag: false,
-              useSafeArea: true,
-              context: context,
-              builder: (context) {
-                return WebViewAware(
-                  child: GestureDetector(
-                    onTap: () => FocusScope.of(context).unfocus(),
-                    child: Padding(
-                      padding: MediaQuery.viewInsetsOf(context),
-                      child: CheckFormViewWidget(
-                        assetReference: widget!.assetDocument!.reference,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ).then((value) => safeSetState(() {}));
-          },
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          icon: FaIcon(
-            FontAwesomeIcons.clipboardCheck,
-          ),
-          elevation: 8.0,
-          label: Text(
-            'บันทึกการตรวจ',
-            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  fontFamily: 'Kanit',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 18.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-        ),
         body: SafeArea(
           top: true,
           child: Column(
