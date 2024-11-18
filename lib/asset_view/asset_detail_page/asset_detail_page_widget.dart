@@ -1037,11 +1037,16 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                               safeSetState(() {});
                                           },
                                           text: 'เปลี่ยนสถานะ',
+                                          icon: Icon(
+                                            Icons
+                                                .published_with_changes_rounded,
+                                            size: 18.0,
+                                          ),
                                           options: FFButtonOptions(
-                                            height: 32.0,
+                                            height: 42.0,
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
+                                                    8.0, 0.0, 8.0, 0.0),
                                             iconPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
@@ -1053,7 +1058,7 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     .override(
                                                       fontFamily: 'Kanit',
                                                       color: Colors.white,
-                                                      fontSize: 18.0,
+                                                      fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                     ),
                                             elevation: 3.0,
