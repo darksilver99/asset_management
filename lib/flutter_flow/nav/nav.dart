@@ -101,11 +101,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginPageWidget(),
         ),
         FFRoute(
-          name: 'TestPage',
-          path: '/testPage',
-          builder: (context, params) => TestPageWidget(),
-        ),
-        FFRoute(
           name: 'RegisterPage',
           path: '/registerPage',
           builder: (context, params) => RegisterPageWidget(),

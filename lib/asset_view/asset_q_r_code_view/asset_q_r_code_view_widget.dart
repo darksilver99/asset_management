@@ -231,7 +231,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'QR Code นี้ใช้สำหรับสแกนเพื่อตรวจเช็คอุปกรณ์ โดยสแกนผ่านเมนู \"ตรวจเช็คอุปกรณ์\" ที่หน้าแรก',
+                                      'ท่านสามารถนำ QR Code นี้ไปติดบนอุปกรณ์เพื่อความรวดเร็วในการตรวจสอบ โดยสามารถสแกนผ่านเมนู \'ตรวจเช็คอุปกรณ์\' ที่หน้าแรก',
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium

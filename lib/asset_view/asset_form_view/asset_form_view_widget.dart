@@ -913,7 +913,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                         text: 'แนบรูป',
                                         icon: Icon(
                                           Icons.image_rounded,
-                                          size: 15.0,
+                                          size: 22.0,
                                         ),
                                         options: FFButtonOptions(
                                           height: 40.0,
@@ -924,7 +924,7 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
+                                              .warning,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .titleSmall
