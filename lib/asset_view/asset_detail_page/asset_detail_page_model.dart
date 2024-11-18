@@ -1,6 +1,7 @@
 import '/asset_view/asset_form_view/asset_form_view_widget.dart';
 import '/asset_view/asset_q_r_code_view/asset_q_r_code_view_widget.dart';
 import '/asset_view/asset_status_view/asset_status_view_widget.dart';
+import '/asset_view/remark_form_view/remark_form_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
@@ -40,6 +41,10 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   String? isUpdate;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   String? selectedStatus;
+  // Stores action output result for [Bottom Sheet - RemarkFormView] action in Button widget.
+  String? lostDetail;
+  // Stores action output result for [Bottom Sheet - RemarkFormView] action in Button widget.
+  String? brokenDetail;
 
   @override
   void initState(BuildContext context) {
