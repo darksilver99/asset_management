@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -507,17 +506,12 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                       ),
                                     ),
                                   ),
-                                  FlutterFlowIconButton(
-                                    borderRadius: 8.0,
-                                    buttonSize: 57.0,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).tertiary,
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.barcode,
-                                      color: FlutterFlowTheme.of(context).info,
-                                      size: 24.0,
-                                    ),
-                                    onPressed: () async {
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
                                       _model.barCode =
                                           await FlutterBarcodeScanner
                                               .scanBarcode(
@@ -529,14 +523,41 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
 
                                       if (_model.barCode != null &&
                                           _model.barCode != '') {
-                                        safeSetState(() {
-                                          _model.textController2?.text =
-                                              _model.barCode!;
-                                        });
+                                        if (_model.barCode != '-1') {
+                                          safeSetState(() {
+                                            _model.textController2?.text =
+                                                _model.barCode!;
+                                          });
+                                        }
                                       }
 
                                       safeSetState(() {});
                                     },
+                                    child: Container(
+                                      width: 73.0,
+                                      height: 73.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.barcode,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 32.0,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
