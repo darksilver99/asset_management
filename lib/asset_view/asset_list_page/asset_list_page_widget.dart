@@ -141,95 +141,74 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
-                      child: Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: [
-                          FlutterFlowChoiceChips(
-                            options: [
-                              ChipData('ว่าง'),
-                              ChipData('ใช้งานอยู่'),
-                              ChipData('ส่งซ่อม'),
-                              ChipData('ใช้ไม่ได้แล้ว'),
-                              ChipData('หาย'),
-                              ChipData('ทั้งหมด')
-                            ],
-                            onChanged: (val) async {
-                              safeSetState(() =>
-                                  _model.choiceChipsValue = val?.firstOrNull);
-                              _model.selectedStatus = _model.choiceChipsValue!;
-                              safeSetState(() {});
-                            },
-                            selectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Kanit',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    fontSize: 18.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              iconColor: FlutterFlowTheme.of(context).info,
-                              iconSize: 16.0,
-                              labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 4.0, 16.0, 4.0),
-                              elevation: 3.0,
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
-                            unselectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Kanit',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 18.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).secondaryText,
-                              iconSize: 16.0,
-                              labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 4.0, 16.0, 4.0),
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
-                            chipSpacing: 8.0,
-                            rowSpacing: 8.0,
-                            multiselect: false,
-                            initialized: _model.choiceChipsValue != null,
-                            alignment: WrapAlignment.start,
-                            controller: _model.choiceChipsValueController ??=
-                                FormFieldController<List<String>>(
-                              [_model.selectedStatus],
-                            ),
-                            wrapped: true,
-                          ),
-                        ],
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FlutterFlowChoiceChips(
+                      options: [
+                        ChipData('ว่าง'),
+                        ChipData('ใช้งานอยู่'),
+                        ChipData('ส่งซ่อม'),
+                        ChipData('ใช้ไม่ได้แล้ว'),
+                        ChipData('หาย')
+                      ],
+                      onChanged: (val) async {
+                        safeSetState(
+                            () => _model.choiceChipsValue = val?.firstOrNull);
+                        _model.selectedStatus = _model.choiceChipsValue!;
+                        safeSetState(() {});
+                      },
+                      selectedChipStyle: ChipStyle(
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: 'Kanit',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  fontSize: 18.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                        iconColor: FlutterFlowTheme.of(context).info,
+                        iconSize: 16.0,
+                        labelPadding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 8.0, 16.0, 8.0),
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(100.0),
                       ),
+                      unselectedChipStyle: ChipStyle(
+                        backgroundColor: FlutterFlowTheme.of(context).alternate,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                              fontFamily: 'Kanit',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 18.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                        iconColor: FlutterFlowTheme.of(context).secondaryText,
+                        iconSize: 16.0,
+                        labelPadding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 8.0, 16.0, 8.0),
+                        elevation: 0.0,
+                        borderRadius: BorderRadius.circular(100.0),
+                      ),
+                      chipSpacing: 8.0,
+                      rowSpacing: 8.0,
+                      multiselect: false,
+                      initialized: _model.choiceChipsValue != null,
+                      alignment: WrapAlignment.start,
+                      controller: _model.choiceChipsValueController ??=
+                          FormFieldController<List<String>>(
+                        [_model.selectedStatus],
+                      ),
+                      wrapped: false,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             if (!_model.isLoading)
