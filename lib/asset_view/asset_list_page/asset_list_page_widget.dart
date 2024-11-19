@@ -140,14 +140,14 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowChoiceChips(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: FlutterFlowChoiceChips(
                       options: [
                         ChipData('ว่าง'),
                         ChipData('ใช้งานอยู่'),
@@ -207,8 +207,8 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                       ),
                       wrapped: false,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             if (!_model.isLoading)
