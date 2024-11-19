@@ -663,8 +663,8 @@ class _LocationFormViewWidgetState extends State<LocationFormViewWidget> {
                                     refPath: functions.getLocationPath(
                                         _model.locationInserted!.reference),
                                     subject:
-                                        '${_model.textController1.text} ถูกใช้งาน',
-                                    remark: _model.textController2.text,
+                                        '${widget!.assetDocument?.subject} ถูกใช้งาน',
+                                    remark: _model.textController1.text,
                                   );
                                   Navigator.pop(context, 'update');
                                 } else {
