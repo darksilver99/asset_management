@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -15,6 +16,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -407,78 +410,135 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 16.0),
-                              child: Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: _model.textController2,
-                                  focusNode: _model.textFieldFocusNode2,
-                                  autofocus: false,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    labelText: 'Serial Number',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Kanit',
-                                          fontSize: 22.0,
-                                          letterSpacing: 0.0,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 8.0, 0.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        child: TextFormField(
+                                          controller: _model.textController2,
+                                          focusNode: _model.textFieldFocusNode2,
+                                          autofocus: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            isDense: false,
+                                            labelText: 'Serial Number',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Kanit',
+                                                      fontSize: 22.0,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Kanit',
+                                                      fontSize: 22.0,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Kanit',
+                                                fontSize: 22.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          validator: _model
+                                              .textController2Validator
+                                              .asValidator(context),
                                         ),
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Kanit',
-                                          fontSize: 22.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Kanit',
-                                        fontSize: 22.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController2Validator
-                                      .asValidator(context),
-                                ),
+                                  FlutterFlowIconButton(
+                                    borderRadius: 8.0,
+                                    buttonSize: 57.0,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.barcode,
+                                      color: FlutterFlowTheme.of(context).info,
+                                      size: 24.0,
+                                    ),
+                                    onPressed: () async {
+                                      _model.barCode =
+                                          await FlutterBarcodeScanner
+                                              .scanBarcode(
+                                        '#C62828', // scanning line color
+                                        'Cancel', // cancel button text
+                                        true, // whether to show the flash icon
+                                        ScanMode.BARCODE,
+                                      );
+
+                                      if (_model.barCode != null &&
+                                          _model.barCode != '') {
+                                        safeSetState(() {
+                                          _model.textController2?.text =
+                                              _model.barCode!;
+                                        });
+                                      }
+
+                                      safeSetState(() {});
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                             Padding(
