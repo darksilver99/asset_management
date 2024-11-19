@@ -974,167 +974,27 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                         ),
                                       ),
                                       Builder(
-                                        builder: (context) => FFButtonWidget(
-                                          onPressed: () async {
-                                            var _shouldSetState = false;
-                                            await showDialog(
-                                              context: context,
-                                              builder: (dialogContext) {
-                                                return Dialog(
-                                                  elevation: 0,
-                                                  insetPadding: EdgeInsets.zero,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
-                                                  child: WebViewAware(
-                                                    child: GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(
-                                                                  dialogContext)
-                                                              .unfocus(),
-                                                      child:
-                                                          AssetStatusViewWidget(
-                                                        currentStatus: _model
-                                                            .assetDocument!
-                                                            .status,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ).then((value) => safeSetState(() =>
-                                                _model.selectedStatus = value));
-
-                                            _shouldSetState = true;
-                                            if (_model.selectedStatus != null &&
-                                                _model.selectedStatus != '') {
-                                              if (_model.selectedStatus ==
-                                                  'ว่าง') {
-                                                await _model
-                                                    .assetDocument!.reference
-                                                    .update({
-                                                  ...createAssetListRecordData(
-                                                    updateDate:
-                                                        getCurrentTimestamp,
-                                                    status: 'ว่าง',
-                                                  ),
-                                                  ...mapToFirestore(
-                                                    {
-                                                      'location':
-                                                          FieldValue.delete(),
-                                                    },
-                                                  ),
-                                                });
-                                                await action_blocks
-                                                    .insertTransaction(
+                                        builder: (context) {
+                                          if (_model.assetDocument?.status ==
+                                              'ส่งซ่อม') {
+                                            return FFButtonWidget(
+                                              onPressed: () async {
+                                                _model.isUpdateRepair =
+                                                    await _model
+                                                        .updateRepairData(
                                                   context,
-                                                  assetReference: _model
-                                                      .assetDocument?.reference,
-                                                  refPath: '',
-                                                  subject: _model
-                                                      .assetDocument?.subject,
-                                                  remark:
-                                                      'ปรับสถานะเป็น \"ว่าง\"',
+                                                  repairRef: _model
+                                                      .assetDocument
+                                                      ?.lastRepairRef,
                                                 );
-                                              } else if (_model
-                                                      .selectedStatus ==
-                                                  'ใช้งาน') {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  useSafeArea: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              LocationFormViewWidget(
-                                                            assetDocument: _model
-                                                                .assetDocument!,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) => safeSetState(
-                                                    () =>
-                                                        _model.locationDetail =
-                                                            value));
-
-                                                _shouldSetState = true;
-                                                if (!((_model.locationDetail !=
-                                                            null &&
-                                                        _model.locationDetail !=
-                                                            '') &&
-                                                    (_model.locationDetail ==
-                                                        'update'))) {
-                                                  if (_shouldSetState)
-                                                    safeSetState(() {});
-                                                  return;
-                                                }
-                                              } else if (_model
-                                                      .selectedStatus ==
-                                                  'หาย') {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  useSafeArea: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              LostFormViewWidget(
-                                                            hintText:
-                                                                'ระบุรายละเอียดเพิ่มเติม เช่น หายที่ไหน, ใครเป็นคนแจ้ง',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) => safeSetState(
-                                                    () => _model.lostDetail =
-                                                        value));
-
-                                                _shouldSetState = true;
-                                                if (_model.lostDetail != null &&
-                                                    _model.lostDetail != '') {
+                                                if (_model.isUpdateRepair!) {
                                                   await _model
                                                       .assetDocument!.reference
                                                       .update({
                                                     ...createAssetListRecordData(
                                                       updateDate:
                                                           getCurrentTimestamp,
-                                                      status: 'หาย',
-                                                      lostDetail:
-                                                          _model.lostDetail,
-                                                      lostDate:
-                                                          getCurrentTimestamp,
+                                                      status: 'ว่าง',
                                                     ),
                                                     ...mapToFirestore(
                                                       {
@@ -1153,180 +1013,438 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                                     subject: _model
                                                         .assetDocument?.subject,
                                                     remark:
-                                                        'ปรับสถานะเป็น \"หาย\"',
+                                                        'ปรับสถานะเป็น \"ว่าง\"',
                                                   );
-                                                } else {
-                                                  if (_shouldSetState)
-                                                    safeSetState(() {});
-                                                  return;
                                                 }
-                                              } else if (_model
-                                                      .selectedStatus ==
-                                                  'ใช้ไม่ได้แล้ว') {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  useSafeArea: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
+
+                                                safeSetState(() {});
+                                              },
+                                              text: 'เปิดใช้งาน',
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.check,
+                                                size: 14.0,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 42.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        8.0, 0.0, 8.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .success,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          color: Colors.white,
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 3.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            );
+                                          } else {
+                                            return Builder(
+                                              builder: (context) =>
+                                                  FFButtonWidget(
+                                                onPressed: () async {
+                                                  var _shouldSetState = false;
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: WebViewAware(
                                                           child:
-                                                              BrokenFormViewWidget(
-                                                            assetDocument: _model
-                                                                .assetDocument!,
+                                                              GestureDetector(
+                                                            onTap: () =>
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus(),
+                                                            child:
+                                                                AssetStatusViewWidget(
+                                                              currentStatus: _model
+                                                                  .assetDocument!
+                                                                  .status,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) => safeSetState(
-                                                    () => _model.brokenDetail =
-                                                        value));
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      safeSetState(() => _model
+                                                              .selectedStatus =
+                                                          value));
 
-                                                _shouldSetState = true;
-                                                if (!((_model.brokenDetail !=
-                                                            null &&
-                                                        _model.brokenDetail !=
-                                                            '') &&
-                                                    (_model.brokenDetail ==
-                                                        'update'))) {
-                                                  if (_shouldSetState)
-                                                    safeSetState(() {});
-                                                  return;
-                                                }
-                                              } else if (_model
-                                                      .selectedStatus ==
-                                                  'ส่งซ่อม') {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  useSafeArea: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              RepairFormViewWidget(
-                                                            assetDocument: _model
-                                                                .assetDocument!,
+                                                  _shouldSetState = true;
+                                                  if (_model.selectedStatus !=
+                                                          null &&
+                                                      _model.selectedStatus !=
+                                                          '') {
+                                                    if (_model.selectedStatus ==
+                                                        'ว่าง') {
+                                                      await _model
+                                                          .assetDocument!
+                                                          .reference
+                                                          .update({
+                                                        ...createAssetListRecordData(
+                                                          updateDate:
+                                                              getCurrentTimestamp,
+                                                          status: 'ว่าง',
+                                                        ),
+                                                        ...mapToFirestore(
+                                                          {
+                                                            'location':
+                                                                FieldValue
+                                                                    .delete(),
+                                                          },
+                                                        ),
+                                                      });
+                                                      await action_blocks
+                                                          .insertTransaction(
+                                                        context,
+                                                        assetReference: _model
+                                                            .assetDocument
+                                                            ?.reference,
+                                                        refPath: '',
+                                                        subject: _model
+                                                            .assetDocument
+                                                            ?.subject,
+                                                        remark:
+                                                            'ปรับสถานะเป็น \"ว่าง\"',
+                                                      );
+                                                    } else if (_model
+                                                            .selectedStatus ==
+                                                        'ใช้งาน') {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        enableDrag: false,
+                                                        useSafeArea: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    LocationFormViewWidget(
+                                                                  assetDocument:
+                                                                      _model
+                                                                          .assetDocument!,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() =>
+                                                              _model.locationDetail =
+                                                                  value));
+
+                                                      _shouldSetState = true;
+                                                      if (!((_model.locationDetail !=
+                                                                  null &&
+                                                              _model.locationDetail !=
+                                                                  '') &&
+                                                          (_model.locationDetail ==
+                                                              'update'))) {
+                                                        if (_shouldSetState)
+                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    } else if (_model
+                                                            .selectedStatus ==
+                                                        'หาย') {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        enableDrag: false,
+                                                        useSafeArea: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    LostFormViewWidget(
+                                                                  hintText:
+                                                                      'ระบุรายละเอียดเพิ่มเติม เช่น หายที่ไหน, ใครเป็นคนแจ้ง',
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() =>
+                                                              _model.lostDetail =
+                                                                  value));
+
+                                                      _shouldSetState = true;
+                                                      if (_model.lostDetail !=
+                                                              null &&
+                                                          _model.lostDetail !=
+                                                              '') {
+                                                        await _model
+                                                            .assetDocument!
+                                                            .reference
+                                                            .update({
+                                                          ...createAssetListRecordData(
+                                                            updateDate:
+                                                                getCurrentTimestamp,
+                                                            status: 'หาย',
+                                                            lostDetail: _model
+                                                                .lostDetail,
+                                                            lostDate:
+                                                                getCurrentTimestamp,
                                                           ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) => safeSetState(
-                                                    () => _model.repairDetail =
-                                                        value));
+                                                          ...mapToFirestore(
+                                                            {
+                                                              'location':
+                                                                  FieldValue
+                                                                      .delete(),
+                                                            },
+                                                          ),
+                                                        });
+                                                        await action_blocks
+                                                            .insertTransaction(
+                                                          context,
+                                                          assetReference: _model
+                                                              .assetDocument
+                                                              ?.reference,
+                                                          refPath: '',
+                                                          subject: _model
+                                                              .assetDocument
+                                                              ?.subject,
+                                                          remark:
+                                                              'ปรับสถานะเป็น \"หาย\"',
+                                                        );
+                                                      } else {
+                                                        if (_shouldSetState)
+                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    } else if (_model
+                                                            .selectedStatus ==
+                                                        'ใช้ไม่ได้แล้ว') {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        enableDrag: false,
+                                                        useSafeArea: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    BrokenFormViewWidget(
+                                                                  assetDocument:
+                                                                      _model
+                                                                          .assetDocument!,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() =>
+                                                              _model.brokenDetail =
+                                                                  value));
 
-                                                _shouldSetState = true;
-                                                if (!((_model.repairDetail !=
-                                                            null &&
-                                                        _model.repairDetail !=
-                                                            '') &&
-                                                    (_model.repairDetail ==
-                                                        'update'))) {
+                                                      _shouldSetState = true;
+                                                      if (!((_model.brokenDetail !=
+                                                                  null &&
+                                                              _model.brokenDetail !=
+                                                                  '') &&
+                                                          (_model.brokenDetail ==
+                                                              'update'))) {
+                                                        if (_shouldSetState)
+                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    } else if (_model
+                                                            .selectedStatus ==
+                                                        'ส่งซ่อม') {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        enableDrag: false,
+                                                        useSafeArea: true,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    RepairFormViewWidget(
+                                                                  assetDocument:
+                                                                      _model
+                                                                          .assetDocument!,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() =>
+                                                              _model.repairDetail =
+                                                                  value));
+
+                                                      _shouldSetState = true;
+                                                      if (!((_model.repairDetail !=
+                                                                  null &&
+                                                              _model.repairDetail !=
+                                                                  '') &&
+                                                          (_model.repairDetail ==
+                                                              'update'))) {
+                                                        if (_shouldSetState)
+                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                    } else {
+                                                      if (_shouldSetState)
+                                                        safeSetState(() {});
+                                                      return;
+                                                    }
+
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child: WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus(),
+                                                              child:
+                                                                  InfoCustomViewWidget(
+                                                                title:
+                                                                    'บันทึกข้อมูลเรียบร้อยแล้ว',
+                                                                status:
+                                                                    'success',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                    await actions
+                                                        .pushReplacement(
+                                                      context,
+                                                      'AssetListPage',
+                                                    );
+                                                  }
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
-                                                  return;
-                                                }
-                                              } else {
-                                                if (_shouldSetState)
-                                                  safeSetState(() {});
-                                                return;
-                                              }
-
-                                              await showDialog(
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: WebViewAware(
-                                                      child: GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    dialogContext)
-                                                                .unfocus(),
-                                                        child:
-                                                            InfoCustomViewWidget(
-                                                          title:
-                                                              'บันทึกข้อมูลเรียบร้อยแล้ว',
-                                                          status: 'success',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
                                                 },
-                                              );
-
-                                              await actions.pushReplacement(
-                                                context,
-                                                'AssetListPage',
-                                              );
-                                            }
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                          },
-                                          text: 'เปลี่ยนสถานะ',
-                                          icon: Icon(
-                                            Icons
-                                                .published_with_changes_rounded,
-                                            size: 18.0,
-                                          ),
-                                          options: FFButtonOptions(
-                                            height: 42.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8.0, 0.0, 8.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Kanit',
-                                                      color: Colors.white,
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
+                                                text: 'เปลี่ยนสถานะ',
+                                                icon: Icon(
+                                                  Icons
+                                                      .published_with_changes_rounded,
+                                                  size: 18.0,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  height: 42.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 8.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .override(
+                                                            fontFamily: 'Kanit',
+                                                            color: Colors.white,
+                                                            fontSize: 16.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  elevation: 3.0,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
                                       ),
                                     ],
                                   ),
