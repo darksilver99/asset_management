@@ -627,7 +627,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               fontFamily: 'Kanit',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .error,
+                                                      .secondaryText,
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                             ),
@@ -683,7 +683,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               fontFamily: 'Kanit',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .error,
+                                                      .secondaryText,
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
                                             ),
