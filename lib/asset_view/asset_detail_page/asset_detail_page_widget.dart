@@ -977,77 +977,123 @@ class _AssetDetailPageWidgetState extends State<AssetDetailPageWidget> {
                                         builder: (context) {
                                           if (_model.assetDocument?.status ==
                                               'ส่งซ่อม') {
-                                            return FFButtonWidget(
-                                              onPressed: () async {
-                                                _model.isUpdateRepair =
-                                                    await _model
-                                                        .updateRepairData(
-                                                  context,
-                                                  repairRef: _model
-                                                      .assetDocument
-                                                      ?.lastRepairRef,
-                                                );
-                                                if (_model.isUpdateRepair!) {
-                                                  await _model
-                                                      .assetDocument!.reference
-                                                      .update({
-                                                    ...createAssetListRecordData(
-                                                      updateDate:
-                                                          getCurrentTimestamp,
-                                                      status: 'ว่าง',
-                                                    ),
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'location':
-                                                            FieldValue.delete(),
-                                                      },
-                                                    ),
-                                                  });
-                                                  await action_blocks
-                                                      .insertTransaction(
+                                            return Builder(
+                                              builder: (context) =>
+                                                  FFButtonWidget(
+                                                onPressed: () async {
+                                                  _model.isUpdateRepair =
+                                                      await _model
+                                                          .updateRepairData(
                                                     context,
-                                                    assetReference: _model
+                                                    repairRef: _model
                                                         .assetDocument
-                                                        ?.reference,
-                                                    refPath: '',
-                                                    subject: _model
-                                                        .assetDocument?.subject,
-                                                    remark:
-                                                        'ปรับสถานะเป็น \"ว่าง\"',
+                                                        ?.lastRepairRef,
                                                   );
-                                                }
+                                                  if (_model.isUpdateRepair!) {
+                                                    await _model.assetDocument!
+                                                        .reference
+                                                        .update({
+                                                      ...createAssetListRecordData(
+                                                        updateDate:
+                                                            getCurrentTimestamp,
+                                                        status: 'ว่าง',
+                                                      ),
+                                                      ...mapToFirestore(
+                                                        {
+                                                          'location': FieldValue
+                                                              .delete(),
+                                                        },
+                                                      ),
+                                                    });
+                                                    await action_blocks
+                                                        .insertTransaction(
+                                                      context,
+                                                      assetReference: _model
+                                                          .assetDocument
+                                                          ?.reference,
+                                                      refPath: '',
+                                                      subject: _model
+                                                          .assetDocument
+                                                          ?.subject,
+                                                      remark:
+                                                          'ปรับสถานะเป็น \"ว่าง\"',
+                                                    );
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child: WebViewAware(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus(),
+                                                              child:
+                                                                  InfoCustomViewWidget(
+                                                                title:
+                                                                    'บันทึกข้อมูลเรียบร้อยแล้ว',
+                                                                status:
+                                                                    'success',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
 
-                                                safeSetState(() {});
-                                              },
-                                              text: 'เปิดใช้งาน',
-                                              icon: FaIcon(
-                                                FontAwesomeIcons.check,
-                                                size: 14.0,
-                                              ),
-                                              options: FFButtonOptions(
-                                                height: 42.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 8.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .success,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily: 'Kanit',
-                                                          color: Colors.white,
-                                                          fontSize: 16.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                elevation: 3.0,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                                    await actions
+                                                        .pushReplacement(
+                                                      context,
+                                                      'AssetListPage',
+                                                    );
+                                                  }
+
+                                                  safeSetState(() {});
+                                                },
+                                                text: 'เปิดใช้งาน',
+                                                icon: FaIcon(
+                                                  FontAwesomeIcons.check,
+                                                  size: 14.0,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  height: 42.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 8.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .success,
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .override(
+                                                            fontFamily: 'Kanit',
+                                                            color: Colors.white,
+                                                            fontSize: 16.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  elevation: 3.0,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
                                               ),
                                             );
                                           } else {
