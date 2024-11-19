@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'asset_list_page_widget.dart' show AssetListPageWidget;
@@ -43,6 +44,8 @@ class AssetListPageModel extends FlutterFlowModel<AssetListPageWidget> {
   Query? listViewPagingQuery;
   List<StreamSubscription?> listViewStreamSubscriptions = [];
 
+  // Stores action output result for [Action Block - checkIsExpire] action in Container widget.
+  bool? isExpire;
   // Stores action output result for [Firestore Query - Query a collection] action in FloatingActionButton widget.
   int? totalAsset;
   // Stores action output result for [Bottom Sheet - AssetFormView] action in FloatingActionButton widget.

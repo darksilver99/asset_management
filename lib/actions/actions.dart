@@ -166,3 +166,32 @@ Future insertTransaction(
     remark: remark,
   ));
 }
+
+Future<bool?> checkIsExpire(BuildContext context) async {
+  if (getCurrentTimestamp > FFAppState().customerData.expireDate!) {
+    await showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          elevation: 0,
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          alignment: AlignmentDirectional(0.0, 0.0)
+              .resolve(Directionality.of(context)),
+          child: WebViewAware(
+            child: InfoCustomViewWidget(
+              title: 'ขออภัยบัญชีของท่านหมดอายุการใช้งาน',
+              status: 'error',
+              detail:
+                  'กรุณาต่ออายุการใช้งาน ดูรายละเอียดเพิ่มเติมได้ที่เมนู \"ตั้งค่า\" > \"ต่ออายุการใช้งาน\"',
+            ),
+          ),
+        );
+      },
+    );
+
+    return true;
+  } else {
+    return false;
+  }
+}

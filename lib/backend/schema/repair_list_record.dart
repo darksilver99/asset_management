@@ -46,6 +46,11 @@ class RepairListRecord extends FirestoreRecord {
   List<String> get image => _image ?? const [];
   bool hasImage() => _image != null;
 
+  // "finish_remark" field.
+  String? _finishRemark;
+  String get finishRemark => _finishRemark ?? '';
+  bool hasFinishRemark() => _finishRemark != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -55,6 +60,7 @@ class RepairListRecord extends FirestoreRecord {
     _finishDate = snapshotData['finish_date'] as DateTime?;
     _price = castToType<int>(snapshotData['price']);
     _image = getDataList(snapshotData['image']);
+    _finishRemark = snapshotData['finish_remark'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -102,6 +108,7 @@ Map<String, dynamic> createRepairListRecordData({
   DocumentReference? assetRef,
   DateTime? finishDate,
   int? price,
+  String? finishRemark,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -110,6 +117,7 @@ Map<String, dynamic> createRepairListRecordData({
       'asset_ref': assetRef,
       'finish_date': finishDate,
       'price': price,
+      'finish_remark': finishRemark,
     }.withoutNulls,
   );
 
@@ -127,7 +135,8 @@ class RepairListRecordDocumentEquality implements Equality<RepairListRecord> {
         e1?.assetRef == e2?.assetRef &&
         e1?.finishDate == e2?.finishDate &&
         e1?.price == e2?.price &&
-        listEquality.equals(e1?.image, e2?.image);
+        listEquality.equals(e1?.image, e2?.image) &&
+        e1?.finishRemark == e2?.finishRemark;
   }
 
   @override
@@ -137,7 +146,8 @@ class RepairListRecordDocumentEquality implements Equality<RepairListRecord> {
         e?.assetRef,
         e?.finishDate,
         e?.price,
-        e?.image
+        e?.image,
+        e?.finishRemark
       ]);
 
   @override
