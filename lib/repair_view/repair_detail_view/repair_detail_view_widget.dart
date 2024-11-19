@@ -168,7 +168,7 @@ class _RepairDetailViewWidgetState extends State<RepairDetailViewWidget> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'รูปก่อนการใช้งาน',
+                                            'รูปความเสียหาย',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
