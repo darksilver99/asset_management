@@ -17,12 +17,25 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _currentDate = prefs.containsKey('ff_currentDate')
+          ? DateTime.fromMillisecondsSinceEpoch(prefs.getInt('ff_currentDate')!)
+          : _currentDate;
+    });
+    _safeInit(() {
+      _isSkipExpireAlert =
+          prefs.getBool('ff_isSkipExpireAlert') ?? _isSkipExpireAlert;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   String _appVersion = '';
   String get appVersion => _appVersion;
@@ -55,4 +68,32 @@ class FFAppState extends ChangeNotifier {
   void updateCustomerDataStruct(Function(CustomerDataStruct) updateFn) {
     updateFn(_customerData);
   }
+
+  DateTime? _currentDate = DateTime.fromMillisecondsSinceEpoch(122530800000);
+  DateTime? get currentDate => _currentDate;
+  set currentDate(DateTime? value) {
+    _currentDate = value;
+    value != null
+        ? prefs.setInt('ff_currentDate', value.millisecondsSinceEpoch)
+        : prefs.remove('ff_currentDate');
+  }
+
+  bool _isSkipExpireAlert = false;
+  bool get isSkipExpireAlert => _isSkipExpireAlert;
+  set isSkipExpireAlert(bool value) {
+    _isSkipExpireAlert = value;
+    prefs.setBool('ff_isSkipExpireAlert', value);
+  }
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }

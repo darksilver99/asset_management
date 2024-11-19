@@ -15,6 +15,7 @@ import '/location_view/location_form_view/location_form_view_widget.dart';
 import '/lost_view/lost_form_view/lost_form_view_widget.dart';
 import '/lost_view/lost_view/lost_view_widget.dart';
 import '/repair_view/repair_form_view/repair_form_view_widget.dart';
+import '/repair_view/repair_update_view/repair_update_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -102,5 +103,42 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
         null,
       );
     }
+  }
+
+  Future<bool?> updateRepairData(
+    BuildContext context, {
+    required DocumentReference? repairRef,
+  }) async {
+    RepairListRecord? repairDocumentResult;
+    String? updateRepair;
+
+    repairDocumentResult = await RepairListRecord.getDocumentOnce(repairRef!);
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: false,
+      useSafeArea: true,
+      context: context,
+      builder: (context) {
+        return WebViewAware(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Padding(
+              padding: MediaQuery.viewInsetsOf(context),
+              child: RepairUpdateViewWidget(
+                repairDocument: repairDocumentResult!,
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((value) => updateRepair = value);
+
+    if ((updateRepair != null && updateRepair != '') &&
+        (updateRepair == 'update')) {
+      return true;
+    }
+
+    return false;
   }
 }

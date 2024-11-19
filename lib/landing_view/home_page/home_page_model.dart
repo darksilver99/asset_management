@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/component/expire_alert_view/expire_alert_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -22,13 +23,52 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Action Block - checkIsExpire] action in Button widget.
+  bool? isExpire;
   var qrCode = '';
   // Stores action output result for [Custom Action - getAssetData] action in Button widget.
   AssetListRecord? assetResult;
+  // Stores action output result for [Action Block - checkIsExpire] action in Container widget.
+  bool? isExpire2;
+  // Stores action output result for [Action Block - checkIsExpire] action in Container widget.
+  bool? isExpire3;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
+
+  /// Action blocks.
+  Future checkCloseExpire(BuildContext context) async {
+    if (functions.getStartDayTime(FFAppState().currentDate!) !=
+        functions.getStartDayTime(getCurrentTimestamp)) {
+      FFAppState().isSkipExpireAlert = false;
+      FFAppState().currentDate = functions.getStartDayTime(getCurrentTimestamp);
+      FFAppState().update(() {});
+    }
+    if (getCurrentTimestamp >
+        functions.getBeforeDay(3, FFAppState().customerData.expireDate!)) {
+      if (!FFAppState().isSkipExpireAlert) {
+        if (functions.getStartDayTime(getCurrentTimestamp) <=
+            functions.getStartDayTime(FFAppState().customerData.expireDate!)) {
+          await showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(0.0, 0.0)
+                    .resolve(Directionality.of(context)),
+                child: WebViewAware(
+                  child: ExpireAlertViewWidget(),
+                ),
+              );
+            },
+          );
+        }
+      }
+    }
+  }
 }

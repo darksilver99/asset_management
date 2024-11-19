@@ -585,6 +585,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             child: Builder(
                               builder: (context) => FFButtonWidget(
                                 onPressed: () async {
+                                  var _shouldSetState = false;
+                                  _model.isExpire = await action_blocks
+                                      .checkIsExpire(context);
+                                  _shouldSetState = true;
+                                  if (_model.isExpire!) {
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+
                                   _model.qrCode =
                                       await FlutterBarcodeScanner.scanBarcode(
                                     '#C62828', // scanning line color
@@ -593,12 +602,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ScanMode.QR,
                                   );
 
+                                  _shouldSetState = true;
                                   if (_model.qrCode != null &&
                                       _model.qrCode != '') {
                                     _model.assetResult =
                                         await actions.getAssetData(
                                       functions.getAssetRef(_model.qrCode!),
                                     );
+                                    _shouldSetState = true;
                                     if (_model.assetResult != null) {
                                       context.pushNamed(
                                         'CheckListPage',
@@ -637,8 +648,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       );
                                     }
                                   }
-
-                                  safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                 },
                                 text: 'ตรวจเช็คอุปกรณ์',
                                 icon: FaIcon(
@@ -914,66 +924,83 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 8.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 3.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 180.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                var _shouldSetState = false;
+                                _model.isExpire2 =
+                                    await action_blocks.checkIsExpire(context);
+                                _shouldSetState = true;
+                                if (_model.isExpire2!) {
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if (_shouldSetState) safeSetState(() {});
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 1.0,
-                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/receipt_17374054.png',
-                                        height: 42.0,
-                                        fit: BoxFit.cover,
-                                      ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 180.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 0.0, 8.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              'รายงาน\nอุปกรณ์ทั้งหมด',
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontSize: 18.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/images/receipt_17374054.png',
+                                          height: 42.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 8.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'รายงาน\nอุปกรณ์ทั้งหมด',
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -983,66 +1010,83 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 8.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 3.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 180.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                var _shouldSetState = false;
+                                _model.isExpire3 =
+                                    await action_blocks.checkIsExpire(context);
+                                _shouldSetState = true;
+                                if (_model.isExpire3!) {
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if (_shouldSetState) safeSetState(() {});
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 1.0,
-                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/chart_17373936.png',
-                                        height: 42.0,
-                                        fit: BoxFit.cover,
-                                      ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 180.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 0.0, 8.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              'รายงาน\nค่าใช้จ่าย',
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Kanit',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontSize: 18.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/images/chart_17373936.png',
+                                          height: 42.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 8.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'รายงาน\nค่าใช้จ่าย',
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Kanit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -298,6 +299,15 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              var _shouldSetState = false;
+                              _model.isExpire =
+                                  await action_blocks.checkIsExpire(context);
+                              _shouldSetState = true;
+                              if (_model.isExpire!) {
+                                if (_shouldSetState) safeSetState(() {});
+                                return;
+                              }
+
                               context.pushNamed(
                                 'AssetDetailPage',
                                 queryParameters: {
@@ -310,6 +320,8 @@ class _AssetListPageWidgetState extends State<AssetListPageWidget> {
                                   'assetDocument': listViewAssetListRecord,
                                 },
                               );
+
+                              if (_shouldSetState) safeSetState(() {});
                             },
                             child: Material(
                               color: Colors.transparent,

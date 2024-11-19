@@ -129,3 +129,11 @@ String getLocationPath(DocumentReference ref) {
 String getRepairPath(DocumentReference ref) {
   return ref.path;
 }
+
+DateTime getBeforeDay(
+  int pastDay,
+  DateTime date,
+) {
+  DateTime pastDate = date.subtract(Duration(days: pastDay));
+  return pastDate;
+}
