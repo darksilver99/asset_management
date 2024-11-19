@@ -45,6 +45,8 @@ class AssetDetailPageModel extends FlutterFlowModel<AssetDetailPageWidget> {
   bool? isConfirm;
   // Stores action output result for [Bottom Sheet - AssetFormView] action in Button widget.
   String? isUpdate;
+  // Stores action output result for [Action Block - updateRepairData] action in Button widget.
+  bool? isUpdateRepair;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   String? selectedStatus;
   // Stores action output result for [Bottom Sheet - LocationFormView] action in Button widget.
