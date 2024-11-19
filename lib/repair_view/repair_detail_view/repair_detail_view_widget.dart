@@ -168,7 +168,7 @@ class _RepairDetailViewWidgetState extends State<RepairDetailViewWidget> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'รูปก่อนการใช้งาน',
+                                            'รูปความเสียหาย',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -391,7 +391,7 @@ class _RepairDetailViewWidgetState extends State<RepairDetailViewWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'วันที่บันทึก ${functions.dateTimeTh(widget!.repairDocument?.createDate)}',
+                                          'วันที่เสร็จสิ้น${functions.dateTimeTh(widget!.repairDocument?.finishDate)}',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
