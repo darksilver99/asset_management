@@ -391,7 +391,7 @@ class _RepairDetailViewWidgetState extends State<RepairDetailViewWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'วันที่เสร็จสิ้น${functions.dateTimeTh(widget!.repairDocument?.finishDate)}',
+                                          'วันที่เสร็จสิ้น ${functions.dateTimeTh(widget!.repairDocument?.finishDate)}',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
