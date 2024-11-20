@@ -1,4 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/component/info_custom_view/info_custom_view_widget.dart';
+import '/component/loading_view/loading_view_widget.dart';
 import '/component/main_background_view/main_background_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,7 +8,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/other_view/issue_view/issue_view_widget.dart';
 import '/other_view/suggest_view/suggest_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +35,12 @@ class _MorePageWidgetState extends State<MorePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MorePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.isLoading = false;
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -260,6 +270,200 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                                     ),
                                 ],
                               ),
+                            Builder(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  var _shouldSetState = false;
+                                  _model.isExpire2 = await action_blocks
+                                      .checkIsExpire(context);
+                                  _shouldSetState = true;
+                                  if (_model.isExpire2!) {
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+
+                                  _model.isLoading = true;
+                                  safeSetState(() {});
+                                  _model.path1 = await actions.exportExcel1();
+                                  _shouldSetState = true;
+                                  if (_model.path1 == 'No Data') {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: InfoCustomViewWidget(
+                                              title: 'ไม่มีข้อมูล',
+                                              status: 'warning',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    await actions.shareFile(
+                                      _model.path1,
+                                    );
+                                  }
+
+                                  _model.isLoading = false;
+                                  safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 16.0, 16.0, 16.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'รายงานอุปกรณ์ทั้งหมด',
+                                              maxLines: 1,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Kanit',
+                                                        fontSize: 20.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.navigate_next_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 1.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Builder(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  var _shouldSetState = false;
+                                  _model.isExpire3 = await action_blocks
+                                      .checkIsExpire(context);
+                                  _shouldSetState = true;
+                                  if (_model.isExpire3!) {
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+
+                                  _model.isLoading = true;
+                                  safeSetState(() {});
+                                  _model.path2 = await actions.exportExcel2();
+                                  _shouldSetState = true;
+                                  if (_model.path2 == 'No Data') {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: InfoCustomViewWidget(
+                                              title: 'ไม่มีข้อมูล',
+                                              status: 'warning',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    await actions.shareFile(
+                                      _model.path2,
+                                    );
+                                  }
+
+                                  _model.isLoading = false;
+                                  safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 16.0, 16.0, 16.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'รายงานค่าใช้จ่าย',
+                                              maxLines: 1,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Kanit',
+                                                        fontSize: 20.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.navigate_next_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 1.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -652,6 +856,12 @@ class _MorePageWidgetState extends State<MorePageWidget> {
                     .addToEnd(SizedBox(height: 32.0)),
               ),
             ),
+            if (_model.isLoading)
+              wrapWithModel(
+                model: _model.loadingViewModel,
+                updateCallback: () => safeSetState(() {}),
+                child: LoadingViewWidget(),
+              ),
           ],
         ),
       ),
