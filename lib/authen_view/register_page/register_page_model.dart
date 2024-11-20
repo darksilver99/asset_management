@@ -2,7 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
-import '/component/main_background_view/main_background_view_widget.dart';
+import '/component/second_background_view/second_background_view_widget.dart';
 import '/component/web_view/web_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -18,8 +18,8 @@ class RegisterPageModel extends FlutterFlowModel<RegisterPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Model for MainBackgroundView component.
-  late MainBackgroundViewModel mainBackgroundViewModel;
+  // Model for SecondBackgroundView component.
+  late SecondBackgroundViewModel secondBackgroundViewModel;
   // Model for BackButtonView component.
   late BackButtonViewModel backButtonViewModel;
   // State field(s) for TextField widget.
@@ -83,8 +83,8 @@ class RegisterPageModel extends FlutterFlowModel<RegisterPageWidget> {
 
   @override
   void initState(BuildContext context) {
-    mainBackgroundViewModel =
-        createModel(context, () => MainBackgroundViewModel());
+    secondBackgroundViewModel =
+        createModel(context, () => SecondBackgroundViewModel());
     backButtonViewModel = createModel(context, () => BackButtonViewModel());
     emailTextControllerValidator = _emailTextControllerValidator;
     passwordVisibility1 = false;
@@ -97,7 +97,7 @@ class RegisterPageModel extends FlutterFlowModel<RegisterPageWidget> {
 
   @override
   void dispose() {
-    mainBackgroundViewModel.dispose();
+    secondBackgroundViewModel.dispose();
     backButtonViewModel.dispose();
     textFieldFocusNode1?.dispose();
     emailTextController?.dispose();

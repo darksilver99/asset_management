@@ -2,7 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/back_button_view/back_button_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
-import '/component/main_background_view/main_background_view_widget.dart';
+import '/component/second_background_view/second_background_view_widget.dart';
 import '/component/web_view/web_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -65,9 +65,9 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
       body: Stack(
         children: [
           wrapWithModel(
-            model: _model.mainBackgroundViewModel,
+            model: _model.secondBackgroundViewModel,
             updateCallback: () => safeSetState(() {}),
-            child: MainBackgroundViewWidget(),
+            child: SecondBackgroundViewWidget(),
           ),
           SingleChildScrollView(
             child: Column(
