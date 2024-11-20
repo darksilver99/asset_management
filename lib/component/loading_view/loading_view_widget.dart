@@ -47,7 +47,7 @@ class _LoadingViewWidgetState extends State<LoadingViewWidget> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: Color(0x2C000000),
+              color: Color(0x7C000000),
             ),
           ),
           Column(
