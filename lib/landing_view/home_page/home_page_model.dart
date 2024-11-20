@@ -38,6 +38,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   String? path1;
   // Stores action output result for [Action Block - checkIsExpire] action in Container widget.
   bool? isExpire3;
+  // Stores action output result for [Custom Action - exportExcel2] action in Container widget.
+  String? path2;
 
   @override
   void initState(BuildContext context) {}

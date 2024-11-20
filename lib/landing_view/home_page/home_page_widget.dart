@@ -1215,85 +1215,120 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 8.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                var _shouldSetState = false;
-                                _model.isExpire3 =
-                                    await action_blocks.checkIsExpire(context);
-                                _shouldSetState = true;
-                                if (_model.isExpire3!) {
-                                  if (_shouldSetState) safeSetState(() {});
-                                  return;
-                                }
-                                if (_shouldSetState) safeSetState(() {});
-                              },
-                              child: Material(
-                                color: Colors.transparent,
-                                elevation: 3.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 180.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    border: Border.all(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        child: Image.asset(
-                                          'assets/images/chart_17373936.png',
-                                          height: 42.0,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 8.0, 0.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                'รายงาน\nค่าใช้จ่าย',
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Kanit',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          fontSize: 18.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
+                          child: Builder(
+                            builder: (context) => Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 8.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  var _shouldSetState = false;
+                                  _model.isExpire3 = await action_blocks
+                                      .checkIsExpire(context);
+                                  _shouldSetState = true;
+                                  if (_model.isExpire3!) {
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+
+                                  _model.path2 = await actions.exportExcel2();
+                                  _shouldSetState = true;
+                                  if (_model.path2 == 'No Data') {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: InfoCustomViewWidget(
+                                              title: 'ไม่มีข้อมูล',
+                                              status: 'warning',
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    await actions.shareFile(
+                                      _model.path2,
+                                    );
+                                  }
+
+                                  if (_shouldSetState) safeSetState(() {});
+                                },
+                                child: Material(
+                                  color: Colors.transparent,
+                                  elevation: 3.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 180.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 1.0,
                                       ),
-                                    ],
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: Image.asset(
+                                            'assets/images/chart_17373936.png',
+                                            height: 42.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8.0, 0.0, 8.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'รายงาน\nค่าใช้จ่าย',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Kanit',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
