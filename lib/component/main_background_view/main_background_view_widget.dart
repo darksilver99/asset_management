@@ -47,7 +47,7 @@ class _MainBackgroundViewWidgetState extends State<MainBackgroundViewWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(0.0),
             child: SvgPicture.asset(
-              'assets/images/14731345_rm222-mind-20.svg',
+              'assets/images/212769313_a9ca7608-f4c6-4567-84bd-c36a3fe19916.svg',
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
