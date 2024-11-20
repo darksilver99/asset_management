@@ -45,7 +45,7 @@ class _MainBackgroundViewWidgetState extends State<MainBackgroundViewWidget> {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(0.0),
             child: SvgPicture.asset(
               'assets/images/14731345_rm222-mind-20.svg',
               width: double.infinity,
