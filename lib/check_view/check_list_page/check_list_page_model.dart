@@ -27,6 +27,9 @@ class CheckListPageModel extends FlutterFlowModel<CheckListPageWidget> {
   Query? listViewPagingQuery;
   List<StreamSubscription?> listViewStreamSubscriptions = [];
 
+  // Stores action output result for [Bottom Sheet - CheckFormView] action in FloatingActionButton widget.
+  String? isUpdate;
+
   @override
   void initState(BuildContext context) {
     backButtonViewModel = createModel(context, () => BackButtonViewModel());
