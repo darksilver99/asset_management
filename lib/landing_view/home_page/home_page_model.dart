@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/expire_alert_view/expire_alert_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
+import '/component/loading_view/loading_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -40,12 +41,18 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   bool? isExpire3;
   // Stores action output result for [Custom Action - exportExcel2] action in Container widget.
   String? path2;
+  // Model for LoadingView component.
+  late LoadingViewModel loadingViewModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    loadingViewModel = createModel(context, () => LoadingViewModel());
+  }
 
   @override
-  void dispose() {}
+  void dispose() {
+    loadingViewModel.dispose();
+  }
 
   /// Action blocks.
   Future checkCloseExpire(BuildContext context) async {
