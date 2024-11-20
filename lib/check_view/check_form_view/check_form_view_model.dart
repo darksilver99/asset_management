@@ -12,6 +12,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'check_form_view_widget.dart' show CheckFormViewWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +31,15 @@ class CheckFormViewModel extends FlutterFlowModel<CheckFormViewWidget> {
           int index, Function(FFUploadedFile) updateFn) =>
       tmpImageList[index] = updateFn(tmpImageList[index]);
 
+  String? assetName;
+
+  bool isLoading = true;
+
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
+  // Stores action output result for [Backend Call - Read Document] action in CheckFormView widget.
+  AssetListRecord? assetDocument;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -67,8 +74,6 @@ class CheckFormViewModel extends FlutterFlowModel<CheckFormViewWidget> {
   List<String>? urlList;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   CheckListRecord? insertedCheck;
-  // Stores action output result for [Backend Call - Read Document] action in Button widget.
-  AssetListRecord? assetResult;
 
   @override
   void initState(BuildContext context) {

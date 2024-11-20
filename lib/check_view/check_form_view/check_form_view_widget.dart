@@ -11,6 +11,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,15 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CheckFormViewModel());
+
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.assetDocument =
+          await AssetListRecord.getDocumentOnce(widget!.assetReference!);
+      _model.assetName = _model.assetDocument?.subject;
+      _model.isLoading = false;
+      safeSetState(() {});
+    });
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -115,7 +125,8 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Text(
-                              'บันทึกการตรวจ',
+                              'บันทึกการตรวจ ${_model.assetName != null && _model.assetName != '' ? '\"${_model.assetName}\"' : ''}',
+                              maxLines: 2,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -593,142 +604,144 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                               ],
                             ),
                           ),
-                          Builder(
-                            builder: (context) => FFButtonWidget(
-                              onPressed: () async {
-                                await actions.hideKeyBoard(
-                                  context,
-                                );
-                                if (_model.formKey.currentState == null ||
-                                    !_model.formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                if (_model.tmpImageList.isNotEmpty) {
-                                  _model.urlList =
-                                      await actions.uploadImageToFirebase(
-                                    '${currentUserUid}/check',
-                                    _model.tmpImageList.toList(),
-                                    false,
-                                  );
-
-                                  var checkListRecordReference =
-                                      CheckListRecord.createDoc(FFAppState()
-                                          .customerData
-                                          .customerRef!);
-                                  await checkListRecordReference.set({
-                                    ...createCheckListRecordData(
-                                      createDate: getCurrentTimestamp,
-                                      remark: _model.textController1.text,
-                                      assetRef: widget!.assetReference,
-                                      checkerName: _model.textController2.text,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'image': _model.urlList,
-                                      },
-                                    ),
-                                  });
-                                  _model.insertedCheck =
-                                      CheckListRecord.getDocumentFromData({
-                                    ...createCheckListRecordData(
-                                      createDate: getCurrentTimestamp,
-                                      remark: _model.textController1.text,
-                                      assetRef: widget!.assetReference,
-                                      checkerName: _model.textController2.text,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'image': _model.urlList,
-                                      },
-                                    ),
-                                  }, checkListRecordReference);
-
-                                  await widget!.assetReference!
-                                      .update(createAssetListRecordData(
-                                    lastCheckRef:
-                                        _model.insertedCheck?.reference,
-                                  ));
-                                  _model.assetResult =
-                                      await AssetListRecord.getDocumentOnce(
-                                          widget!.assetReference!);
-                                  await action_blocks.insertTransaction(
+                          if (!_model.isLoading)
+                            Builder(
+                              builder: (context) => FFButtonWidget(
+                                onPressed: () async {
+                                  await actions.hideKeyBoard(
                                     context,
-                                    assetReference: widget!.assetReference,
-                                    refPath: functions.getCheckPath(
-                                        _model.insertedCheck!.reference),
-                                    subject:
-                                        'ทำการตรวจสอบ ${_model.assetResult?.subject}',
-                                    remark: _model.textController1.text,
                                   );
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                        child: WebViewAware(
-                                          child: InfoCustomViewWidget(
-                                            title: 'บันทึกข้อมูลเรียบร้อยแล้ว',
-                                            status: 'success',
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  if (_model.formKey.currentState == null ||
+                                      !_model.formKey.currentState!
+                                          .validate()) {
+                                    return;
+                                  }
+                                  if (_model.tmpImageList.isNotEmpty) {
+                                    _model.urlList =
+                                        await actions.uploadImageToFirebase(
+                                      '${currentUserUid}/check',
+                                      _model.tmpImageList.toList(),
+                                      false,
+                                    );
 
-                                  context.goNamed('HomePage');
-                                } else {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                        child: WebViewAware(
-                                          child: InfoCustomViewWidget(
-                                            title:
-                                                'กรุณาแนบรูปการตรวจอย่างน้อย 1 รูป',
-                                            status: 'error',
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }
+                                    var checkListRecordReference =
+                                        CheckListRecord.createDoc(FFAppState()
+                                            .customerData
+                                            .customerRef!);
+                                    await checkListRecordReference.set({
+                                      ...createCheckListRecordData(
+                                        createDate: getCurrentTimestamp,
+                                        remark: _model.textController1.text,
+                                        assetRef: widget!.assetReference,
+                                        checkerName:
+                                            _model.textController2.text,
+                                      ),
+                                      ...mapToFirestore(
+                                        {
+                                          'image': _model.urlList,
+                                        },
+                                      ),
+                                    });
+                                    _model.insertedCheck =
+                                        CheckListRecord.getDocumentFromData({
+                                      ...createCheckListRecordData(
+                                        createDate: getCurrentTimestamp,
+                                        remark: _model.textController1.text,
+                                        assetRef: widget!.assetReference,
+                                        checkerName:
+                                            _model.textController2.text,
+                                      ),
+                                      ...mapToFirestore(
+                                        {
+                                          'image': _model.urlList,
+                                        },
+                                      ),
+                                    }, checkListRecordReference);
 
-                                safeSetState(() {});
-                              },
-                              text: 'บันทึกข้อมูล',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 57.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Kanit',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
+                                    await widget!.assetReference!
+                                        .update(createAssetListRecordData(
+                                      lastCheckRef:
+                                          _model.insertedCheck?.reference,
+                                    ));
+                                    await action_blocks.insertTransaction(
+                                      context,
+                                      assetReference: widget!.assetReference,
+                                      refPath: functions.getCheckPath(
+                                          _model.insertedCheck!.reference),
+                                      subject:
+                                          'ทำการตรวจสอบ ${_model.assetName}',
+                                      remark: _model.textController1.text,
+                                    );
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: InfoCustomViewWidget(
+                                              title:
+                                                  'บันทึกข้อมูลเรียบร้อยแล้ว',
+                                              status: 'success',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+
+                                    context.goNamed('HomePage');
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: WebViewAware(
+                                            child: InfoCustomViewWidget(
+                                              title:
+                                                  'กรุณาแนบรูปการตรวจอย่างน้อย 1 รูป',
+                                              status: 'error',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+
+                                  safeSetState(() {});
+                                },
+                                text: 'บันทึกข้อมูล',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 57.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Kanit',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
