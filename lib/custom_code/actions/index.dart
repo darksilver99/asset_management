@@ -7,3 +7,4 @@ export 'share_file.dart' show shareFile;
 export 'upload_image_to_firebase.dart' show uploadImageToFirebase;
 export 'get_asset_data.dart' show getAssetData;
 export 'export_excel1.dart' show exportExcel1;
+export 'export_excel2.dart' show exportExcel2;
