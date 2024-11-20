@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/component/expire_alert_view/expire_alert_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
@@ -10,7 +9,6 @@ import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'home_page_widget.dart' show HomePageWidget;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -31,8 +29,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   var qrCode = '';
   // Stores action output result for [Custom Action - getAssetData] action in Button widget.
   AssetListRecord? assetResult;
-  // Stores action output result for [Backend Call - Read Document] action in Container widget.
-  AssetListRecord? assetDocument;
+  // Stores action output result for [Custom Action - checkIsExitAsset] action in Container widget.
+  AssetListRecord? assetResultFromTransaction;
   // Stores action output result for [Action Block - checkIsExpire] action in Container widget.
   bool? isExpire2;
   // Stores action output result for [Custom Action - exportExcel1] action in Container widget.

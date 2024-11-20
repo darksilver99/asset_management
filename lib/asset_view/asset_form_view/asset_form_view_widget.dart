@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -426,13 +425,14 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             isDense: false,
-                                            labelText: 'Serial Number',
+                                            labelText:
+                                                'Serial Number, Barcode, รหัสอุปกรณ์',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
                                                     .override(
                                                       fontFamily: 'Kanit',
-                                                      fontSize: 22.0,
+                                                      fontSize: 14.0,
                                                       letterSpacing: 0.0,
                                                     ),
                                             hintStyle:
@@ -550,8 +550,8 @@ class _AssetFormViewWidgetState extends State<AssetFormViewWidget> {
                                       child: Align(
                                         alignment:
                                             AlignmentDirectional(0.0, 0.0),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.barcode,
+                                        child: Icon(
+                                          Icons.document_scanner_outlined,
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           size: 32.0,
