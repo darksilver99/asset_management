@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/check_view/check_form_view/check_form_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/component/loading_view/loading_view_widget.dart';
 import '/component/main_background_view/main_background_view_widget.dart';
@@ -765,19 +766,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         );
                                         _shouldSetState = true;
                                         if (_model.assetResult != null) {
-                                          context.pushNamed(
-                                            'CheckListPage',
-                                            queryParameters: {
-                                              'assetDocument': serializeParam(
-                                                _model.assetResult,
-                                                ParamType.Document,
-                                              ),
-                                            }.withoutNulls,
-                                            extra: <String, dynamic>{
-                                              'assetDocument':
-                                                  _model.assetResult,
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            useSafeArea: true,
+                                            context: context,
+                                            builder: (context) {
+                                              return WebViewAware(
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: CheckFormViewWidget(
+                                                    assetReference: _model
+                                                        .assetResult!.reference,
+                                                  ),
+                                                ),
+                                              );
                                             },
-                                          );
+                                          ).then(
+                                              (value) => safeSetState(() {}));
                                         } else {
                                           await showDialog(
                                             context: context,
