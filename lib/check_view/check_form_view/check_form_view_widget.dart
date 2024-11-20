@@ -694,7 +694,7 @@ class _CheckFormViewWidgetState extends State<CheckFormViewWidget> {
                                       },
                                     );
 
-                                    context.goNamed('HomePage');
+                                    Navigator.pop(context, 'update');
                                   } else {
                                     await showDialog(
                                       context: context,

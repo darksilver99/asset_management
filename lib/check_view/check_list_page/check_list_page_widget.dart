@@ -76,7 +76,28 @@ class _CheckListPageWidgetState extends State<CheckListPageWidget> {
                   ),
                 );
               },
-            ).then((value) => safeSetState(() {}));
+            ).then((value) => safeSetState(() => _model.isUpdate = value));
+
+            if ((_model.isUpdate != null && _model.isUpdate != '') &&
+                (_model.isUpdate == 'update')) {
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+              context.pushNamed(
+                'CheckListPage',
+                queryParameters: {
+                  'assetDocument': serializeParam(
+                    widget!.assetDocument,
+                    ParamType.Document,
+                  ),
+                }.withoutNulls,
+                extra: <String, dynamic>{
+                  'assetDocument': widget!.assetDocument,
+                },
+              );
+            }
+
+            safeSetState(() {});
           },
           backgroundColor: FlutterFlowTheme.of(context).primary,
           icon: FaIcon(
