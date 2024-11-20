@@ -11,7 +11,6 @@ import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import 'more_page_widget.dart' show MorePageWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,7 @@ import 'package:webviewx_plus/webviewx_plus.dart';
 class MorePageModel extends FlutterFlowModel<MorePageWidget> {
   ///  Local state fields for this page.
 
-  bool isLoading = true;
+  bool isLoading = false;
 
   ///  State fields for stateful widgets in this page.
 
