@@ -1189,6 +1189,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         return;
                                       }
 
+                                      _model.isLoading = true;
+                                      safeSetState(() {});
                                       _model.path1 =
                                           await actions.exportExcel1();
                                       _shouldSetState = true;
@@ -1221,6 +1223,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         );
                                       }
 
+                                      _model.isLoading = false;
+                                      safeSetState(() {});
                                       if (_shouldSetState) safeSetState(() {});
                                     },
                                     child: Material(
