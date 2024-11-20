@@ -10,7 +10,6 @@ import '/other_view/suggest_view/suggest_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -35,12 +34,6 @@ class _MorePageWidgetState extends State<MorePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MorePageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.isLoading = false;
-      safeSetState(() {});
-    });
   }
 
   @override
