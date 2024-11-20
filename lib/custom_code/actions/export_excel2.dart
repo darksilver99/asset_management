@@ -56,7 +56,7 @@ Future<String> exportExcel2() async {
     bottomBorder: exBorder.Border(borderStyle: exBorder.BorderStyle.Thin),
   );
 
-// title
+  // title
   var cell =
       sheetObject.cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: 0));
   cell.value = TextCellValue(
@@ -66,8 +66,9 @@ Future<String> exportExcel2() async {
   sheetObject.cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: 1))
     ..value = TextCellValue("รายการอุปกรณ์")
     ..cellStyle = CellStyle(fontSize: 22, bold: true);
+  // end title
 
-// สร้างหัวตารางสำหรับอุปกรณ์ทั้งหมด
+  // สร้างหัวตารางสำหรับอุปกรณ์ทั้งหมด
   List<String> header = [
     "ชื่ออุปกรณ์",
     "วันที่ซื้อ",
@@ -79,8 +80,9 @@ Future<String> exportExcel2() async {
     cell.value = TextCellValue(header[i]);
     cell.cellStyle = cellStyle;
   }
+  // end สร้างหัวตารางสำหรับอุปกรณ์ทั้งหมด
 
-// body
+  // เพิ่มข้อมูลอุปกรณ์ทั้งหมด
   QuerySnapshot<Map<String, dynamic>> dataList = await FirebaseFirestore
       .instance
       .collection("${FFAppState().customerData.customerRef!.path}/asset_list")
@@ -93,11 +95,9 @@ Future<String> exportExcel2() async {
 
   double totalPrice = 0.0; // ตัวแปรสำหรับเก็บผลรวมราคา
 
-// เพิ่มข้อมูลอุปกรณ์ทั้งหมด
   for (int i = 0; i < dataList.size; i++) {
     var dataRecord = dataList.docs[i].data();
 
-    // Set each value in the corresponding column
     sheetObject
         .cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: i + 3))
       ..value = TextCellValue(
@@ -119,15 +119,15 @@ Future<String> exportExcel2() async {
       ..value = TextCellValue(" ${dataRecord["price"]}")
       ..cellStyle = CellStyle(horizontalAlign: HorizontalAlign.Right);
   }
+  // end เพิ่มข้อมูลอุปกรณ์ทั้งหมด
 
-// สไตล์สำหรับแถวรวม
+  // เพิ่มข้อมูลรวมที่แถวสุดท้ายของอุปกรณ์ทั้งหมด
   CellStyle totalRowStyle = CellStyle(
     backgroundColorHex: ExcelColor.fromHexString("#FFFF99"), // สีเหลืองอ่อน
     bold: true,
     horizontalAlign: HorizontalAlign.Right,
   );
 
-// เพิ่มข้อมูลรวมที่แถวสุดท้ายของอุปกรณ์ทั้งหมด
   int lastRowIndex = dataList.size + 3; // แถวใหม่หลังจากข้อมูลทั้งหมด
 
   sheetObject
@@ -145,6 +145,7 @@ Future<String> exportExcel2() async {
       .cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: lastRowIndex))
     ..value = TextCellValue(totalPrice.toStringAsFixed(2))
     ..cellStyle = totalRowStyle;
+  // end เพิ่มข้อมูลรวมที่แถวสุดท้ายของอุปกรณ์ทั้งหมด
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -157,7 +158,7 @@ Future<String> exportExcel2() async {
     ..value = TextCellValue("รายการซ่อม")
     ..cellStyle = CellStyle(fontSize: 22, bold: true);
 
-// สร้างหัวตารางรายการซ่อม
+  // สร้างหัวตารางรายการซ่อม
   List<String> repairHeader = ["ชื่ออุปกรณ์", "วันที่เสร็จสิ้น", "ราคาซ่อม"];
   for (var i = 0; i < repairHeader.length; i++) {
     var cell = sheetObject.cell(CellIndex.indexByColumnRow(
@@ -166,12 +167,14 @@ Future<String> exportExcel2() async {
     cell.cellStyle = cellStyle;
   }
 
+  // เพิ่มข้อมูล body การซ่อม
+
   double totalRepairPrice = 0.0; // ตัวแปรสำหรับเก็บผลรวมราคาซ่อม
   int totalRepairRows = 0; // ตัวแปรสำหรับเก็บจำนวนแถวการซ่อมทั้งหมด
 
   List<Map<String, dynamic>> tmpDate = [];
 
-// ค้นหาข้อมูลการซ่อมจาก Firestore
+  // ค้นหาข้อมูลการซ่อมจาก Firestore
   for (int i = 0; i < dataList.size; i++) {
     var dataRecord = dataList.docs[i].data();
     var assetRef = dataList.docs[i].reference; // ค้นหาจาก asset reference
@@ -220,31 +223,23 @@ Future<String> exportExcel2() async {
         columnIndex: 0, rowIndex: repairTableStartRow + 2 + totalRepairRows))
       ..value = TextCellValue("${tmpDate[j]["name"]}")
       ..cellStyle = CellStyle(horizontalAlign: HorizontalAlign.Left);
-
     if (tmpDate[j]["finish_date"] == null) {
-      // วันที่ซ่อม
       sheetObject.cell(CellIndex.indexByColumnRow(
           columnIndex: 1, rowIndex: repairTableStartRow + 2 + totalRepairRows))
         ..value = TextCellValue("-")
         ..cellStyle = CellStyle(horizontalAlign: HorizontalAlign.Center);
-
-      // ราคาซ่อม
       sheetObject.cell(CellIndex.indexByColumnRow(
           columnIndex: 2, rowIndex: repairTableStartRow + 2 + totalRepairRows))
         ..value = TextCellValue("กำลังซ่อม")
         ..cellStyle = CellStyle(horizontalAlign: HorizontalAlign.Right);
     } else {
-      // ราคาซ่อม
       double repairPrice = double.tryParse("${tmpDate[j]["price"]}") ?? 0.0;
       totalRepairPrice += repairPrice; // เพิ่มราคาซ่อมเข้าไปในผลรวม
-
-      // วันที่ซ่อม
       sheetObject.cell(CellIndex.indexByColumnRow(
           columnIndex: 1, rowIndex: repairTableStartRow + 2 + totalRepairRows))
         ..value = TextCellValue(
             "${functions.dateTh(tmpDate[j]["finish_date"].toDate())}")
         ..cellStyle = CellStyle(horizontalAlign: HorizontalAlign.Center);
-
       sheetObject.cell(CellIndex.indexByColumnRow(
           columnIndex: 2, rowIndex: repairTableStartRow + 2 + totalRepairRows))
         ..value = TextCellValue("${tmpDate[j]["price"]}")
@@ -253,14 +248,15 @@ Future<String> exportExcel2() async {
     totalRepairRows++; // เพิ่มจำนวนแถวการซ่อมทั้งหมด
   }
 
-// สไตล์สำหรับแถวรวมการซ่อม
+  // end เพิ่มข้อมูล body การซ่อม
+
+  // เพิ่มข้อมูลรวมการซ่อมที่แถวสุดท้ายของรายการซ่อม
   CellStyle repairTotalRowStyle = CellStyle(
     backgroundColorHex: ExcelColor.fromHexString("#FFFF99"), // สีเหลืองอ่อน
     bold: true,
     horizontalAlign: HorizontalAlign.Right,
   );
 
-  // เพิ่มข้อมูลรวมการซ่อมที่แถวสุดท้ายของรายการซ่อม
   int repairLastRowIndex =
       repairTableStartRow + 2 + totalRepairRows; // ใช้ totalRepairRows แทน
 
@@ -279,23 +275,29 @@ Future<String> exportExcel2() async {
       CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: repairLastRowIndex))
     ..value = TextCellValue(totalRepairPrice.toStringAsFixed(2))
     ..cellStyle = repairTotalRowStyle;
+  // end เพิ่มข้อมูลรวมการซ่อมที่แถวสุดท้ายของรายการซ่อม
 
-// ตารางสุดท้าย (รวมราคาอุปกรณ์และการซ่อม)
+  // ตารางสุดท้าย (รวมราคาอุปกรณ์และการซ่อม)
   int finalTotalRow = repairLastRowIndex + 2;
   sheetObject
       .cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: finalTotalRow))
     ..value = TextCellValue("รวมทั้งหมด")
-    ..cellStyle = CellStyle(fontSize: 22, bold: true);
+    ..cellStyle = totalRowStyle.copyWith(
+        fontSizeVal: 22,
+        boldVal: true,
+        horizontalAlignVal: HorizontalAlign.Left);
 
   sheetObject
       .cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: finalTotalRow))
     ..value = TextCellValue("")
-    ..cellStyle = CellStyle();
+    ..cellStyle = totalRowStyle;
 
   sheetObject
       .cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: finalTotalRow))
     ..value = TextCellValue((totalPrice + totalRepairPrice).toStringAsFixed(2))
     ..cellStyle = totalRowStyle;
+
+  // end ตารางสุดท้าย (รวมราคาอุปกรณ์และการซ่อม)
 
   // Auto-size columns
   for (int col = 0; col < header.length; col++) {
