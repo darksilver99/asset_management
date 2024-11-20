@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/authen_view/forget_password_view/forget_password_view_widget.dart';
-import '/component/main_background_view/main_background_view_widget.dart';
+import '/component/second_background_view/second_background_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -53,9 +53,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         child: Stack(
           children: [
             wrapWithModel(
-              model: _model.mainBackgroundViewModel,
+              model: _model.secondBackgroundViewModel,
               updateCallback: () => safeSetState(() {}),
-              child: MainBackgroundViewWidget(),
+              child: SecondBackgroundViewWidget(),
             ),
             SingleChildScrollView(
               child: Column(

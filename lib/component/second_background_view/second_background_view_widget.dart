@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'main_background_view_model.dart';
-export 'main_background_view_model.dart';
+import 'second_background_view_model.dart';
+export 'second_background_view_model.dart';
 
-class MainBackgroundViewWidget extends StatefulWidget {
-  const MainBackgroundViewWidget({super.key});
+class SecondBackgroundViewWidget extends StatefulWidget {
+  const SecondBackgroundViewWidget({super.key});
 
   @override
-  State<MainBackgroundViewWidget> createState() =>
-      _MainBackgroundViewWidgetState();
+  State<SecondBackgroundViewWidget> createState() =>
+      _SecondBackgroundViewWidgetState();
 }
 
-class _MainBackgroundViewWidgetState extends State<MainBackgroundViewWidget> {
-  late MainBackgroundViewModel _model;
+class _SecondBackgroundViewWidgetState
+    extends State<SecondBackgroundViewWidget> {
+  late SecondBackgroundViewModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -27,7 +28,7 @@ class _MainBackgroundViewWidgetState extends State<MainBackgroundViewWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => MainBackgroundViewModel());
+    _model = createModel(context, () => SecondBackgroundViewModel());
   }
 
   @override
@@ -47,10 +48,17 @@ class _MainBackgroundViewWidgetState extends State<MainBackgroundViewWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: SvgPicture.asset(
-              'assets/images/14731345_rm222-mind-20.svg',
+              'assets/images/19962856_6198974.svg',
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0x8E000000),
             ),
           ),
         ],

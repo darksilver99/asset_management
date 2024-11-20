@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/component/expire_alert_view/expire_alert_view_widget.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/component/loading_view/loading_view_widget.dart';
+import '/component/main_background_view/main_background_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -24,6 +25,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Model for MainBackgroundView component.
+  late MainBackgroundViewModel mainBackgroundViewModel;
   // Stores action output result for [Action Block - checkIsExpire] action in Button widget.
   bool? isExpire;
   var qrCode = '';
@@ -44,11 +47,14 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   @override
   void initState(BuildContext context) {
+    mainBackgroundViewModel =
+        createModel(context, () => MainBackgroundViewModel());
     loadingViewModel = createModel(context, () => LoadingViewModel());
   }
 
   @override
   void dispose() {
+    mainBackgroundViewModel.dispose();
     loadingViewModel.dispose();
   }
 

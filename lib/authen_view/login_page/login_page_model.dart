@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/authen_view/forget_password_view/forget_password_view_widget.dart';
-import '/component/main_background_view/main_background_view_widget.dart';
+import '/component/second_background_view/second_background_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -15,8 +15,8 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Model for MainBackgroundView component.
-  late MainBackgroundViewModel mainBackgroundViewModel;
+  // Model for SecondBackgroundView component.
+  late SecondBackgroundViewModel secondBackgroundViewModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? emailTextController;
@@ -44,8 +44,8 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
 
   @override
   void initState(BuildContext context) {
-    mainBackgroundViewModel =
-        createModel(context, () => MainBackgroundViewModel());
+    secondBackgroundViewModel =
+        createModel(context, () => SecondBackgroundViewModel());
     emailTextControllerValidator = _emailTextControllerValidator;
     passwordVisibility = false;
     passwordTextControllerValidator = _passwordTextControllerValidator;
@@ -53,7 +53,7 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
 
   @override
   void dispose() {
-    mainBackgroundViewModel.dispose();
+    secondBackgroundViewModel.dispose();
     textFieldFocusNode1?.dispose();
     emailTextController?.dispose();
 

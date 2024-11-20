@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/component/main_background_view/main_background_view_widget.dart';
+import '/component/second_background_view/second_background_view_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -21,8 +21,8 @@ class MorePageModel extends FlutterFlowModel<MorePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Model for MainBackgroundView component.
-  late MainBackgroundViewModel mainBackgroundViewModel;
+  // Model for SecondBackgroundView component.
+  late SecondBackgroundViewModel secondBackgroundViewModel;
   // Stores action output result for [Action Block - confirmBlock] action in Text widget.
   bool? isConfirm2;
   // Stores action output result for [Action Block - confirmBlock] action in Column widget.
@@ -30,12 +30,12 @@ class MorePageModel extends FlutterFlowModel<MorePageWidget> {
 
   @override
   void initState(BuildContext context) {
-    mainBackgroundViewModel =
-        createModel(context, () => MainBackgroundViewModel());
+    secondBackgroundViewModel =
+        createModel(context, () => SecondBackgroundViewModel());
   }
 
   @override
   void dispose() {
-    mainBackgroundViewModel.dispose();
+    secondBackgroundViewModel.dispose();
   }
 }
