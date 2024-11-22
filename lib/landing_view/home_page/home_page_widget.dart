@@ -758,12 +758,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       );
 
                                       _shouldSetState = true;
-                                      if ((_model.qrCode != null &&
-                                              _model.qrCode != '') &&
-                                          (_model.qrCode != '-1')) {
+                                      if (_model.qrCode != null &&
+                                          _model.qrCode != '') {
                                         _model.assetResult =
-                                            await actions.getAssetData(
-                                          functions.getAssetRef(_model.qrCode!),
+                                            await actions.getAssetDataFromID(
+                                          _model.qrCode,
                                         );
                                         _shouldSetState = true;
                                         if (_model.assetResult != null) {

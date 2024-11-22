@@ -151,7 +151,7 @@ class _AssetQRCodeViewWidgetState extends State<AssetQRCodeViewWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 32.0),
                                       child: BarcodeWidget(
-                                        data: functions.getAssetPath(
+                                        data: functions.getAssetID(
                                             widget!.assetDocument!.reference),
                                         barcode: Barcode.qrCode(),
                                         width: 250.0,

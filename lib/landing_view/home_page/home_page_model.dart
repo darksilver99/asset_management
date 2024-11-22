@@ -31,7 +31,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   // Stores action output result for [Action Block - checkIsExpire] action in Button widget.
   bool? isExpire;
   var qrCode = '';
-  // Stores action output result for [Custom Action - getAssetData] action in Button widget.
+  // Stores action output result for [Custom Action - getAssetDataFromID] action in Button widget.
   AssetListRecord? assetResult;
   // Stores action output result for [Custom Action - checkIsExitAsset] action in Container widget.
   AssetListRecord? assetResultFromTransaction;
