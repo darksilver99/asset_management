@@ -15,6 +15,9 @@ Future<AssetListRecord?> getAssetDataFromID(String? assetID) async {
   if (assetID == null) {
     return null;
   }
+  if (assetID.contains("/")) {
+    return null;
+  }
   var rs = await FirebaseFirestore.instance
       .doc("${FFAppState().customerData.customerRef}/asset_list/$assetID")
       .get();
