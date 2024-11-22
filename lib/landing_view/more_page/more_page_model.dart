@@ -1,3 +1,4 @@
+import '/app_suggest_view/app_suggest_view/app_suggest_view_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/component/info_custom_view/info_custom_view_widget.dart';
 import '/component/loading_view/loading_view_widget.dart';

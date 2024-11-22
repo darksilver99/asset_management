@@ -20,6 +20,8 @@ class ConfigDataStruct extends FFFirebaseStruct {
     String? storeAndroidLink,
     String? storeIosLink,
     int? storeVersion,
+    List<AppSuggestDataStruct>? appSuggestList,
+    List<AppSuggestDataStruct>? appOtherList,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _contact = contact,
         _freeDay = freeDay,
@@ -31,6 +33,8 @@ class ConfigDataStruct extends FFFirebaseStruct {
         _storeAndroidLink = storeAndroidLink,
         _storeIosLink = storeIosLink,
         _storeVersion = storeVersion,
+        _appSuggestList = appSuggestList,
+        _appOtherList = appOtherList,
         super(firestoreUtilData);
 
   // "contact" field.
@@ -116,6 +120,28 @@ class ConfigDataStruct extends FFFirebaseStruct {
 
   bool hasStoreVersion() => _storeVersion != null;
 
+  // "app_suggest_list" field.
+  List<AppSuggestDataStruct>? _appSuggestList;
+  List<AppSuggestDataStruct> get appSuggestList => _appSuggestList ?? const [];
+  set appSuggestList(List<AppSuggestDataStruct>? val) => _appSuggestList = val;
+
+  void updateAppSuggestList(Function(List<AppSuggestDataStruct>) updateFn) {
+    updateFn(_appSuggestList ??= []);
+  }
+
+  bool hasAppSuggestList() => _appSuggestList != null;
+
+  // "app_other_list" field.
+  List<AppSuggestDataStruct>? _appOtherList;
+  List<AppSuggestDataStruct> get appOtherList => _appOtherList ?? const [];
+  set appOtherList(List<AppSuggestDataStruct>? val) => _appOtherList = val;
+
+  void updateAppOtherList(Function(List<AppSuggestDataStruct>) updateFn) {
+    updateFn(_appOtherList ??= []);
+  }
+
+  bool hasAppOtherList() => _appOtherList != null;
+
   static ConfigDataStruct fromMap(Map<String, dynamic> data) =>
       ConfigDataStruct(
         contact: getDataList(data['contact']),
@@ -128,6 +154,14 @@ class ConfigDataStruct extends FFFirebaseStruct {
         storeAndroidLink: data['store_android_link'] as String?,
         storeIosLink: data['store_ios_link'] as String?,
         storeVersion: castToType<int>(data['store_version']),
+        appSuggestList: getStructList(
+          data['app_suggest_list'],
+          AppSuggestDataStruct.fromMap,
+        ),
+        appOtherList: getStructList(
+          data['app_other_list'],
+          AppSuggestDataStruct.fromMap,
+        ),
       );
 
   static ConfigDataStruct? maybeFromMap(dynamic data) => data is Map
@@ -145,6 +179,8 @@ class ConfigDataStruct extends FFFirebaseStruct {
         'store_android_link': _storeAndroidLink,
         'store_ios_link': _storeIosLink,
         'store_version': _storeVersion,
+        'app_suggest_list': _appSuggestList?.map((e) => e.toMap()).toList(),
+        'app_other_list': _appOtherList?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
   @override
@@ -190,6 +226,16 @@ class ConfigDataStruct extends FFFirebaseStruct {
         'store_version': serializeParam(
           _storeVersion,
           ParamType.int,
+        ),
+        'app_suggest_list': serializeParam(
+          _appSuggestList,
+          ParamType.DataStruct,
+          isList: true,
+        ),
+        'app_other_list': serializeParam(
+          _appOtherList,
+          ParamType.DataStruct,
+          isList: true,
         ),
       }.withoutNulls;
 
@@ -245,6 +291,18 @@ class ConfigDataStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        appSuggestList: deserializeStructParam<AppSuggestDataStruct>(
+          data['app_suggest_list'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: AppSuggestDataStruct.fromSerializableMap,
+        ),
+        appOtherList: deserializeStructParam<AppSuggestDataStruct>(
+          data['app_other_list'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: AppSuggestDataStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -263,7 +321,9 @@ class ConfigDataStruct extends FFFirebaseStruct {
         promotionDetailImage == other.promotionDetailImage &&
         storeAndroidLink == other.storeAndroidLink &&
         storeIosLink == other.storeIosLink &&
-        storeVersion == other.storeVersion;
+        storeVersion == other.storeVersion &&
+        listEquality.equals(appSuggestList, other.appSuggestList) &&
+        listEquality.equals(appOtherList, other.appOtherList);
   }
 
   @override
@@ -277,7 +337,9 @@ class ConfigDataStruct extends FFFirebaseStruct {
         promotionDetailImage,
         storeAndroidLink,
         storeIosLink,
-        storeVersion
+        storeVersion,
+        appSuggestList,
+        appOtherList
       ]);
 }
 
