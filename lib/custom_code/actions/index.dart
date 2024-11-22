@@ -9,3 +9,4 @@ export 'get_asset_data.dart' show getAssetData;
 export 'export_excel1.dart' show exportExcel1;
 export 'export_excel2.dart' show exportExcel2;
 export 'check_is_exit_asset.dart' show checkIsExitAsset;
+export 'get_asset_data_from_i_d.dart' show getAssetDataFromID;

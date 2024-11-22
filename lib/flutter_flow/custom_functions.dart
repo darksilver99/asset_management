@@ -137,3 +137,7 @@ DateTime getBeforeDay(
   DateTime pastDate = date.subtract(Duration(days: pastDay));
   return pastDate;
 }
+
+String getAssetID(DocumentReference assetRef) {
+  return assetRef.id;
+}
