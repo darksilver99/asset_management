@@ -950,6 +950,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                var _shouldSetState = false;
+                                                _model.isExpire4 =
+                                                    await action_blocks
+                                                        .checkIsExpire(context);
+                                                _shouldSetState = true;
+                                                if (_model.isExpire4!) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+
                                                 _model.isLoading = true;
                                                 safeSetState(() {});
                                                 _model.assetResultFromTransaction =
@@ -958,6 +969,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   columnTransactionListRecord
                                                       .assetRef!,
                                                 );
+                                                _shouldSetState = true;
                                                 _model.isLoading = false;
                                                 safeSetState(() {});
                                                 if (_model
@@ -1008,7 +1020,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   );
                                                 }
 
-                                                safeSetState(() {});
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
                                               },
                                               child: Container(
                                                 width: double.infinity,
