@@ -19,7 +19,7 @@ Future<AssetListRecord?> getAssetDataFromID(String? assetID) async {
     return null;
   }
   var rs = await FirebaseFirestore.instance
-      .doc("${FFAppState().customerData.customerRef}/asset_list/$assetID")
+      .doc("${FFAppState().customerData.customerRef!.path}/asset_list/$assetID")
       .get();
   if (!rs.exists) {
     return null;
